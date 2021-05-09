@@ -9,6 +9,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Landscape
 import androidx.compose.material.icons.filled.Segment
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,14 +28,14 @@ class FirstTransitionScreen {
                 navController.navigate("secondAnimationScreen")
             }) {
                 Icon(
-                    Icons.Filled.Segment,
+                    Icons.Filled.Landscape,
                     "sealed",
                     tint = Color.White,
                     modifier = Modifier
                         .height(30.dp)
                         .width(30.dp)
                 )
-                Text(text = "sealed")
+                Text(text = "->")
             }
         }
     }

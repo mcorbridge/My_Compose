@@ -56,10 +56,7 @@ import com.example.mycompose.scaffold.TestScaffold
 import com.example.mycompose.sealed.TestSealedClass
 import com.example.mycompose.sinWave.*
 import com.example.mycompose.text.TestingText
-import com.example.mycompose.transition.FirstTransitionScreen
-import com.example.mycompose.transition.SecondTransitionScreen
-import com.example.mycompose.transition.TestTransition
-import com.example.mycompose.transition.TransitionTo
+import com.example.mycompose.transition.*
 import com.example.mycompose.ui.theme.MyComposeTheme
 import com.example.mycompose.utils.FooComposablex
 import com.example.mycompose.ztate.TestState
@@ -259,12 +256,12 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     composable("firstAnimationScreen") {
-                        EnterAnimation {
+                        ScreenTransitions.SceneAnimation {
                             FirstAnimationScreen(navController, testViewModel)
                         }
                     }
                     composable("secondAnimationScreen") {
-                        EnterAnimation {
+                        ScreenTransitions.SceneAnimation {
                             SecondAnimationScreen(navController, testViewModel)
                         }
                     }
@@ -301,21 +298,7 @@ class MainActivity : AppCompatActivity() {
         }*/
     }
 
-    @ExperimentalAnimationApi
-    @Composable
-    fun EnterAnimation(content: @Composable () -> Unit) {
-        AnimatedVisibility(
-            visible = true,
-            enter = slideInVertically(
-                initialOffsetY = { -40 }
-            ) + expandVertically(
-                expandFrom = Alignment.Top
-            ) + fadeIn(initialAlpha = 0.3f),
-            exit = slideOutVertically() + shrinkVertically() + fadeOut(),
-            content = content,
-            initiallyVisible = false
-        )
-    }
+
 
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

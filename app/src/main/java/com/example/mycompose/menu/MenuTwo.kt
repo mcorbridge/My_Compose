@@ -258,9 +258,7 @@ class MenuTwo {
                         Text(text = "transition")
                     }
 
-
                     Spacer(modifier = Modifier.width(16.dp))
-
 
                     Button(onClick = {
                         navController.navigate("thirtyFourthScreen")
@@ -291,12 +289,6 @@ class MenuTwo {
                         )
                         Text(text = "->")
                     }
-
-
-
-
-
-
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
