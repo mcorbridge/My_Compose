@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "658371179487",
+    "project_id": "mcorbridge",
+    "storage_bucket": "mcorbridge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658371179487:android:b3f8217b28ac90bfd58a6a",
+        "android_client_info": {
+          "package_name": "com.example.mycompose"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658371179487-nlhhv978en1penutqqfbiig1mu7jar32.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mycompose",
+            "certificate_hash": "fd023d70ea9ab93c9676b2f2513ddea27be53cde"
+          }
+        },
+        {
+          "client_id": "658371179487-0v85g1vt1lf4dvvkqv9soqtgvm6v4evb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5nqWl2x5mtqj7WLxbsjNfSPkqm7R4nrM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658371179487-0v85g1vt1lf4dvvkqv9soqtgvm6v4evb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Compose</string>
+    <string name="hello">Hello!</string>
+    <string name="drawer_selection_1">Welcome</string>
+    <string name="drawer_selection_2">Screen 2</string>
+    <string name="drawer_selection_3">Screen 3</string>
+    <string name="foo_name">Hello</string>
+    <string name="icon_name_a">Material Icons!</string>
+
+</resources>
