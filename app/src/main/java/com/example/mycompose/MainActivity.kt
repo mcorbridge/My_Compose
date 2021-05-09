@@ -1321,13 +1321,13 @@ class MainActivity : AppCompatActivity() {
     @Composable
     fun FirstAnimationScreen(navController: NavController, testViewModel: TestViewModel) {
         var firstTransitionScreen = FirstTransitionScreen()
-        firstTransitionScreen.ShowScreen()
+        firstTransitionScreen.ShowScreen(navController, testViewModel)
     }
 
     @Composable
     fun SecondAnimationScreen(navController: NavController, testViewModel: TestViewModel) {
         var secondTransitionScreen = SecondTransitionScreen()
-        secondTransitionScreen.ShowScreen()
+        secondTransitionScreen.ShowScreen(navController, testViewModel)
     }
 
 } // end class
