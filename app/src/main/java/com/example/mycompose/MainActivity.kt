@@ -107,9 +107,7 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
 
-
             MyComposeTheme {
-
 
                 val navController = rememberNavController()
 
