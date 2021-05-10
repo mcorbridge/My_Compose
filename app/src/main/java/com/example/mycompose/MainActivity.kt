@@ -254,12 +254,12 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     composable("firstAnimationScreen") {
-                        ScreenTransitions.SceneAnimation {
+                        ScreenTransitions.ExampleAnimation {
                             FirstAnimationScreen(navController, testViewModel)
                         }
                     }
                     composable("secondAnimationScreen") {
-                        ScreenTransitions.SceneAnimation {
+                        ScreenTransitions.ExampleAnimation {
                             SecondAnimationScreen(navController, testViewModel)
                         }
                     }

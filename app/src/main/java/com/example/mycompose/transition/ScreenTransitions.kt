@@ -2,6 +2,7 @@ package com.example.mycompose.transition
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
@@ -34,8 +35,20 @@ class ScreenTransitions {
         fun SceneAnimation(content: @Composable () -> Unit) {
             AnimatedVisibility(
                 visible = true,
-                enter = slideInHorizontally( initialOffsetX = { -1100 }, animationSpec = tween(durationMillis = 1000, delayMillis = 100)),
-                exit = slideOutHorizontally(targetOffsetX = { 0 }, animationSpec = tween(durationMillis = 1000, delayMillis = 0)),
+                exit = fadeOut(0f, animationSpec = tween(durationMillis = 1000, delayMillis = 1000)),
+                enter = slideInHorizontally( initialOffsetX = { -1100 }, animationSpec = tween(durationMillis = 1000, delayMillis = 1000)),
+                content = content,
+                initiallyVisible = false
+            )
+        }
+
+        @ExperimentalAnimationApi
+        @Composable
+        fun ExampleAnimation(content: @Composable () -> Unit) {
+            AnimatedVisibility(
+                visible = true,
+                enter = fadeIn(initialAlpha = 0.1f, animationSpec = tween(1000, 100, easing= LinearEasing)),
+                exit = fadeOut(targetAlpha = 0.5f, animationSpec = tween(1000, 100, easing= LinearEasing)),
                 content = content,
                 initiallyVisible = false
             )
