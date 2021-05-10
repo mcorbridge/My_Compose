@@ -254,12 +254,13 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     composable("firstAnimationScreen") {
-                        ScreenTransitions.ExampleAnimation {
-                            FirstAnimationScreen(navController, testViewModel)
+                            ScreenTransitions.ExampleAnimation{
+                                FirstAnimationScreen(navController, testViewModel)
+                            }
                         }
-                    }
+
                     composable("secondAnimationScreen") {
-                        ScreenTransitions.ExampleAnimation {
+                        ScreenTransitions.ExampleAnimation{
                             SecondAnimationScreen(navController, testViewModel)
                         }
                     }
@@ -1299,12 +1300,14 @@ class MainActivity : AppCompatActivity() {
         testSealedClass.DoTest(navController, testViewModel)
     }
 
+    @ExperimentalAnimationApi
     @Composable
     fun FirstAnimationScreen(navController: NavController, testViewModel: TestViewModel) {
         var firstTransitionScreen = FirstTransitionScreen()
         firstTransitionScreen.ShowScreen(navController, testViewModel)
     }
 
+    @ExperimentalAnimationApi
     @Composable
     fun SecondAnimationScreen(navController: NavController, testViewModel: TestViewModel) {
         var secondTransitionScreen = SecondTransitionScreen()

@@ -9,6 +9,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Landscape
+import androidx.compose.material.icons.filled.Nature
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,7 +32,7 @@ class FirstTransitionScreen {
     @Composable
     fun ShowScreen(navController: NavController, testViewModel: TestViewModel) {
 
-        var visible = remember { mutableStateOf(true) }
+        var visible = remember { mutableStateOf(testViewModel.visible) }
 
         Box(
             modifier = Modifier
@@ -56,8 +57,24 @@ class FirstTransitionScreen {
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Button(onClick = { visible.value =  !visible.value}) {
+                Button(onClick = {
+                    testViewModel.visible = !testViewModel.visible
+                }) {
+                    Icon(
+                        Icons.Filled.Nature,
+                        "*",
+                        tint = Color.White,
+                        modifier = Modifier
+                            .height(30.dp)
+                            .width(30.dp)
+                    )
+                    Text(text = "${testViewModel.visible}")
+                }
 
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Button(onClick = { visible.value = !visible.value }) {
+                    Text(text = "visible? ${ visible.value }")
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))

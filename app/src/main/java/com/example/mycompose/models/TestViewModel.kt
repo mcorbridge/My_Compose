@@ -15,6 +15,8 @@ class TestViewModel : ViewModel() {
     private val _name = MutableLiveData("")
     var name: LiveData<String> = _name
 
+    var visible: Boolean = true
+
     // onNameChanged is an event we're defining that the UI can invoke
     // (events flow up from UI)
     fun onNameChanged(newName: String) {

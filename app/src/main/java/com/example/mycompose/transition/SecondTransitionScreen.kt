@@ -9,6 +9,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Landscape
+import androidx.compose.material.icons.filled.Male
+import androidx.compose.material.icons.filled.Nature
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,7 +33,7 @@ class SecondTransitionScreen {
     @Composable
     fun ShowScreen(navController: NavController, testViewModel: TestViewModel) {
 
-        var visible = remember { mutableStateOf(true) }
+        val visible = remember { mutableStateOf(testViewModel.visible) }
 
         Box(
             modifier = Modifier
@@ -43,6 +45,7 @@ class SecondTransitionScreen {
                 Button(onClick = {
                     navController.navigate("firstAnimationScreen")
                 }) {
+                    Text(text = "<-")
                     Icon(
                         Icons.Filled.Landscape,
                         "sealed",
@@ -51,13 +54,28 @@ class SecondTransitionScreen {
                             .height(30.dp)
                             .width(30.dp)
                     )
-                    Text(text = "->")
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Button(onClick = { visible.value =  !visible.value}) {
+                Button(onClick = {
+                    testViewModel.visible = !testViewModel.visible
+                }) {
+                    Icon(
+                        Icons.Filled.Nature,
+                        "*",
+                        tint = Color.White,
+                        modifier = Modifier
+                            .height(30.dp)
+                            .width(30.dp)
+                    )
+                    Text(text = "${testViewModel.visible}")
+                }
 
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Button(onClick = { visible.value = !visible.value }) {
+                    Text("clicky ${ visible.value }")
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -66,11 +84,11 @@ class SecondTransitionScreen {
                     visible = visible.value,
                     enter = slideInVertically(
                         initialOffsetY = { -500 },
-                        animationSpec = tween(2000,0)
+                        animationSpec = tween(2000, 0)
                     ) + expandVertically(
                         expandFrom = Alignment.Top
-                    ) + fadeIn(initialAlpha = 0.0f, animationSpec = tween(3000,0)),
-                    exit = fadeOut(targetAlpha = 0f, animationSpec = tween(1000,0))
+                    ) + fadeIn(initialAlpha = 0.0f, animationSpec = tween(3000, 0)),
+                    exit = fadeOut(targetAlpha = 0f, animationSpec = tween(1000, 0))
                 ) {
                     TestingText.CustomStyledText(
                         SampleText.nowIsTheWinter,

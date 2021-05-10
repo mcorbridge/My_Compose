@@ -3,16 +3,16 @@ package com.example.mycompose.transition
 import androidx.compose.animation.*
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import kotlinx.coroutines.delay
 
 class ScreenTransitions {
 
 
     companion object{
+
+
 
         @ExperimentalAnimationApi
         @Composable
@@ -44,7 +44,19 @@ class ScreenTransitions {
 
         @ExperimentalAnimationApi
         @Composable
-        fun ExampleAnimation(content: @Composable () -> Unit) {
+        fun ExampleAnimation(content: @Composable () -> Unit, ) {
+            AnimatedVisibility(
+                visible = true,
+                enter = fadeIn(initialAlpha = 0.1f, animationSpec = tween(1000, 100, easing= LinearEasing)),
+                exit = fadeOut(targetAlpha = 0.5f, animationSpec = tween(1000, 100, easing= LinearEasing)),
+                content = content,
+                initiallyVisible = false
+            )
+        }
+
+        @ExperimentalAnimationApi
+        @Composable
+        fun SampleAnimation(content: @Composable () -> Unit) {
             AnimatedVisibility(
                 visible = true,
                 enter = fadeIn(initialAlpha = 0.1f, animationSpec = tween(1000, 100, easing= LinearEasing)),
