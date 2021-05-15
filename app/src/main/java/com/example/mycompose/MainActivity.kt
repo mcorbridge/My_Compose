@@ -52,6 +52,7 @@ import com.example.mycompose.inlineFun.TestInlineFun
 import com.example.mycompose.layouts.TestRow
 import com.example.mycompose.menu.MenuTwo
 import com.example.mycompose.models.TestViewModel
+import com.example.mycompose.nhl.ShowNHL
 import com.example.mycompose.scaffold.TestScaffold
 import com.example.mycompose.sealed.TestSealedClass
 import com.example.mycompose.sinWave.*
@@ -262,6 +263,12 @@ class MainActivity : AppCompatActivity() {
                     composable("secondAnimationScreen") {
                         ScreenTransitions.ExampleAnimation{
                             SecondAnimationScreen(navController, testViewModel)
+                        }
+                    }
+
+                    composable("nhlScreen") {
+                        ScreenTransitions.ExampleAnimation{
+                            NHLScreen(navController, testViewModel)
                         }
                     }
 
@@ -1312,6 +1319,12 @@ class MainActivity : AppCompatActivity() {
     fun SecondAnimationScreen(navController: NavController, testViewModel: TestViewModel) {
         var secondTransitionScreen = SecondTransitionScreen()
         secondTransitionScreen.ShowScreen(navController, testViewModel)
+    }
+
+    @Composable
+    fun NHLScreen(navController: NavController, testViewModel: TestViewModel) {
+        var showNHL = ShowNHL()
+        showNHL.ShowTeamColor()
     }
 
 } // end class

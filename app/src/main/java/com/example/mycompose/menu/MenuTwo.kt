@@ -309,6 +309,24 @@ class MenuTwo {
                     }
                 }
 
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row{
+                    Button(onClick = {
+                        navController.navigate("nhlScreen")
+                    }) {
+                        Icon(
+                            Icons.Filled.IceSkating,
+                            "NHL",
+                            tint = Color.White,
+                            modifier = Modifier
+                                .height(30.dp)
+                                .width(30.dp)
+                        )
+                        Text(text = "NHL")
+                    }
+                }
+
 
             }
         }
