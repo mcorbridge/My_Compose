@@ -7,215 +7,258 @@ class TeamColors {
     var listTeam: MutableList<TeamColor> = mutableListOf()
 
     val Anaheim: TeamColor = TeamColor(
-        Color(1, 1, 1, 256),
-        Color(181, 152, 90, 256),
-        Color(249, 86, 2, 256),
-        Color(164, 169, 173, 256)
+        "Anaheim",
+        Color(0xFFF47A38),
+        Color(0xFFB9975B),
+        Color(0xFFC1C6C8),
+        Color(0xFF000000)
     )
 
     val Arizona: TeamColor = TeamColor(
-        Color(1, 1, 1, 256),
-        Color(181, 152, 90, 256),
-        Color(249, 86, 2, 256),
+        "Arizona",
+        Color(0xFF8C2633),
+        Color(0xFFE2D6B5),
+        Color(0xFF111111),
     )
 
     val Boston: TeamColor = TeamColor(
-        Color(252, 181, 20, 256),
-        Color(17, 17, 17, 256),
-        Color(255, 255, 255, 256)
+        "Boston",
+        Color(0xFFFFB81C),
+        Color(0xFF000000),
+        Color(0xFFFFFFFF),
     )
 
     val Buffalo: TeamColor = TeamColor(
-        Color(0, 38, 84, 256),
-        Color(252, 181, 20, 256),
-        Color(173, 175, 170, 256)
+        "Buffalo",
+        Color(0xFF002654),
+        Color(0xFFFCB514),
+        Color(0xFFADAFAA),
+        Color(0xFFC8102E),
     )
 
     val Calgary: TeamColor = TeamColor(
-        Color(200, 16, 46, 256),
-        Color(241, 190, 72, 256),
-        Color(17, 17, 17, 256)
+        "Calgary",
+        Color(0xFFC8102E),
+        Color(0xFFF1BE48),
+        Color(0xFF111111),
+        Color(0xFFFFFFFF),
     )
 
     val Carolina: TeamColor = TeamColor(
-        Color(226, 24, 54, 256),
-        Color(35, 31, 32, 256),
-        Color(162, 170, 173, 256),
-        Color(118, 35, 47, 256)
+        "Carolina",
+        Color(0xFFCC0000),
+        Color(0xFF000000),
+        Color(0xFFA2AAAD),
+        Color(0xFF76232F),
     )
 
     val Chicago: TeamColor = TeamColor(
-        Color(207, 10, 44, 256),
-        Color(255, 103, 27, 256),
-        Color(0, 131, 62, 256),
-        Color(255, 209, 0, 256)
+        "Chicago",
+        Color(0xFFCF0A2C),
+        Color(0xFFFF671B),
+        Color(0xFF00833E),
+        Color(0xFFFFD100),
+        Color(0xFFD18A00),
+        Color(0xFF001970),
+        Color(0xFF000000),
+        Color(0xFFFFFFFF),
     )
 
     val Colorado: TeamColor = TeamColor(
-        Color(111, 38, 61, 256),
-        Color(35, 97, 146, 256),
-        Color(162, 170, 173, 256),
-        Color(20, 0, 0, 256)
+        "Colorado",
+        Color(0xFF6F263D),
+        Color(0xFF236192),
+        Color(0xFFA2AAAD),
+        Color(0xFF000000),
+        Color(0xFFFFFFFF),
     )
 
     val Columbus: TeamColor = TeamColor(
-        Color(0, 38, 84, 256),
-        Color(206, 17, 38, 256),
-        Color(164, 169, 173, 256),
+        "Columbus",
+        Color(0xFF002654),
+        Color(0xFFCE1126),
+        Color(0xFFA4A9AD),
+        Color(0xFFFFFFFF),
     )
 
     val Dallas: TeamColor = TeamColor(
-        Color(0, 104, 71, 256),
-        Color(143, 143, 140, 256),
-        Color(17, 17, 17, 256),
+        "Dallas",
+        Color(0xFF006847),
+        Color(0xFF8F8F8C),
+        Color(0xFF111111),
     )
 
     val Detroit: TeamColor = TeamColor(
-        Color(206, 17, 38, 256),
-        Color(255, 255, 255, 256),
+        "Detroit",
+        Color(0xFFCE1126),
+        Color(0xFFFFFFFF),
     )
 
     val Edmonton: TeamColor = TeamColor(
-        Color(4, 30, 66, 256),
-        Color(252, 76, 0, 256),
-        Color(252, 76, 0, 256),
-    )
+        "Edmonton",
+        Color(0xFF041E42),
+        Color(0xFFFF4C00),
+        Color(0xFFFFFFFF),
+        )
 
     val Florida: TeamColor = TeamColor(
-        Color(4, 30, 66, 256),
-        Color(200, 16, 46, 256),
-        Color(185, 151, 91, 256),
+        "Florida",
+        Color(0xFF041E42),
+        Color(0xFFC8102E),
+        Color(0xFFB9975B),
+        Color(0xFFFFFFFF),
     )
 
     val LosAngeles: TeamColor = TeamColor(
-        Color(17, 17, 17, 256),
-        Color(162, 170, 173, 256),
-        Color(255, 255, 255, 256),
+        "LosAngeles",
+        Color(0xFF111111),
+        Color(0xFFA2AAAD),
+        Color(0xFFFFFFFF),
     )
 
     val Minnesota: TeamColor = TeamColor(
-        Color(175, 35, 36, 256),
-        Color(2, 73, 48, 256),
-        Color(237, 170, 0, 256),
-        Color(226, 214, 181, 256)
+        "Minnesota",
+        Color(0xFFA6192E),
+        Color(0xFF154734),
+        Color(0xFFEAAA00),
+        Color(0xFFDDCBA4),
+        Color(0xFFFFFFFF),
     )
 
     val Montreal: TeamColor = TeamColor(
-        Color(175, 30, 45, 256),
-        Color(25, 33, 104, 256),
-        Color(255, 255, 255, 256),
+        "Montreal",
+        Color(0xFFAF1E2D),
+        Color(0xFF192168),
+        Color(0xFFFFFFFF),
     )
 
     val Nashville: TeamColor = TeamColor(
-        Color(255, 184, 28, 256),
-        Color(4, 30, 66, 256),
-        Color(255, 255, 255, 256),
+        "Nashville",
+        Color(0xFFFFB81C),
+        Color(0xFF041E42),
+        Color(0xFFFFFFFF),
     )
 
     val NewJersey: TeamColor = TeamColor(
-        Color(206, 17, 38, 256),
-        Color(0, 0, 0, 256),
-        Color(255, 255, 255, 256),
+        "NewJersey",
+        Color(0xFFCE1126),
+        Color(0xFF000000),
+        Color(0xFFFFFFFF),
     )
 
     val NewYorkIslanders: TeamColor = TeamColor(
-        Color(0, 83, 155, 256),
-        Color(244, 125, 48, 256),
-        Color(255, 255, 255, 256),
+        "NewYorkIslanders",
+        Color(0xFF00539B),
+        Color(0xFFF47D30),
+        Color(0xFFFFFFFF),
     )
 
     val NewYorkRangers: TeamColor = TeamColor(
-        Color(0, 56, 168, 256),
-        Color(206, 17, 38, 256),
-        Color(255, 255, 255, 256),
+        "NewYorkRangers",
+        Color(0xFF0038A8),
+        Color(0xFFCE1126),
+        Color(0xFFFFFFFF),
     )
 
     val Ottawa: TeamColor = TeamColor(
-        Color(197, 32, 50, 256),
-        Color(194, 145, 44, 256),
-        Color(0, 0, 0, 256),
-        Color(255, 255, 255, 256),
+        "Ottawa",
+        Color(0xFFC52032),
+        Color(0xFFC2912C),
+        Color(0xFF000000),
+        Color(0xFFFFFFFF),
     )
 
     val Philadelphia: TeamColor = TeamColor(
-        Color(247, 73, 2, 256),
-        Color(0, 0, 0, 256),
-        Color(255, 255, 255, 256),
+        "Philadelphia",
+        Color(0xFFF74902),
+        Color(0xFF000000),
+        Color(0xFFFFFFFF),
     )
 
     val Pittsburgh: TeamColor = TeamColor(
-        Color(0, 0, 0, 256),
-        Color(207, 196, 147, 256),
-        Color(252, 181, 20, 256),
+        "Pittsburgh",
+        Color(0xFF000000),
+        Color(0xFFCFC493),
+        Color(0xFFFCB514),
+        Color(0xFFFFFFFF),
     )
 
     val StLouis: TeamColor = TeamColor(
-        Color(0, 47, 135, 256),
-        Color(252, 181, 20, 256),
-        Color(4, 30, 66, 256),
-        Color(255, 255, 255, 256)
+        "StLouis",
+        Color(0xFF002F87),
+        Color(0xFFFCB514),
+        Color(0xFF041E42),
+        Color(0xFFFFFFFF),
     )
 
     val SanJose: TeamColor = TeamColor(
-        Color(0, 109, 117, 256),
-        Color(234, 114, 0, 256),
-        Color(0, 0, 0, 256),
-        Color(255, 255, 255, 256)
+        "SanJose",
+        Color(0xFF006D75),
+        Color(0xFFEA7200),
+        Color(0xFF000000),
+        Color(0xFFFFFFFF),
     )
 
     val Seattle: TeamColor = TeamColor(
-        Color(0, 22, 40, 256),
-        Color(153, 217, 217, 256),
-        Color(53, 84, 100, 256),
-        Color(104, 162, 185, 256),
-        Color(233, 7, 43, 256)
+        "Seattle",
+        Color(0xFF001628),
+        Color(0xFF99D9D9),
+        Color(0xFF355464),
+        Color(0xFF68A2B9),
+        Color(0xFFE9072B),
+        Color(0xFFFFFFFF),
     )
 
     val TampaBay: TeamColor = TeamColor(
-        Color(0, 40, 104, 256),
-        Color(255, 255, 255, 256)
+        "TampaBay",
+        Color(0xFF002868),
+        Color(0xFFFFFFFF),
     )
 
     val Toronto: TeamColor = TeamColor(
-        Color(0, 32, 91, 256),
-        Color(255, 255, 255, 256)
+        "Toronto",
+        Color(0xFF00205B),
+        Color(0xFFFFFFFF),
     )
 
     val Vancouver: TeamColor = TeamColor(
-        Color(0, 32, 91, 256),
-        Color(10, 134, 61, 256),
-        Color(4, 28, 44, 256),
-        Color(153, 153, 154, 256),
-        Color(255, 255, 255, 256)
+        "Vancouver",
+        Color(0xFF00205B),
+        Color(0xFF00843D),
+        Color(0xFF041C2C),
+        Color(0xFF99999A),
+        Color(0xFFFFFFFF),
     )
 
     val Vegas: TeamColor = TeamColor(
-        Color(185, 151, 91, 256),
-        Color(51, 63, 72, 256),
-        Color(200, 16, 46, 256),
-        Color(35, 31, 32, 256),
-        Color(255, 255, 255, 256)
-    )
+        "Vegas",
+        Color(0xFFB4975A),
+        Color(0xFF333F42),
+        Color(0xFFC8102E),
+        Color(0xFF000000),
+        Color(0xFFFFFFFF),
+        )
 
     val Washington: TeamColor = TeamColor(
-        Color(4, 30, 66, 256),
-        Color(200, 16, 46, 256),
-        Color(255, 255, 255, 256)
+        "Washington",
+        Color(0xFF041E42),
+        Color(0xFFC8102E),
+        Color(0xFFFFFFFF),
     )
 
     val Winnipeg: TeamColor = TeamColor(
-        Color(4, 30, 66, 256),
-        Color(0, 76, 151, 256),
-        Color(172, 22, 44, 256),
-        Color(123, 48, 62, 256),
-        Color(85, 86, 90, 256),
-        Color(142, 144, 144, 256),
-        Color(255, 255, 255, 256)
+        "Winnipeg",
+        Color(0xFF041E42),
+        Color(0xFF004C97),
+        Color(0xFFAC162C),
+        Color(0xFF7B303E),
+        Color(0xFF55565A),
+        Color(0xFF8E9090),
+        Color(0xFFFFFFFF),
     )
 
 
     fun setTeams() {
-
         listTeam.add(Anaheim)
         listTeam.add(Arizona)
         listTeam.add(Boston)
@@ -254,11 +297,13 @@ class TeamColors {
 }
 
 data class TeamColor(
+    val name:String,
     val primaryColor: Color,
     val secondaryColor: Color,
     val tertiaryColor: Color? = null,
     val quaternaryColor: Color? = null,
     val quinaryColor: Color? = null,
     val senaryColor: Color? = null,
-    val septaryColor: Color? = null,
+    val septenaryColor: Color? = null,
+    val octenaryColor: Color? = null,
 )

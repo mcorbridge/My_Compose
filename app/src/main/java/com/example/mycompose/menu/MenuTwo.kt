@@ -307,11 +307,9 @@ class MenuTwo {
                         )
                         Text(text = "<-")
                     }
-                }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.width(16.dp))
 
-                Row{
                     Button(onClick = {
                         navController.navigate("nhlScreen")
                     }) {
@@ -325,6 +323,12 @@ class MenuTwo {
                         )
                         Text(text = "NHL")
                     }
+                }
+
+
+
+                Row{
+
                 }
 
 
