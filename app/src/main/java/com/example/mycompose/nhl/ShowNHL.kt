@@ -1,20 +1,29 @@
 package com.example.mycompose.nhl
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.mycompose.R
 
 
 class ShowNHL {
+
+
+    var teamName: String = ""
 
 
     @Composable
@@ -129,6 +138,9 @@ class ShowNHL {
                         //callback
                         if (it.name == team.replace("Las", "").replace(" ", "").replace(".", "")) {
 
+                            // place currently selected team into class scope
+                            teamName = it.name
+
                             arrColors.add(it.primaryColor) // team MUST have a primary color
                             arrColors.add(it.secondaryColor) // team MUST have a secondary color
 
@@ -180,7 +192,42 @@ class ShowNHL {
         octenaryColor: Color,
     ) {
 
-        Column(modifier = Modifier.padding(4.dp)){
+        val listTeamLogo: List<Int> = listOf(
+                            R.drawable.ana_d,//        "Anaheim",
+                            R.drawable.ari_d,//        "Arizona",
+                            R.drawable.bos_d,//        "Boston",
+                            R.drawable.buf_d,//        "Buffalo",
+                            R.drawable.cgy_d,//        "Calgary",
+                            R.drawable.car_d,//        "Carolina",
+                            R.drawable.chi_d,//        "Chicago",
+                            R.drawable.col_d,//        "Colorado",
+                            R.drawable.cbj_d,//        "Columbus",
+                            R.drawable.dal_d,//        "Dallas",
+                            R.drawable.det_d,//        "Detroit",
+                            R.drawable.edm_d,//        "Edmonton",
+                            R.drawable.fla_d,//        "Florida",
+                            R.drawable.lak_d,//        "Los Angeles",
+                            R.drawable.min_d,//        "Minnesota",
+                            R.drawable.mtl_l,//        "Montreal",
+                            R.drawable.nsh_d,//        "Nashville",
+                            R.drawable.njd_d,//        "New Jersey",
+                            R.drawable.nyi_d,//        "New York Islanders",
+                            R.drawable.nyr_d,//        "New York Rangers",
+                            R.drawable.ott_d,//        "Ottawa",
+                            R.drawable.phi_d,//        "Philadelphia",
+                            R.drawable.pit_d,//        "Pittsburgh",
+                            R.drawable.stl_l,//        "St. Louis",
+                            R.drawable.sjs_d,//        "San Jose",
+                            R.drawable.sea,//        "Seattle",
+                            R.drawable.tbl_l,//        "Tampa Bay",
+                            R.drawable.tor_l,//        "Toronto",
+                            R.drawable.van_l,//        "Vancouver",
+                            R.drawable.vgk_l,//        "Las Vegas",
+                            R.drawable.wsh_l,//        "Washington",
+                            R.drawable.wpg_l,//        "Winnipeg",
+        )
+
+        Column(modifier = Modifier.padding(4.dp)) {
             if (primaryColor != Color.Transparent) {
                 Box(
                     modifier = Modifier
@@ -284,8 +331,64 @@ class ShowNHL {
                     Text("")
                 }
             }
+
+            when (teamName) {
+                "Anaheim" -> TeamLogo(listTeamLogo[0])
+                "Arizona" -> TeamLogo(listTeamLogo[1])
+                "Boston" -> TeamLogo(listTeamLogo[2])
+                "Buffalo" -> TeamLogo(listTeamLogo[3])
+                "Calgary" -> TeamLogo(listTeamLogo[4])
+                "Carolina" -> TeamLogo(listTeamLogo[5])
+                "Chicago" -> TeamLogo(listTeamLogo[6])
+                "Colorado" -> TeamLogo(listTeamLogo[7])
+                "Columbus" -> TeamLogo(listTeamLogo[8])
+                "Dallas" -> TeamLogo(listTeamLogo[9])
+                "Detroit" -> TeamLogo(listTeamLogo[10])
+                "Edmonton" -> TeamLogo(listTeamLogo[11])
+                "Florida" -> TeamLogo(listTeamLogo[12])
+                "LosAngeles" -> TeamLogo(listTeamLogo[13])
+                "Minnesota" -> TeamLogo(listTeamLogo[14])
+                "Montreal" -> TeamLogo(listTeamLogo[15])
+                "Nashville" -> TeamLogo(listTeamLogo[16])
+                "NewJersey" -> TeamLogo(listTeamLogo[17])
+                "NewYorkIslanders" -> TeamLogo(listTeamLogo[18])
+                "NewYorkRangers" -> TeamLogo(listTeamLogo[19])
+                "Ottawa" -> TeamLogo(listTeamLogo[20])
+                "Philadelphia" -> TeamLogo(listTeamLogo[21])
+                "Pittsburgh" -> TeamLogo(listTeamLogo[22])
+                "StLouis" -> TeamLogo(listTeamLogo[23])
+                "SanJose" -> TeamLogo(listTeamLogo[24])
+                "Seattle" -> TeamLogo(listTeamLogo[25])
+                "TampaBay" -> TeamLogo(listTeamLogo[26])
+                "Toronto" -> TeamLogo(listTeamLogo[27])
+                "Vancouver" -> TeamLogo(listTeamLogo[28])
+                "Vegas" -> TeamLogo(listTeamLogo[29])
+                "Washington" -> TeamLogo(listTeamLogo[30])
+                "Winnipeg" -> TeamLogo(listTeamLogo[31])
+            }
+
         }
 
+    }
+
+    @Composable
+    fun TeamLogo(drawable: Int) {
+        Box(
+            modifier = Modifier
+                .height(100.dp)
+                .width(100.dp)
+        ) {
+            Image(
+                painterResource(drawable),
+                contentDescription = "Leafs",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .size(64.dp)
+                    .clip(CircleShape)                       // clip to the circle shape
+                    .border(5.dp, Color.Black, CircleShape)
+            )
+        }
     }
 
 
