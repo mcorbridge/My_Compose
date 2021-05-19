@@ -6,7 +6,11 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.QuestionAnswer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,12 +22,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.mycompose.R
+import com.example.mycompose.icons.TestIcons
 
 
 class ShowNHL {
 
 
     var teamName: String = ""
+    var isClicked = false
 
 
     @Composable
@@ -42,6 +48,8 @@ class ShowNHL {
         Row {
 
             ShowTeamList {
+
+                println("||||||||||||||||||||||||||||||||||||| I just clicked a team")
 
                 // reset all colors to transparent
                 primaryColor.value = Color.Transparent
@@ -131,6 +139,8 @@ class ShowNHL {
 
                 TeamItem(team) {
 
+                    println("================================== team $team was clicked")
+
                     val arrColors: MutableList<Color> = mutableListOf()
 
                     teamColors.listTeam.forEach {
@@ -176,7 +186,10 @@ class ShowNHL {
     @Composable
     fun TeamItem(team: String, callback: () -> Unit) {
         Column(modifier = Modifier.padding(1.dp)) {
-            Text(team, modifier = Modifier.clickable { callback() })
+            Text(team, modifier = Modifier.clickable {
+                println("----------------------------------- team $team was clicked")
+                callback()
+            })
         }
     }
 
@@ -191,6 +204,8 @@ class ShowNHL {
         septenaryColor: Color,
         octenaryColor: Color,
     ) {
+
+        val isClicked = remember { mutableStateOf(false)}
 
         val listTeamLogo: List<Int> = listOf(
                             R.drawable.ana_d,//        "Anaheim",
@@ -332,43 +347,50 @@ class ShowNHL {
                 }
             }
 
-            when (teamName) {
-                "Anaheim" -> TeamLogo(listTeamLogo[0])
-                "Arizona" -> TeamLogo(listTeamLogo[1])
-                "Boston" -> TeamLogo(listTeamLogo[2])
-                "Buffalo" -> TeamLogo(listTeamLogo[3])
-                "Calgary" -> TeamLogo(listTeamLogo[4])
-                "Carolina" -> TeamLogo(listTeamLogo[5])
-                "Chicago" -> TeamLogo(listTeamLogo[6])
-                "Colorado" -> TeamLogo(listTeamLogo[7])
-                "Columbus" -> TeamLogo(listTeamLogo[8])
-                "Dallas" -> TeamLogo(listTeamLogo[9])
-                "Detroit" -> TeamLogo(listTeamLogo[10])
-                "Edmonton" -> TeamLogo(listTeamLogo[11])
-                "Florida" -> TeamLogo(listTeamLogo[12])
-                "LosAngeles" -> TeamLogo(listTeamLogo[13])
-                "Minnesota" -> TeamLogo(listTeamLogo[14])
-                "Montreal" -> TeamLogo(listTeamLogo[15])
-                "Nashville" -> TeamLogo(listTeamLogo[16])
-                "NewJersey" -> TeamLogo(listTeamLogo[17])
-                "NewYorkIslanders" -> TeamLogo(listTeamLogo[18])
-                "NewYorkRangers" -> TeamLogo(listTeamLogo[19])
-                "Ottawa" -> TeamLogo(listTeamLogo[20])
-                "Philadelphia" -> TeamLogo(listTeamLogo[21])
-                "Pittsburgh" -> TeamLogo(listTeamLogo[22])
-                "StLouis" -> TeamLogo(listTeamLogo[23])
-                "SanJose" -> TeamLogo(listTeamLogo[24])
-                "Seattle" -> TeamLogo(listTeamLogo[25])
-                "TampaBay" -> TeamLogo(listTeamLogo[26])
-                "Toronto" -> TeamLogo(listTeamLogo[27])
-                "Vancouver" -> TeamLogo(listTeamLogo[28])
-                "Vegas" -> TeamLogo(listTeamLogo[29])
-                "Washington" -> TeamLogo(listTeamLogo[30])
-                "Winnipeg" -> TeamLogo(listTeamLogo[31])
+            if(!isClicked.value){
+                Icon(
+                    Icons.Filled.QuestionAnswer, "menu", tint = Color.Black,
+                    modifier = Modifier
+                        .height(50.dp)
+                        .width(50.dp)
+                        .clickable { isClicked.value = true })
+            }else{
+                when (teamName) {
+                    "Anaheim" -> TeamLogo(listTeamLogo[0])
+                    "Arizona" -> TeamLogo(listTeamLogo[1])
+                    "Boston" -> TeamLogo(listTeamLogo[2])
+                    "Buffalo" -> TeamLogo(listTeamLogo[3])
+                    "Calgary" -> TeamLogo(listTeamLogo[4])
+                    "Carolina" -> TeamLogo(listTeamLogo[5])
+                    "Chicago" -> TeamLogo(listTeamLogo[6])
+                    "Colorado" -> TeamLogo(listTeamLogo[7])
+                    "Columbus" -> TeamLogo(listTeamLogo[8])
+                    "Dallas" -> TeamLogo(listTeamLogo[9])
+                    "Detroit" -> TeamLogo(listTeamLogo[10])
+                    "Edmonton" -> TeamLogo(listTeamLogo[11])
+                    "Florida" -> TeamLogo(listTeamLogo[12])
+                    "LosAngeles" -> TeamLogo(listTeamLogo[13])
+                    "Minnesota" -> TeamLogo(listTeamLogo[14])
+                    "Montreal" -> TeamLogo(listTeamLogo[15])
+                    "Nashville" -> TeamLogo(listTeamLogo[16])
+                    "NewJersey" -> TeamLogo(listTeamLogo[17])
+                    "NewYorkIslanders" -> TeamLogo(listTeamLogo[18])
+                    "NewYorkRangers" -> TeamLogo(listTeamLogo[19])
+                    "Ottawa" -> TeamLogo(listTeamLogo[20])
+                    "Philadelphia" -> TeamLogo(listTeamLogo[21])
+                    "Pittsburgh" -> TeamLogo(listTeamLogo[22])
+                    "StLouis" -> TeamLogo(listTeamLogo[23])
+                    "SanJose" -> TeamLogo(listTeamLogo[24])
+                    "Seattle" -> TeamLogo(listTeamLogo[25])
+                    "TampaBay" -> TeamLogo(listTeamLogo[26])
+                    "Toronto" -> TeamLogo(listTeamLogo[27])
+                    "Vancouver" -> TeamLogo(listTeamLogo[28])
+                    "Vegas" -> TeamLogo(listTeamLogo[29])
+                    "Washington" -> TeamLogo(listTeamLogo[30])
+                    "Winnipeg" -> TeamLogo(listTeamLogo[31])
+                }
             }
-
         }
-
     }
 
     @Composable
