@@ -6,14 +6,14 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.QuestionAnswer
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -27,13 +27,10 @@ import com.example.mycompose.icons.TestIcons
 
 class ShowNHL {
 
-
     var teamName: String = ""
-    var isClicked = false
-
 
     @Composable
-    fun ShowTeamColor() {
+    fun MainNHL() {
 
         val primaryColor = remember { mutableStateOf(Color.Transparent) }
         val secondaryColor = remember { mutableStateOf(Color.Transparent) }
@@ -44,12 +41,37 @@ class ShowNHL {
         val septenaryColor = remember { mutableStateOf(Color.Transparent) }
         val octenaryColor = remember { mutableStateOf(Color.Transparent) }
 
+        var showTeamLogo by remember { mutableStateOf(false) }
+
+
 
         Row {
 
+            TeamFoo {
+                showTeamLogo = it // passed BACK from Composable
+            }
+
+            if(showTeamLogo){
+                TeamBar(Color.Black) {
+                    println("!TeamBar! $showTeamLogo <========================")
+                }
+            }else{
+                TeamBar(Color.Red) {
+                    println("!TeamBar! $showTeamLogo <========================")
+                }
+            }
+
+            TeamXit(showTeamLogo) // var *remember* passed TO composable
+            TeamXit(showTeamLogo) // var *remember* passed TO composable
+            TeamXit(showTeamLogo) // var *remember* passed TO composable
+
             ShowTeamList {
 
-                println("||||||||||||||||||||||||||||||||||||| I just clicked a team")
+                if(showTeamLogo){
+                    println("!!!!!!!!!!!!!!!!!!!!!! FOO !!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                }else{
+                    println("no no no no no no no no no no no FOO no no no no no no no no no no no")
+                }
 
                 // reset all colors to transparent
                 primaryColor.value = Color.Transparent
@@ -79,7 +101,7 @@ class ShowNHL {
 
 
             // yeah, yeah .... this should probably be a List
-            TeamColors(
+            BarTeamColors(
                 primaryColor.value,
                 secondaryColor.value,
                 tertiaryColor.value,
@@ -194,7 +216,7 @@ class ShowNHL {
     }
 
     @Composable
-    fun TeamColors(
+    fun BarTeamColors(
         primaryColor: Color,
         secondaryColor: Color,
         tertiaryColor: Color,
@@ -205,10 +227,9 @@ class ShowNHL {
         octenaryColor: Color,
     ) {
 
-        val isClicked = remember { mutableStateOf(false)}
+        var isShowLogo by remember { mutableStateOf(false)}
 
         val listTeamLogo: List<Int> = listOf(
-                            R.drawable.ana_d,//        "Anaheim",
                             R.drawable.ari_d,//        "Arizona",
                             R.drawable.bos_d,//        "Boston",
                             R.drawable.buf_d,//        "Buffalo",
@@ -347,13 +368,13 @@ class ShowNHL {
                 }
             }
 
-            if(!isClicked.value){
+            if(!isShowLogo){
                 Icon(
                     Icons.Filled.QuestionAnswer, "menu", tint = Color.Black,
                     modifier = Modifier
                         .height(50.dp)
                         .width(50.dp)
-                        .clickable { isClicked.value = true })
+                        .clickable { isShowLogo = !isShowLogo })
             }else{
                 when (teamName) {
                     "Anaheim" -> TeamLogo(listTeamLogo[0])
@@ -413,5 +434,40 @@ class ShowNHL {
         }
     }
 
+    //Hoisting...
+    // this Composable will set a *remember* var in the parent Composable
+    // basically... this is how we get Composables to communicate with each other
+    // through a callback
+    @Composable
+    fun TeamFoo(callback: (Boolean) -> Unit) {
 
+        Column{
+            Button(onClick = {
+                callback(true)
+            }) {
+                Text("true")
+            }
+
+            Button(onClick = {
+                callback(false)
+            }) {
+                Text("false")
+            }
+        }
+    }
+
+    @Composable
+    fun TeamBar(color:Color, callback: () -> Unit) {
+        Box(modifier = Modifier.height(10.dp).width(10.dp).background(color= color))
+        callback()
+    }
+
+    @Composable
+    fun TeamXit(showTeam:Boolean) {
+        if(showTeam){
+            Box(modifier = Modifier.height(10.dp).width(10.dp).background(color= Color.Green))
+        }else{
+            Box(modifier = Modifier.height(10.dp).width(10.dp).background(color= Color.Blue))
+        }
+    }
 }
