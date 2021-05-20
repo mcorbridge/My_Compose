@@ -1324,7 +1324,7 @@ class MainActivity : AppCompatActivity() {
     @Composable
     fun NHLScreen(navController: NavController, testViewModel: TestViewModel) {
         var showNHL = ShowNHL()
-        showNHL.ShowTeamColor()
+        showNHL.MainNHL()
     }
 
 } // end class
