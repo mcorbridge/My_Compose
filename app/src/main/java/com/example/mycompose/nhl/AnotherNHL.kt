@@ -30,8 +30,11 @@ class AnotherNHL {
         var showTeamColors by remember { mutableStateOf(false) }
         var teamLogo by remember { mutableStateOf(0) }
         var currentTeam by remember { mutableStateOf(teamData[0]) }
+        var isInit by remember { mutableStateOf(true)}
 
         fun doShowTeamLogo() {
+            if(isInit) // if user clicks on '?' before selecting a team
+                return
             showTeamLogo = !showTeamLogo
         }
 
@@ -41,6 +44,7 @@ class AnotherNHL {
                 teamData.forEach { team ->
                     // team item onClick
                     TeamItem(team.displayName) {
+                        isInit = false
                         currentTeam = team
                         showTeamColors = true
                         teamLogo = team.logo
@@ -65,7 +69,7 @@ class AnotherNHL {
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.Black,
                         modifier = Modifier.clickable {
-                            doShowTeamLogo()
+                            doShowTeamLogo() // on '?' click
                         })
                 }
             }
