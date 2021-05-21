@@ -1,6 +1,7 @@
 package com.example.mycompose.nhl
 
 import androidx.compose.ui.graphics.Color
+import com.example.mycompose.R
 
 class TeamColors {
 
@@ -8,6 +9,8 @@ class TeamColors {
 
     val Anaheim: TeamColor = TeamColor(
         "Anaheim",
+        "Anaheim Ducks",
+        R.drawable.ana_d,
         Color(0xFFF47A38),
         Color(0xFFB9975B),
         Color(0xFFC1C6C8),
@@ -16,6 +19,8 @@ class TeamColors {
 
     val Arizona: TeamColor = TeamColor(
         "Arizona",
+        "Arizona Coyotes",
+        R.drawable.ari_d,
         Color(0xFF8C2633),
         Color(0xFFE2D6B5),
         Color(0xFF111111),
@@ -23,6 +28,8 @@ class TeamColors {
 
     val Boston: TeamColor = TeamColor(
         "Boston",
+        "Boston Bruins",
+        R.drawable.bos_d,
         Color(0xFFFFB81C),
         Color(0xFF000000),
         Color(0xFFFFFFFF),
@@ -30,6 +37,8 @@ class TeamColors {
 
     val Buffalo: TeamColor = TeamColor(
         "Buffalo",
+        "Buffalo Sabres",
+        R.drawable.buf_d,
         Color(0xFF002654),
         Color(0xFFFCB514),
         Color(0xFFADAFAA),
@@ -38,6 +47,8 @@ class TeamColors {
 
     val Calgary: TeamColor = TeamColor(
         "Calgary",
+        "Calgary Flames",
+        R.drawable.cgy_d,
         Color(0xFFC8102E),
         Color(0xFFF1BE48),
         Color(0xFF111111),
@@ -46,6 +57,8 @@ class TeamColors {
 
     val Carolina: TeamColor = TeamColor(
         "Carolina",
+        "Carolina Hurricanes",
+        R.drawable.car_d,
         Color(0xFFCC0000),
         Color(0xFF000000),
         Color(0xFFA2AAAD),
@@ -54,6 +67,8 @@ class TeamColors {
 
     val Chicago: TeamColor = TeamColor(
         "Chicago",
+        "Chicago Black Hawks",
+        R.drawable.chi_d,
         Color(0xFFCF0A2C),
         Color(0xFFFF671B),
         Color(0xFF00833E),
@@ -66,6 +81,8 @@ class TeamColors {
 
     val Colorado: TeamColor = TeamColor(
         "Colorado",
+        "Colorado Avalanche",
+        R.drawable.col_d,
         Color(0xFF6F263D),
         Color(0xFF236192),
         Color(0xFFA2AAAD),
@@ -75,6 +92,8 @@ class TeamColors {
 
     val Columbus: TeamColor = TeamColor(
         "Columbus",
+        "Columbus Blue Jackets",
+        R.drawable.cbj_d,
         Color(0xFF002654),
         Color(0xFFCE1126),
         Color(0xFFA4A9AD),
@@ -83,6 +102,8 @@ class TeamColors {
 
     val Dallas: TeamColor = TeamColor(
         "Dallas",
+        "Dallas Stars",
+        R.drawable.dal_d,
         Color(0xFF006847),
         Color(0xFF8F8F8C),
         Color(0xFF111111),
@@ -90,12 +111,16 @@ class TeamColors {
 
     val Detroit: TeamColor = TeamColor(
         "Detroit",
+        "Detroit Red Wings",
+        R.drawable.det_d,
         Color(0xFFCE1126),
         Color(0xFFFFFFFF),
     )
 
     val Edmonton: TeamColor = TeamColor(
         "Edmonton",
+        "Edmonton Oilers",
+        R.drawable.edm_d,
         Color(0xFF041E42),
         Color(0xFFFF4C00),
         Color(0xFFFFFFFF),
@@ -103,6 +128,8 @@ class TeamColors {
 
     val Florida: TeamColor = TeamColor(
         "Florida",
+        "Florida Panthers",
+        R.drawable.fla_d,
         Color(0xFF041E42),
         Color(0xFFC8102E),
         Color(0xFFB9975B),
@@ -111,6 +138,8 @@ class TeamColors {
 
     val LosAngeles: TeamColor = TeamColor(
         "LosAngeles",
+        "Los Angeles Kings",
+        R.drawable.lak_d,
         Color(0xFF111111),
         Color(0xFFA2AAAD),
         Color(0xFFFFFFFF),
@@ -118,6 +147,8 @@ class TeamColors {
 
     val Minnesota: TeamColor = TeamColor(
         "Minnesota",
+        "Minnesota Wild",
+        R.drawable.min_d,
         Color(0xFFA6192E),
         Color(0xFF154734),
         Color(0xFFEAAA00),
@@ -127,6 +158,8 @@ class TeamColors {
 
     val Montreal: TeamColor = TeamColor(
         "Montreal",
+        "Montreal Canadiens",
+        R.drawable.mtl_l,
         Color(0xFFAF1E2D),
         Color(0xFF192168),
         Color(0xFFFFFFFF),
@@ -134,6 +167,8 @@ class TeamColors {
 
     val Nashville: TeamColor = TeamColor(
         "Nashville",
+        "Nashville Predators",
+        R.drawable.nsh_d,
         Color(0xFFFFB81C),
         Color(0xFF041E42),
         Color(0xFFFFFFFF),
@@ -141,6 +176,8 @@ class TeamColors {
 
     val NewJersey: TeamColor = TeamColor(
         "NewJersey",
+        "New Jersey Devils",
+        R.drawable.njd_d,
         Color(0xFFCE1126),
         Color(0xFF000000),
         Color(0xFFFFFFFF),
@@ -148,6 +185,8 @@ class TeamColors {
 
     val NewYorkIslanders: TeamColor = TeamColor(
         "NewYorkIslanders",
+        "New York Islanders",
+        R.drawable.nyi_d,
         Color(0xFF00539B),
         Color(0xFFF47D30),
         Color(0xFFFFFFFF),
@@ -155,6 +194,8 @@ class TeamColors {
 
     val NewYorkRangers: TeamColor = TeamColor(
         "NewYorkRangers",
+        "New York Rangers",
+        R.drawable.nyr_d,
         Color(0xFF0038A8),
         Color(0xFFCE1126),
         Color(0xFFFFFFFF),
@@ -162,6 +203,8 @@ class TeamColors {
 
     val Ottawa: TeamColor = TeamColor(
         "Ottawa",
+        "Ottawa Senators",
+        R.drawable.ott_d,
         Color(0xFFC52032),
         Color(0xFFC2912C),
         Color(0xFF000000),
@@ -170,6 +213,8 @@ class TeamColors {
 
     val Philadelphia: TeamColor = TeamColor(
         "Philadelphia",
+        "Philadelphia Flyers",
+        R.drawable.phi_d,
         Color(0xFFF74902),
         Color(0xFF000000),
         Color(0xFFFFFFFF),
@@ -177,6 +222,8 @@ class TeamColors {
 
     val Pittsburgh: TeamColor = TeamColor(
         "Pittsburgh",
+        "Pittsburgh Penguins",
+        R.drawable.pit_d,
         Color(0xFF000000),
         Color(0xFFCFC493),
         Color(0xFFFCB514),
@@ -185,6 +232,8 @@ class TeamColors {
 
     val StLouis: TeamColor = TeamColor(
         "StLouis",
+        "St. Louis Blues",
+        R.drawable.stl_l,
         Color(0xFF002F87),
         Color(0xFFFCB514),
         Color(0xFF041E42),
@@ -193,6 +242,8 @@ class TeamColors {
 
     val SanJose: TeamColor = TeamColor(
         "SanJose",
+        "San Jose Sharks",
+        R.drawable.sjs_d,
         Color(0xFF006D75),
         Color(0xFFEA7200),
         Color(0xFF000000),
@@ -201,6 +252,8 @@ class TeamColors {
 
     val Seattle: TeamColor = TeamColor(
         "Seattle",
+        "Seattle Kraken",
+        R.drawable.sea,
         Color(0xFF001628),
         Color(0xFF99D9D9),
         Color(0xFF355464),
@@ -211,18 +264,24 @@ class TeamColors {
 
     val TampaBay: TeamColor = TeamColor(
         "TampaBay",
+        "Tampa Bay Lightning",
+        R.drawable.tbl_l,
         Color(0xFF002868),
         Color(0xFFFFFFFF),
     )
 
     val Toronto: TeamColor = TeamColor(
         "Toronto",
+        "Toronto Maple Leafs",
+        R.drawable.tor_l,
         Color(0xFF00205B),
         Color(0xFFFFFFFF),
     )
 
     val Vancouver: TeamColor = TeamColor(
         "Vancouver",
+        "Vancouver Canucks",
+        R.drawable.van_l,
         Color(0xFF00205B),
         Color(0xFF00843D),
         Color(0xFF041C2C),
@@ -232,6 +291,8 @@ class TeamColors {
 
     val Vegas: TeamColor = TeamColor(
         "Vegas",
+        "Las Vegas Golden Knights",
+        R.drawable.vgk_l,
         Color(0xFFB4975A),
         Color(0xFF333F42),
         Color(0xFFC8102E),
@@ -241,6 +302,8 @@ class TeamColors {
 
     val Washington: TeamColor = TeamColor(
         "Washington",
+        "Washington Capitals",
+        R.drawable.wsh_l,
         Color(0xFF041E42),
         Color(0xFFC8102E),
         Color(0xFFFFFFFF),
@@ -248,6 +311,8 @@ class TeamColors {
 
     val Winnipeg: TeamColor = TeamColor(
         "Winnipeg",
+        "Winnipeg Jets",
+        R.drawable.wpg_l,
         Color(0xFF041E42),
         Color(0xFF004C97),
         Color(0xFFAC162C),
@@ -297,7 +362,9 @@ class TeamColors {
 }
 
 data class TeamColor(
-    val name:String,
+    val primaryName:String,
+    val displayName: String,
+    val logo:Int,
     val primaryColor: Color,
     val secondaryColor: Color,
     val tertiaryColor: Color? = null,

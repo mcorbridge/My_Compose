@@ -52,6 +52,7 @@ import com.example.mycompose.inlineFun.TestInlineFun
 import com.example.mycompose.layouts.TestRow
 import com.example.mycompose.menu.MenuTwo
 import com.example.mycompose.models.TestViewModel
+import com.example.mycompose.nhl.AnotherNHL
 import com.example.mycompose.nhl.ShowNHL
 import com.example.mycompose.scaffold.TestScaffold
 import com.example.mycompose.sealed.TestSealedClass
@@ -1323,8 +1324,10 @@ class MainActivity : AppCompatActivity() {
 
     @Composable
     fun NHLScreen(navController: NavController, testViewModel: TestViewModel) {
-        var showNHL = ShowNHL()
-        showNHL.MainNHL()
+        var anotherNHL = AnotherNHL()
+        anotherNHL.ThisTest()
+//        var showNHL = ShowNHL()
+//        showNHL.MainNHL()
     }
 
 } // end class

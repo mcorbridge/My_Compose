@@ -44,26 +44,22 @@ class ShowNHL {
         var showTeamLogo by remember { mutableStateOf(false) }
 
 
-
         Row {
 
-            TeamFoo {
-                showTeamLogo = it // passed BACK from Composable
-            }
-
-            if(showTeamLogo){
-                TeamBar(Color.Black) {
-                    println("!TeamBar! $showTeamLogo <========================")
-                }
-            }else{
-                TeamBar(Color.Red) {
-                    println("!TeamBar! $showTeamLogo <========================")
-                }
-            }
-
-            TeamXit(showTeamLogo) // var *remember* passed TO composable
-            TeamXit(showTeamLogo) // var *remember* passed TO composable
-            TeamXit(showTeamLogo) // var *remember* passed TO composable
+//            TeamFoo {
+//                showTeamLogo = it // passed BACK from Composable - everybody sees the change
+//            }
+//
+//            if(showTeamLogo) TeamBar(Color.Black){
+//                println("!!!!!!!!!!!!Black!!!!!!!!!! $showTeamLogo !!!!!!!!!!!!!!!!!!!!!!!!!!!")
+//            } else TeamBar(Color.Red){
+//                println("!!!!!!!!!!!!Red!!!!!!!!!! $showTeamLogo !!!!!!!!!!!!!!!!!!!!!!!!!!!")
+//            }
+//
+//
+//            TeamXit(showTeamLogo) // var showTeamLogo by *remember* passed TO composable
+//            TeamXit(showTeamLogo) // var showTeamLogo by *remember* passed TO composable
+//            TeamXit(showTeamLogo) // var showTeamLogo by *remember* passed TO composable
 
             ShowTeamList {
 
@@ -168,10 +164,10 @@ class ShowNHL {
                     teamColors.listTeam.forEach {
 
                         //callback
-                        if (it.name == team.replace("Las", "").replace(" ", "").replace(".", "")) {
+                        if (it.primaryName == team.replace("Las", "").replace(" ", "").replace(".", "")) {
 
                             // place currently selected team into class scope
-                            teamName = it.name
+                            teamName = it.primaryName
 
                             arrColors.add(it.primaryColor) // team MUST have a primary color
                             arrColors.add(it.secondaryColor) // team MUST have a secondary color
@@ -423,18 +419,18 @@ class ShowNHL {
         ) {
             Image(
                 painterResource(drawable),
-                contentDescription = "Leafs",
+                contentDescription = "nhLogo",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxSize()
-                    .size(64.dp)
+                    .size(100.dp)
                     .clip(CircleShape)                       // clip to the circle shape
-                    .border(5.dp, Color.Black, CircleShape)
+                    .border(1.dp, Color.Black, CircleShape)
             )
         }
     }
 
-    //Hoisting...
+    // Hoisting...
     // this Composable will set a *remember* var in the parent Composable
     // basically... this is how we get Composables to communicate with each other
     // through a callback
@@ -463,11 +459,11 @@ class ShowNHL {
     }
 
     @Composable
-    fun TeamXit(showTeam:Boolean) {
-        if(showTeam){
-            Box(modifier = Modifier.height(10.dp).width(10.dp).background(color= Color.Green))
+    fun TeamXit(doChange:Boolean) {
+        if(doChange){
+            Box(modifier = Modifier.height(5.dp).width(5.dp).background(color= Color.Green))
         }else{
-            Box(modifier = Modifier.height(10.dp).width(10.dp).background(color= Color.Blue))
+            Box(modifier = Modifier.height(5.dp).width(5.dp).background(color= Color.Blue))
         }
     }
 }
