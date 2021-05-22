@@ -30,7 +30,7 @@ class TestTransition {
         val testAnimatedVisibility = TestAnimatedVisibility()
         testAnimatedVisibility.RunTransition()
 
-        return
+        //return
 
         deviceWidth =  testViewModel.getScreenDims().first.dp
         deviceHeight =  testViewModel.getScreenDims().second.dp

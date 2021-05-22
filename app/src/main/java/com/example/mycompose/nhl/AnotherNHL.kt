@@ -23,13 +23,13 @@ class AnotherNHL {
     @Composable
     fun ThisTest() {
 
-        val nhlTeamData = NHLTeamData()
-        nhlTeamData.setTeams()
-        val teamData = nhlTeamData.listTeam
+        //val nhlTeamData = NHLTeamData()
+        //nhlTeamData.setTeams()
+        //val teamData = nhlTeamData.listTeam
         var showTeamLogo by remember { mutableStateOf(false) }
         var showTeamColors by remember { mutableStateOf(false) }
         var teamLogo by remember { mutableStateOf(0) }
-        var currentTeam by remember { mutableStateOf(teamData[0]) }
+        var currentTeam by remember { mutableStateOf(NHLData.ANAHEIM) }
         var isInit by remember { mutableStateOf(true)}
 
         fun doShowTeamLogo() {
@@ -41,22 +41,23 @@ class AnotherNHL {
         Row {
 
             Column {
-                teamData.forEach { team ->
-                    // team item onClick
-                    TeamItem(team.displayName) {
+                NHLData.values().forEach { team ->
+
+                    TeamItem(team.teamData.displayName) { // team item 'onClick'
                         isInit = false
                         currentTeam = team
                         showTeamColors = true
-                        teamLogo = team.logo
+                        teamLogo = team.teamData.logo
                         showTeamLogo = false
                     }
+
                 }
             }
 
             Column {
 
                 if (showTeamColors) {
-                    ShowTeamColors(currentTeam)
+                    ShowTeamColors(currentTeam.teamData)
                 }
 
                 if (showTeamLogo) {
