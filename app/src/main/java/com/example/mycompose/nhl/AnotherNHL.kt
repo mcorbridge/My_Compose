@@ -23,15 +23,16 @@ class AnotherNHL {
     @Composable
     fun ThisTest() {
 
-        //val nhlTeamData = NHLTeamData()
-        //nhlTeamData.setTeams()
-        //val teamData = nhlTeamData.listTeam
         var showTeamLogo by remember { mutableStateOf(false) }
         var showTeamColors by remember { mutableStateOf(false) }
         var teamLogo by remember { mutableStateOf(0) }
         var currentTeam by remember { mutableStateOf(NHLData.ANAHEIM) }
         var isInit by remember { mutableStateOf(true)}
 
+        /**
+         * nested function
+         * toggle the team logo : logo -> '?'
+         */
         fun doShowTeamLogo() {
             if(isInit) // if user clicks on '?' before selecting a team
                 return
@@ -40,10 +41,13 @@ class AnotherNHL {
 
         Row {
 
+            // left side column
             Column {
+
+                //read data from enum
                 NHLData.values().forEach { team ->
 
-                    TeamItem(team.teamData.displayName) { // team item 'onClick'
+                    TeamItem(team.teamData.displayName) { // team item 'onClick' callback
                         isInit = false
                         currentTeam = team
                         showTeamColors = true
@@ -54,6 +58,7 @@ class AnotherNHL {
                 }
             }
 
+            // right side column
             Column {
 
                 if (showTeamColors) {

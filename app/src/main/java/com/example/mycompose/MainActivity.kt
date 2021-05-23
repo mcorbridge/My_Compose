@@ -57,6 +57,7 @@ import com.example.mycompose.nhl.ShowNHL
 import com.example.mycompose.scaffold.TestScaffold
 import com.example.mycompose.sealed.TestSealedClass
 import com.example.mycompose.sinWave.*
+import com.example.mycompose.state.ManagingState
 import com.example.mycompose.text.TestingText
 import com.example.mycompose.transition.*
 import com.example.mycompose.ui.theme.MyComposeTheme
@@ -270,6 +271,12 @@ class MainActivity : AppCompatActivity() {
                     composable("nhlScreen") {
                         ScreenTransitions.ExampleAnimation{
                             NHLScreen(navController, testViewModel)
+                        }
+                    }
+
+                    composable("managingState") {
+                        ScreenTransitions.ExampleAnimation{
+                            ManagingState(navController, testViewModel)
                         }
                     }
 
@@ -1326,8 +1333,12 @@ class MainActivity : AppCompatActivity() {
     fun NHLScreen(navController: NavController, testViewModel: TestViewModel) {
         var anotherNHL = AnotherNHL()
         anotherNHL.ThisTest()
-//        var showNHL = ShowNHL()
-//        showNHL.MainNHL()
+    }
+
+    @Composable
+    fun ManagingState(navController: NavController, testViewModel: TestViewModel) {
+        var managingState = ManagingState()
+        managingState.DoManagingState(navController)
     }
 
 } // end class

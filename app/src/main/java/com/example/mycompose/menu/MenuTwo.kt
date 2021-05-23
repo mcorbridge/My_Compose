@@ -323,6 +323,22 @@ class MenuTwo {
                         )
                         Text(text = "NHL")
                     }
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Button(onClick = {
+                        navController.navigate("managingState")
+                    }) {
+                        Icon(
+                            Icons.Filled.ManageAccounts,
+                            "managingState",
+                            tint = Color.White,
+                            modifier = Modifier
+                                .height(30.dp)
+                                .width(30.dp)
+                        )
+                        Text(text = "Manage")
+                    }
                 }
 
 

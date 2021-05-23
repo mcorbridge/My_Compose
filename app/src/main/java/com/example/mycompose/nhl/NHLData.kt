@@ -78,7 +78,8 @@ enum class NHLData(val teamData: TeamData) {
                 Color(0xFFCC0000),
                 Color(0xFF000000),
                 Color(0xFFA2AAAD),
-                Color(0xFF76232F)
+                Color(0xFF76232F),
+                Color(0xFFFFFFFF)
             )
         )
     ),
