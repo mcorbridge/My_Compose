@@ -135,42 +135,77 @@ class ManagingState {
     @Composable
     fun Fooby(){
 
-        var n0 by remember { mutableStateOf(false) }
-        var n1 by remember { mutableStateOf(false) }
-        var n2 by remember { mutableStateOf(false) }
-        var n3 by remember { mutableStateOf(false) }
-        var n4 by remember { mutableStateOf(false) }
+        var n0 = false
+        var n1 = false
+        var n2 = false
+        var n3 = false
+        var n4 = false
+
+        val listN = remember { mutableStateListOf<Boolean>(n0, n1, n2, n3, n4) }
+        val revList = listN.asReversed()
 
         fun changeColor(){
-            println("before > n0:$n0 n1:$n1 n2:$n2 n3:$n3 n4:$n4")
-            if(!n0 && !n1 && !n2 && !n3 && !n4){
-                n0 = true
-            }else if(n0 && !n1 && !n2 && !n3 && !n4){
-                n0 = false
-                n1 = true
-            }else if(!n0 && n1 && !n2 && !n3 && !n4){
-                n1 = false
-                n2 = true
-            }else if(!n0 && !n1 && n2 && !n3 && !n4){
-                n2 = false
-                n3 = true
-            }else if(!n0 && !n1 && !n2 && n3 && !n4){
-                n3 = false
-                n4 = true
-            }else if(!n0 && !n1 && !n2 && !n3 && n4){
-                n4 = false
+            println("before > n0:${listN[0]} n1:${listN[1]} n2:${listN[2]} n3:${listN[3]} n4:${listN[4]}")
+            if(!listN[0] && !listN[1] && !listN[2] && !listN[3] && !listN[4]){
+                listN[0] = true
+            }else if(listN[0] && !listN[1] && !listN[2] && !listN[3] && !listN[4]){
+                listN[0] = false
+                listN[1] = true
+            }else if(!listN[0] && listN[1] && !listN[2] && !listN[3] && !listN[4]){
+                listN[1] = false
+                listN[2] = true
+            }else if(!listN[0] && !listN[1] && listN[2] && !listN[3] && !listN[4]){
+                listN[2] = false
+                listN[3] = true
+            }else if(!listN[0] && !listN[1] && !listN[2] && listN[3] && !listN[4]){
+                listN[3] = false
+                listN[4] = true
+            }else if(!listN[0] && !listN[1] && !listN[2] && !listN[3] && listN[4]){
+                listN[4] = false
             }
+        }
 
+        fun changeKolor(){
+            println("before > n0:${revList[0]} n1:${revList[1]} n2:${revList[2]} n3:${revList[3]} n4:${revList[4]}")
+            if(!revList[0] && !revList[1] && !revList[2] && !revList[3] && !revList[4]){
+                revList[0] = true
+            }else if(revList[0] && !revList[1] && !revList[2] && !revList[3] && !revList[4]){
+                revList[0] = false
+                revList[1] = true
+            }else if(!revList[0] && revList[1] && !revList[2] && !revList[3] && !revList[4]){
+                revList[1] = false
+                revList[2] = true
+            }else if(!revList[0] && !revList[1] && revList[2] && !revList[3] && !revList[4]){
+                revList[2] = false
+                revList[3] = true
+            }else if(!revList[0] && !revList[1] && !revList[2] && revList[3] && !revList[4]){
+                revList[3] = false
+                revList[4] = true
+            }else if(!revList[0] && !revList[1] && !revList[2] && !revList[3] && revList[4]){
+                revList[4] = false
+            }
         }
 
         fun doFooColor():Color{
-            println("n0:$n0 n1:$n1 n2:$n2  n3:$n3 n4:$n4 < after")
+            println("n0:${listN[0]} n1:${listN[1]} n2:${listN[2]} n3:${listN[3]} n4:${listN[4]} < after")
             return when{
-                n0 -> Color.Black
-                n1 -> Color.Green
-                n2 -> Color.Blue
-                n3 -> Color.Red
-                n4 -> Color.Cyan
+                listN[0] -> Color.Black
+                listN[1] -> Color.Green
+                listN[2] -> Color.Blue
+                listN[3] -> Color.Red
+                listN[4] -> Color.Cyan
+                else -> Color.Transparent
+            }
+        }
+
+        fun doFooKolor():Color{
+            println("n0:${revList[0]} n1:${revList[1]} n2:${revList[2]} n3:${revList[3]} n4:${revList[4]} < after")
+            return when{
+                revList[0] -> Color.Black
+                revList[1] -> Color.Green
+                revList[2] -> Color.Blue
+                revList[3] -> Color.Red
+                revList[4] -> Color.Cyan
                 else -> Color.Transparent
             }
         }
@@ -183,8 +218,12 @@ class ManagingState {
                 .width(100.dp)
                 .height(100.dp)
                 .background(Color.White)
-                .align(Alignment.Center)){
-                Button(onClick = { changeColor() }) {
+                .align(Alignment.Center)
+                .background(color = doFooKolor())){
+                Button(onClick = {
+                    changeColor()
+                    //changeKolor()
+                }) {
                     Text("color?")
                 }
             }
