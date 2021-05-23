@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigate
+
 import androidx.navigation.compose.rememberNavController
 import com.example.mycompose.animate.*
 import com.example.mycompose.canvas.TestCanvas
@@ -54,6 +54,7 @@ import com.example.mycompose.menu.MenuTwo
 import com.example.mycompose.models.TestViewModel
 import com.example.mycompose.nhl.AnotherNHL
 import com.example.mycompose.nhl.ShowNHL
+import com.example.mycompose.room.TestingRoom
 import com.example.mycompose.scaffold.TestScaffold
 import com.example.mycompose.sealed.TestSealedClass
 import com.example.mycompose.sinWave.*
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
     var isTrue = true
     var ndx = 0
-    var fuckingInsult: String = "STOP FUCKING CLICKING ME!!!!!!!!!!!!!!!!"
+    var thisInsult: String = "STOP CLICKING ME!!!!!!!!!!!!!!!!"
 
     private val testViewModel by viewModels<TestViewModel>()
 
@@ -277,6 +278,12 @@ class MainActivity : AppCompatActivity() {
                     composable("managingState") {
                         ScreenTransitions.ExampleAnimation{
                             ManagingState(navController, testViewModel)
+                        }
+                    }
+
+                    composable("roomDatabase") {
+                        ScreenTransitions.ExampleAnimation{
+                            RoomDatabase(navController, testViewModel)
                         }
                     }
 
@@ -730,7 +737,7 @@ class MainActivity : AppCompatActivity() {
                     IconButton(
                         onClick = {
                             expanded = false
-                            fuckingInsult = getInsult()
+                            thisInsult = getInsult()
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
@@ -741,7 +748,7 @@ class MainActivity : AppCompatActivity() {
                     IconButton(
                         onClick = {
                             expanded = true
-                            fuckingInsult = getInsult()
+                            thisInsult = getInsult()
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
@@ -754,18 +761,18 @@ class MainActivity : AppCompatActivity() {
 
     fun getInsult(): String {
         var listInsults = listOf<String>(
-            "Eat shit jerkface",
-            "Fuck off shit turd",
-            "Pound Tar moron",
-            "Take a hike cunt",
-            "You fucking idiot",
+            "Eat peanut butter",
+            "Sod off",
+            "Go Pound Tar",
+            "Take a hike",
+            "You wanker",
             "Go pound salt",
-            "Suck shit",
-            "Piss off dwarf",
-            "Sure, Fuck a dog",
-            "Motherfucking idiot",
-            "Ass licking jerk",
-            "Fuck you, cocksucker",
+            "Hello Kitty",
+            "Pass the dwarf",
+            "Sure, See You Next Tuesday",
+            "Time for beddies",
+            "Ice cream time",
+            "Buh Bye Felicia",
         )
         var insult = listInsults[(0..11).random()]
         println(insult)
@@ -902,80 +909,93 @@ class MainActivity : AppCompatActivity() {
                 .background(Color.LightGray)
         ) {
 
+
             if (name != "") {
                 Text(text = "Welcome $name to the WELCOME screen!")
             } else {
                 Text(text = "Welcome to the WELCOME screen!")
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
 
-            Button(onClick = { navController.navigate("secondScreen") }) {
-                println("testViewModel.name.value-----> [[${name}]]")
-                Text(text = "Next")
+            Row{
+                Button(onClick = { navController.navigate("secondScreen") }) {
+                    println("testViewModel.name.value-----> [[${name}]]")
+                    Text(text = "Next")
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = { navController.navigate("thirdScreen") }) {
+                    Text(text = "Animate Me!")
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = { navController.navigate("sixthScreen") }) {
+                    Text(text = "The 6th")
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(onClick = { navController.navigate("thirdScreen") }) {
-                Text(text = "Animate Me!")
+            Row{
+                Button(onClick = { navController.navigate("seventhScreen") }) {
+                    Text(text = "Lucky #7")
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = { navController.navigate("eighthScreen") }) {
+                    Text(text = "8 Ball")
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = { navController.navigate("tenthScreen") }) {
+                    Text(text = "Scaffold")
+                }
+
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(onClick = { navController.navigate("sixthScreen") }) {
-                Text(text = "The 6th")
+            Row{
+
+                Button(onClick = { navController.navigate("eleventhScreen") }) {
+                    Text(text = "Images")
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = { navController.navigate("twelvthScreen") }) {
+                    Text(text = "Special Effects")
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = { navController.navigate("thirteenthScreen") }) {
+                    Text(text = "Icons!")
+                }
+
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(onClick = { navController.navigate("seventhScreen") }) {
-                Text(text = "Lucky #7")
-            }
+           Row{
 
-            Spacer(modifier = Modifier.height(16.dp))
+               Button(onClick = { navController.navigate("menuTwo") }) {
+                   Text(text = "Menu Too!")
+               }
 
-            Button(onClick = { navController.navigate("eighthScreen") }) {
-                Text(text = "8 Ball")
-            }
+               Spacer(modifier = Modifier.width(16.dp))
 
-            Spacer(modifier = Modifier.height(16.dp))
+               Button(onClick = { toggle = !toggle }) {
+                   Text(text = "Animate Text? $toggle")
+               }
 
-            Button(onClick = { navController.navigate("tenthScreen") }) {
-                Text(text = "Scaffold")
-            }
+               Spacer(modifier = Modifier.width(16.dp))
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(onClick = { navController.navigate("eleventhScreen") }) {
-                Text(text = "Images")
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(onClick = { navController.navigate("twelvthScreen") }) {
-                Text(text = "Special Effects")
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(onClick = { navController.navigate("thirteenthScreen") }) {
-                Text(text = "Icons!")
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(onClick = { navController.navigate("menuTwo") }) {
-                Text(text = "Menu Too!")
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(onClick = { toggle = !toggle }) {
-                Text(text = "Animate Text? $toggle")
-            }
-
-
+           }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -1339,6 +1359,12 @@ class MainActivity : AppCompatActivity() {
     fun ManagingState(navController: NavController, testViewModel: TestViewModel) {
         var managingState = ManagingState()
         managingState.DoManagingState(navController)
+    }
+
+    @Composable
+    fun RoomDatabase(navController: NavController, testViewModel: TestViewModel) {
+        var testingRoom = TestingRoom()
+        testingRoom.DoTestRoom(navController)
     }
 
 } // end class

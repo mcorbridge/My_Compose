@@ -21,7 +21,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
 import com.example.mycompose.models.TestViewModel
 import com.example.mycompose.text.SampleText
 import com.example.mycompose.text.TestingText

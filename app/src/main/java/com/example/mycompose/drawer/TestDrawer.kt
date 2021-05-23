@@ -8,7 +8,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
+
 import com.example.mycompose.ui.theme.CormorantTypography
 import kotlinx.coroutines.launch
 import com.example.mycompose.R

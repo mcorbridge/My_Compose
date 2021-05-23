@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
 import com.example.mycompose.ui.theme.CormorantTypography
 
 class TestRow {

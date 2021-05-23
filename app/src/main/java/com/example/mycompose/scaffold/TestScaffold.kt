@@ -15,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.example.mycompose.ui.theme.CormorantTypography
 import kotlinx.coroutines.CoroutineScope

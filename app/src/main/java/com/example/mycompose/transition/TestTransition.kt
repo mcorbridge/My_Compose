@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
 import com.example.mycompose.animatedVisibility.TestAnimatedVisibility
 import com.example.mycompose.models.TestViewModel
 import kotlinx.coroutines.delay

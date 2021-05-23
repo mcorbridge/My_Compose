@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
 import com.example.mycompose.models.TestViewModel
 
 class MenuTwo {
@@ -85,12 +84,9 @@ class MenuTwo {
                         Text(text = "Lift Off!")
                     }
 
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.width(16.dp))
 
 
-                Row {
                     Button(onClick = { navController.navigate("twentySecondScreen") }) {
                         Icon(
                             Icons.Filled.Timer,
@@ -103,7 +99,12 @@ class MenuTwo {
                         Text(text = "Spin!")
                     }
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+
+                Row {
 
                     Button(onClick = { navController.navigate("twentyThirdScreen") }) {
                         Icon(
@@ -114,14 +115,11 @@ class MenuTwo {
                                 .height(30.dp)
                                 .width(30.dp)
                         )
-                        Text(text = "What a drag!")
+                        Text(text = "drag!")
                     }
 
-                }
+                    Spacer(modifier = Modifier.width(16.dp))
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Row {
                     Button(onClick = { navController.navigate("twentyFourthScreen") }) {
                         Icon(
                             Icons.Filled.Star,
@@ -148,7 +146,12 @@ class MenuTwo {
                         Text(text = "Cosine")
                     }
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row {
+
 
                     Button(onClick = { navController.navigate("twentySixthScreen") }) {
                         Icon(
@@ -161,11 +164,9 @@ class MenuTwo {
                         )
                         Text(text = "Smiley")
                     }
-                }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.width(16.dp))
 
-                Row {
                     Button(onClick = { navController.navigate("twentySeventhScreen") }) {
                         Icon(
                             Icons.Filled.Paragliding,
@@ -180,6 +181,13 @@ class MenuTwo {
 
                     Spacer(modifier = Modifier.width(16.dp))
 
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row {
+
+
                     Button(onClick = { navController.navigate("twentyEightScreen") }) {
                         Icon(
                             Icons.Filled.Coffee,
@@ -191,10 +199,9 @@ class MenuTwo {
                         )
                         Text(text = "Zine")
                     }
-                }
-                Spacer(modifier = Modifier.height(16.dp))
 
-                Row {
+                    Spacer(modifier = Modifier.width(16.dp))
+
                     Button(onClick = { navController.navigate("twentyNinthScreen") }) {
                         Icon(
                             Icons.Filled.Timer,
@@ -220,8 +227,11 @@ class MenuTwo {
                         )
                         Text(text = "as")
                     }
+                }
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row {
 
                     Button(onClick = { navController.navigate("thirtyFirstScreen") }) {
                         Icon(
@@ -234,11 +244,8 @@ class MenuTwo {
                         )
                         Text(text = "inLine")
                     }
-                }
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Row {
+                    Spacer(modifier = Modifier.width(16.dp))
 
                     Button(onClick = {
                         // Kotlin delay implementation
@@ -261,22 +268,6 @@ class MenuTwo {
                     Spacer(modifier = Modifier.width(16.dp))
 
                     Button(onClick = {
-                        navController.navigate("thirtyFourthScreen")
-                    }) {
-                        Icon(
-                            Icons.Filled.Segment,
-                            "sealed",
-                            tint = Color.White,
-                            modifier = Modifier
-                                .height(30.dp)
-                                .width(30.dp)
-                        )
-                        Text(text = "sealed")
-                    }
-
-                    Spacer(modifier = Modifier.width(16.dp))
-
-                    Button(onClick = {
                         navController.navigate("firstAnimationScreen")
                     }) {
                         Icon(
@@ -293,7 +284,23 @@ class MenuTwo {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Row{
+                Row {
+
+                    Button(onClick = {
+                        navController.navigate("thirtyFourthScreen")
+                    }) {
+                        Icon(
+                            Icons.Filled.Segment,
+                            "sealed",
+                            tint = Color.White,
+                            modifier = Modifier
+                                .height(30.dp)
+                                .width(30.dp)
+                        )
+                        Text(text = "sealed")
+                    }
+
+                    Spacer(modifier = Modifier.width(16.dp))
                     Button(onClick = {
                         navController.navigate("secondAnimationScreen")
                     }) {
@@ -324,7 +331,11 @@ class MenuTwo {
                         Text(text = "NHL")
                     }
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row {
 
                     Button(onClick = {
                         navController.navigate("managingState")
@@ -339,13 +350,28 @@ class MenuTwo {
                         )
                         Text(text = "Manage")
                     }
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Button(onClick = {
+                        navController.navigate("roomDatabase")
+                    }) {
+                        Icon(
+                            Icons.Filled.Room,
+                            "roomDatabase",
+                            tint = Color.White,
+                            modifier = Modifier
+                                .height(30.dp)
+                                .width(30.dp)
+                        )
+                        Text(text = "Room")
+                    }
                 }
+            }
 
+            Spacer(modifier = Modifier.height(16.dp))
 
-
-                Row{
-
-                }
+            Row {
 
 
             }

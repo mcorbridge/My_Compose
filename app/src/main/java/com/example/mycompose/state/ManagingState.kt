@@ -21,7 +21,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
 import com.example.mycompose.text.SampleText
 
 class ManagingState {
