@@ -55,7 +55,7 @@ class TestAnimatedVisibility {
                     enter = slideInHorizontally(initialOffsetX = { -100 }),
                     exit = slideOutHorizontally(),
                 ) {
-                    Column() {
+                    Column {
                         Text("Toronto Maple Leafs are in the playoffs!", color = mapleLeafBlue, fontSize = 46.sp)
                         Spacer(modifier = Modifier.height(6.dp))
                         Text("Boston Bruins are in the playoffs!", color = bostonBruinsGold, fontSize = 46.sp)

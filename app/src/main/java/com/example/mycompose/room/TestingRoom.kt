@@ -18,15 +18,21 @@ class TestingRoom {
     @Composable
     fun DoTestRoom(navController: NavController) {
 
-        BoxWithConstraints(modifier = Modifier
-            .background(color = bgColor)
-            .fillMaxSize()) {
+        //createDb()
+
+        BoxWithConstraints(
+            modifier = Modifier
+                .background(color = bgColor)
+                .fillMaxSize()
+        ) {
 
             DoMenuButton(navController)
 
         }
 
     }
+
+
 
     @Composable
     fun DoMenuButton(navController: NavController) {
@@ -40,4 +46,5 @@ class TestingRoom {
         }
     }
 
-}
+} // end  class
+

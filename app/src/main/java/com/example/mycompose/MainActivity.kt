@@ -1,6 +1,5 @@
 package com.example.mycompose
 
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -24,7 +23,6 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -34,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-
 import androidx.navigation.compose.rememberNavController
 import com.example.mycompose.animate.*
 import com.example.mycompose.canvas.TestCanvas
@@ -53,7 +50,6 @@ import com.example.mycompose.layouts.TestRow
 import com.example.mycompose.menu.MenuTwo
 import com.example.mycompose.models.TestViewModel
 import com.example.mycompose.nhl.AnotherNHL
-import com.example.mycompose.nhl.ShowNHL
 import com.example.mycompose.room.TestingRoom
 import com.example.mycompose.scaffold.TestScaffold
 import com.example.mycompose.sealed.TestSealedClass
@@ -258,31 +254,31 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     composable("firstAnimationScreen") {
-                            ScreenTransitions.ExampleAnimation{
-                                FirstAnimationScreen(navController, testViewModel)
-                            }
+                        ScreenTransitions.ExampleAnimation {
+                            FirstAnimationScreen(navController, testViewModel)
                         }
+                    }
 
                     composable("secondAnimationScreen") {
-                        ScreenTransitions.ExampleAnimation{
+                        ScreenTransitions.ExampleAnimation {
                             SecondAnimationScreen(navController, testViewModel)
                         }
                     }
 
                     composable("nhlScreen") {
-                        ScreenTransitions.ExampleAnimation{
+                        ScreenTransitions.ExampleAnimation {
                             NHLScreen(navController, testViewModel)
                         }
                     }
 
                     composable("managingState") {
-                        ScreenTransitions.ExampleAnimation{
+                        ScreenTransitions.ExampleAnimation {
                             ManagingState(navController, testViewModel)
                         }
                     }
 
                     composable("roomDatabase") {
-                        ScreenTransitions.ExampleAnimation{
+                        ScreenTransitions.ExampleAnimation {
                             RoomDatabase(navController, testViewModel)
                         }
                     }
@@ -290,35 +286,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-
-
-        /*setContent {
-            MyComposeTheme {
-
-                // A surface container using the 'background' color from the theme
-                Surface(color = Teal200) {
-                    Column(
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth()
-                            .fillMaxHeight()
-                    ) {
-                        //Greeting("Wally")
-                        //BostonBruins()
-                        //SimpleText("I am learning Compose")
-                        //TextWithPaddingFromBaseline()
-                        //ButtonExample()
-                        //ExpandingCard("Lorem Ipsum", loremIpsum)
-                        //Counter()
-                        //FooText(fuckingInsult)
-                    }
-
-                }
-            }
-        }*/
     }
-
 
 
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -333,7 +301,7 @@ class MainActivity : AppCompatActivity() {
         fooComposables.NewFooText(testViewModel)
         fooComposablex.NewFooText()
 
-        name?.let {
+        name?.let { it ->
             HelloContent(name = it,
                 onNameChange = {
                     name = it
@@ -917,7 +885,7 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-            Row{
+            Row {
                 Button(onClick = { navController.navigate("secondScreen") }) {
                     println("testViewModel.name.value-----> [[${name}]]")
                     Text(text = "Next")
@@ -938,7 +906,7 @@ class MainActivity : AppCompatActivity() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Row{
+            Row {
                 Button(onClick = { navController.navigate("seventhScreen") }) {
                     Text(text = "Lucky #7")
                 }
@@ -959,7 +927,7 @@ class MainActivity : AppCompatActivity() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Row{
+            Row {
 
                 Button(onClick = { navController.navigate("eleventhScreen") }) {
                     Text(text = "Images")
@@ -981,21 +949,21 @@ class MainActivity : AppCompatActivity() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-           Row{
+            Row {
 
-               Button(onClick = { navController.navigate("menuTwo") }) {
-                   Text(text = "Menu Too!")
-               }
+                Button(onClick = { navController.navigate("menuTwo") }) {
+                    Text(text = "Menu Too!")
+                }
 
-               Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
-               Button(onClick = { toggle = !toggle }) {
-                   Text(text = "Animate Text? $toggle")
-               }
+                Button(onClick = { toggle = !toggle }) {
+                    Text(text = "Animate Text? $toggle")
+                }
 
-               Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
-           }
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -1315,21 +1283,24 @@ class MainActivity : AppCompatActivity() {
 
     @ExperimentalAnimationApi
     @Composable
-    fun ThirtySecondScreen(navController: NavController, testViewModel: TestViewModel,
+    fun ThirtySecondScreen(
+        navController: NavController, testViewModel: TestViewModel,
     ) {
         var testTransition = TestTransition()
         testTransition.DoTransition(navController, testViewModel)
     }
 
     @Composable
-    fun ThirtyThirdScreen(navController: NavController, testViewModel: TestViewModel,
+    fun ThirtyThirdScreen(
+        navController: NavController, testViewModel: TestViewModel,
     ) {
         var transitionTo = TransitionTo()
         transitionTo.NewTransition(navController, testViewModel)
     }
 
     @Composable
-    fun ThirtyFourthScreen(navController: NavController, testViewModel: TestViewModel,
+    fun ThirtyFourthScreen(
+        navController: NavController, testViewModel: TestViewModel,
     ) {
         var testSealedClass = TestSealedClass()
         testSealedClass.DoTest(navController, testViewModel)
