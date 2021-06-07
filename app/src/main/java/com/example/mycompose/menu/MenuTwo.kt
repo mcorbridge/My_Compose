@@ -366,6 +366,22 @@ class MenuTwo {
                         )
                         Text(text = "Room")
                     }
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Button(onClick = {
+                        navController.navigate("kotlinHash")
+                    }) {
+                        Icon(
+                            Icons.Filled.Handyman,
+                            "kotlinHash",
+                            tint = Color.White,
+                            modifier = Modifier
+                                .height(30.dp)
+                                .width(30.dp)
+                        )
+                        Text(text = "map")
+                    }
                 }
             }
 

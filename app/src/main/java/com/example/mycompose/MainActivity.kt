@@ -42,6 +42,7 @@ import com.example.mycompose.dragdrop.TestDragDrop
 import com.example.mycompose.drawer.TestDrawer
 import com.example.mycompose.effects.TestEffects
 import com.example.mycompose.firebase.TestFirestore
+import com.example.mycompose.hashmap.KotlinHash
 import com.example.mycompose.hoisting.TestStateHoisting
 import com.example.mycompose.icons.TestIcons
 import com.example.mycompose.image.TestImage
@@ -280,6 +281,12 @@ class MainActivity : AppCompatActivity() {
                     composable("roomDatabase") {
                         ScreenTransitions.ExampleAnimation {
                             RoomDatabase(navController, testViewModel)
+                        }
+                    }
+
+                    composable("kotlinHash") {
+                        ScreenTransitions.ExampleAnimation {
+                            TestKotlinHash(navController, testViewModel)
                         }
                     }
 
@@ -1336,6 +1343,12 @@ class MainActivity : AppCompatActivity() {
     fun RoomDatabase(navController: NavController, testViewModel: TestViewModel) {
         var testingRoom = TestingRoom()
         testingRoom.DoTestRoom(navController)
+    }
+
+    @Composable
+    fun TestKotlinHash(navController: NavController, testViewModel: TestViewModel) {
+        var kotlinHash = KotlinHash()
+        kotlinHash.DoKotlinHash(navController = navController)
     }
 
 } // end class
