@@ -4,6 +4,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -177,8 +178,8 @@ class KotlinHash {
             PlayerInfo("Toronto", "Maple Leafs",35,"G")
         hashMap[HockeyPlayer("Joseph Woll",BirthPlace("Dardenne Prairie, MO","USA"))] =
             PlayerInfo("Toronto", "Maple Leafs", 60,"G")
-        hashMap[HockeyPlayer("Wally Miller")] =
-            PlayerInfo("Toronto", "Maple Leafs", 99,"G")
+        hashMap[HockeyPlayer("Wally Miller",BirthPlace("Cotuit, MA","USA"))] =
+            PlayerInfo("Boston", "Bruins", 99,"G")
 
     }
 
@@ -211,24 +212,33 @@ class KotlinHash {
 
         if(showInfo){
             val pInfo:PlayerInfo = getValueFromName(playerName)
+            val bInfo:BirthPlace = getBirthPlaceFromName(playerName)
+
+            if(pInfo.city == null){
+                showInfo = !showInfo
+            }
+
             BoxWithConstraints(modifier = Modifier
                 .fillMaxSize()
                 .background(Color.Gray)
                 .offset(10.dp, 10.dp)) {
-                DoInfoBox(playerName, pInfo) {
+                DoInfoBox(playerName, pInfo, bInfo) {
                     showInfo = !showInfo
+                    if(it != "close"){
+                        println("Searching for: $it")
+                        playerName = it
+                        showInfo = !showInfo
+                    }
                 }
             }
         }
 
 
+
     }
 
     @Composable
-    fun DoInfoBox(playerName:String, pInfo:PlayerInfo, callback: () -> Unit){
-
-        println(pInfo)
-
+    fun DoInfoBox(playerName:String, pInfo:PlayerInfo, bInfo:BirthPlace, callback: (String) -> Unit){
 
             Box(modifier = Modifier
                 .height(350.dp)
@@ -237,7 +247,7 @@ class KotlinHash {
                 .background(Color.White)
                 )
             {
-
+                var text by remember { mutableStateOf("") }
 
                 Column(modifier = Modifier.offset(x=25.dp, y=25.dp)){
                     Text("player name: $playerName")
@@ -246,17 +256,32 @@ class KotlinHash {
                     Text("city: ${pInfo.city}")
                     Text("position: ${pInfo.position}")
                     Text("number: ${pInfo.num}")
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text("     Birth place")
+                    Text("         city: ${bInfo.city}")
+                    Text("         country: ${bInfo.country}")
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    TextField(
+                        value = text,
+                        onValueChange = {
+                            text = it },
+                        label = { Text("search") }
+                    )
                 }
 
+                Button(modifier = Modifier.offset(x=25.dp, y=300.dp), onClick = {
+                    callback(text) }) {
+                    Text("search")
+                }
 
-                Button(modifier = Modifier.offset(x=250.dp, y=300.dp), onClick = { callback() }) {
+                Button(modifier = Modifier.offset(x=250.dp, y=300.dp), onClick = { callback("close") }) {
                     Text("close")
                 }
             }
 
-
-
     }
+
 
     @Composable
     fun DoColumnHockeyPlayerName(listHockeyPlayerName:MutableList<String>, hashMap: HashMap<HockeyPlayer, PlayerInfo>, callback:(String) -> Unit){
@@ -291,10 +316,20 @@ class KotlinHash {
         return playerInfo
     }
 
+    private fun getBirthPlaceFromName(name: String): BirthPlace {
+        var birthPlace = BirthPlace()
+        for (key in hashMap.keys) {
+            if(key.name == name){
+                birthPlace = key.birthPlace!!
+            }
+        }
+        return birthPlace
+    }
+
 } // end class
 
 data class HockeyPlayer(val name:String, val birthPlace:BirthPlace? = null)
 
 data class PlayerInfo(val city:String? = null, val team:String?= null, val num:Int?= null, val position:String?= null)
 
-data class BirthPlace(val city: String, val country:String)
+data class BirthPlace(val city: String? = null, val country:String? = null)
