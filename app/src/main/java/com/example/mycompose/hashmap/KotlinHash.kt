@@ -1,143 +1,300 @@
 package com.example.mycompose.hashmap
 
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+
+/**
+ *  A NOT SO simple example of HashMap class defined
+ *  with empty "HashMap of <HockeyPlayer, PlayerInfo>"
+ *  This PROBABLY not recommended!!
+ */
 
 class KotlinHash {
 
+    var hashMap: HashMap<HockeyPlayer, PlayerInfo> = HashMap()
 
-    @Composable
-    fun DoKotlinHash(navController: NavController) {
-        //A simple example of HashMap class define
-        // with empty "HashMap of <String, Int>"
-        var hashMap: HashMap<String, NHLTeam> = HashMap()
+    private fun doInit(){
+
 
         //printing the Empty hashMap
-        printHashMap(hashMap)
+       // printHashMap(hashMap)
 
         //adding elements to the hashMap using
         // put() function
-        hashMap.put("Patrice Bergeron", NHLTeam("Boston","Bruins",37, "C",BirthPlace("L'Ancienne-Lorette, QC", "CAN")))
-        hashMap.put("Anton Blidh", NHLTeam("Boston","Bruins",81, "LW",BirthPlace("Molnlycke", "SWE")))
-        hashMap.put("Charlie Coyle", NHLTeam("Boston","Bruins",13, "C",BirthPlace("East Weymouth, MA", "USA")))
-        hashMap.put("Jake DeBrusk", NHLTeam("Boston","Bruins",74, "LW",BirthPlace("Edmonton, AB", "CAN")))
-        hashMap.put("Trent Frederic", NHLTeam("Boston","Bruins",11, "C",BirthPlace("St. Louis, MO", "USA")))
-        hashMap.put("Taylor Hall", NHLTeam("Boston","Bruins",71, "LW",BirthPlace("Calgary, AB", "CAN")))
-        hashMap.put("Cameron Hughes", NHLTeam("Boston","Bruins",53, "C",BirthPlace("Edmonton, AB", "CAN")))
-        hashMap.put("Ondrej Kase", NHLTeam("Boston","Bruins",28, "RW",BirthPlace("Kadan", "CZE")))
-        hashMap.put("David Krejci", NHLTeam("Boston","Bruins",46, "C",BirthPlace("Sternberk", "CZE")))
-        hashMap.put("Karson Kuhlman", NHLTeam("Boston","Bruins",83, "C",BirthPlace("Esko, MN", "USA")))
-        hashMap.put("Sean Kuraly", NHLTeam("Boston","Bruins",52, "C",BirthPlace("Dublin, OH", "USA")))
-        hashMap.put("Curtis Lazar", NHLTeam("Boston","Bruins",20, "C",BirthPlace("Salmon Arm, BC", "CAN")))
-        hashMap.put("Brad Marchand", NHLTeam("Boston","Bruins",63, "LW",BirthPlace("Halifax, NS", "CAN")))
-        hashMap.put("Greg McKegg", NHLTeam("Boston","Bruins",18, "C",BirthPlace("St. Thomas, ON", "CAN")))
-        hashMap.put("David Pastrnak", NHLTeam("Boston","Bruins",88, "RW",BirthPlace("Havirov", "CZE")))
-        hashMap.put("Nick Ritchie", NHLTeam("Boston","Bruins",21, "LW",BirthPlace("Orangeville, ON", "CAN")))
-        hashMap.put("Zach Senyshyn", NHLTeam("Boston","Bruins",19, "RW",BirthPlace("Ottawa, ON", "CAN")))
-        hashMap.put("Craig Smith", NHLTeam("Boston","Bruins",12, "C",BirthPlace("Madison, WI", "USA")))
-        hashMap.put("Oskar Steen", NHLTeam("Boston","Bruins",62, "C",BirthPlace("Karlstad", "SWE")))
-        hashMap.put("Jack Studnicka", NHLTeam("Boston","Bruins",23, "C",BirthPlace("Windsor, ON", "CAN")))
-        hashMap.put("Chris Wagner", NHLTeam("Boston","Bruins",14, "RW",BirthPlace("Walpole, MA", "USA")))
-        hashMap.put("Jack Ahcan", NHLTeam("Boston","Bruins",54, "R",BirthPlace("Savage, MN", "USA")))
-        hashMap.put("Brandon Carlo", NHLTeam("Boston","Bruins",25, "R",BirthPlace("Colorado Springs, CO", "USA")))
-        hashMap.put("Connor Clifton", NHLTeam("Boston","Bruins",75, "L",BirthPlace("Long Branch, NJ", "USA")))
-        hashMap.put("Matt Grzelcyk", NHLTeam("Boston","Bruins",48, "L",BirthPlace("Charlestown, MA", "USA")))
-        hashMap.put("Jeremy Lauzon", NHLTeam("Boston","Bruins",55, "R",BirthPlace("Val-d'Or, QC", "CAN")))
-        hashMap.put("Charlie McAvoy", NHLTeam("Boston","Bruins",73, "R",BirthPlace("Long Beach, NY", "USA")))
-        hashMap.put("Kevan Miller", NHLTeam("Boston","Bruins",86, "L",BirthPlace("Los Angeles, CA", "USA")))
-        hashMap.put("John Moore", NHLTeam("Boston","Bruins",27, "L",BirthPlace("Winnetka, IL", "USA")))
-        hashMap.put("Mike Reilly", NHLTeam("Boston","Bruins",6, "L",BirthPlace("Chicago, IL", "USA")))
-        hashMap.put("Jarred Tinordi", NHLTeam("Boston","Bruins",84, "L",BirthPlace("Millersville, MD", "TK")))
-        hashMap.put("Urho Vaakanainen", NHLTeam("Boston","Bruins",58, "L",BirthPlace("Joensuu", "FIN")))
-        hashMap.put("Jakub Zboril", NHLTeam("Boston","Bruins",67, "L",BirthPlace("Brno", "CZE")))
-        hashMap.put("Jaroslav Halak", NHLTeam("Boston","Bruins",41, "G",BirthPlace("Bratislava", "SVK")))
-        hashMap.put("Tuukka Rask", NHLTeam("Boston","Bruins",40, "G",BirthPlace("Savonlinna", "FIN")))
-        hashMap.put("Jeremy Swayman", NHLTeam("Boston","Bruins",1, "G",BirthPlace("Anchorage, AK", "USA")))
-        hashMap.put("Dan Vladar", NHLTeam("Boston","Bruins",80, "G",BirthPlace("Prague", "CZE")))
+        hashMap[HockeyPlayer("Patrice Bergeron",BirthPlace("L'Ancienne-Lorette, QC", "CAN"))] =
+            PlayerInfo("Boston","Bruins",37, "C")
+        hashMap[HockeyPlayer("Anton Blidh",BirthPlace("Molnlycke", "SWE"))] =
+            PlayerInfo("Boston","Bruins",81, "LW")
+        hashMap[HockeyPlayer("Charlie Coyle",BirthPlace("East Weymouth, MA", "USA"))] =
+            PlayerInfo("Boston","Bruins",13, "C")
+        hashMap[HockeyPlayer("Jake DeBrusk",BirthPlace("Edmonton, AB", "CAN"))] =
+            PlayerInfo("Boston","Bruins",74, "LW")
+        hashMap[HockeyPlayer("Trent Frederic",BirthPlace("St. Louis, MO", "USA"))] =
+            PlayerInfo("Boston","Bruins",11, "C")
+        hashMap[HockeyPlayer("Taylor Hall",BirthPlace("Calgary, AB", "CAN"))] =
+            PlayerInfo("Boston","Bruins",71, "LW")
+        hashMap[HockeyPlayer("Cameron Hughes",BirthPlace("Edmonton, AB", "CAN"))] =
+            PlayerInfo("Boston","Bruins",53, "C")
+        hashMap[HockeyPlayer("Ondrej Kase",BirthPlace("Kadan", "CZE"))] =
+            PlayerInfo("Boston","Bruins",28, "RW")
+        hashMap[HockeyPlayer("David Krejci",BirthPlace("Sternberk", "CZE"))] =
+            PlayerInfo("Boston","Bruins",46, "C")
+        hashMap[HockeyPlayer("Karson Kuhlman",BirthPlace("Esko, MN", "USA"))] =
+            PlayerInfo("Boston","Bruins",83, "C")
+        hashMap[HockeyPlayer("Sean Kuraly",BirthPlace("Dublin, OH", "USA"))] =
+            PlayerInfo("Boston","Bruins",52, "C")
+        hashMap[HockeyPlayer("Curtis Lazar",BirthPlace("Salmon Arm, BC", "CAN"))] =
+            PlayerInfo("Boston","Bruins",20, "C")
+        hashMap[HockeyPlayer("Brad Marchand",BirthPlace("Halifax, NS", "CAN"))] =
+            PlayerInfo("Boston","Bruins",63, "LW")
+        hashMap[HockeyPlayer("Greg McKegg",BirthPlace("St. Thomas, ON", "CAN"))] =
+            PlayerInfo("Boston","Bruins",18, "C")
+        hashMap[HockeyPlayer("David Pastrnak",BirthPlace("Havirov", "CZE"))] =
+            PlayerInfo("Boston","Bruins",88, "RW")
+        hashMap[HockeyPlayer("Nick Ritchie",BirthPlace("Orangeville, ON", "CAN"))] =
+            PlayerInfo("Boston","Bruins",21, "LW")
+        hashMap[HockeyPlayer("Zach Senyshyn",BirthPlace("Ottawa, ON", "CAN"))] =
+            PlayerInfo("Boston","Bruins",19, "RW")
+        hashMap[HockeyPlayer("Craig Smith",BirthPlace("Madison, WI", "USA"))] =
+            PlayerInfo("Boston","Bruins",12, "C")
+        hashMap[HockeyPlayer("Oskar Steen",BirthPlace("Karlstad", "SWE"))] =
+            PlayerInfo("Boston","Bruins",62, "C")
+        hashMap[HockeyPlayer("Jack Studnicka",BirthPlace("Windsor, ON", "CAN"))] =
+            PlayerInfo("Boston","Bruins",23, "C")
+        hashMap[HockeyPlayer("Chris Wagner",BirthPlace("Walpole, MA", "USA"))] =
+            PlayerInfo("Boston","Bruins",14, "RW")
+        hashMap[HockeyPlayer("Jack Ahcan",BirthPlace("Savage, MN", "USA"))] =
+            PlayerInfo("Boston","Bruins",54, "R")
+        hashMap[HockeyPlayer("Brandon Carlo",BirthPlace("Colorado Springs, CO", "USA"))] =
+            PlayerInfo("Boston","Bruins",25, "R")
+        hashMap[HockeyPlayer("Connor Clifton",BirthPlace("Long Branch, NJ", "USA"))] =
+            PlayerInfo("Boston","Bruins",75, "L")
+        hashMap[HockeyPlayer("Matt Grzelcyk",BirthPlace("Charlestown, MA", "USA"))] =
+            PlayerInfo("Boston","Bruins",48, "L")
+        hashMap[HockeyPlayer("Jeremy Lauzon",BirthPlace("Val-d'Or, QC", "CAN"))] =
+            PlayerInfo("Boston","Bruins",55, "R")
+        hashMap[HockeyPlayer("Charlie McAvoy",BirthPlace("Long Beach, NY", "USA"))] =
+            PlayerInfo("Boston","Bruins",73, "R")
+        hashMap[HockeyPlayer("Kevan Miller",BirthPlace("Los Angeles, CA", "USA"))] =
+            PlayerInfo("Boston","Bruins",86, "L")
+        hashMap[HockeyPlayer("John Moore",BirthPlace("Winnetka, IL", "USA"))] =
+            PlayerInfo("Boston","Bruins",27, "L")
+        hashMap[HockeyPlayer("Mike Reilly",BirthPlace("Chicago, IL", "USA"))] =
+            PlayerInfo("Boston","Bruins",6, "L")
+        hashMap[HockeyPlayer("Jarred Tinordi",BirthPlace("Millersville, MD", "USA"))] =
+            PlayerInfo("Boston","Bruins",84, "L")
+        hashMap[HockeyPlayer("Urho Vaakanainen",BirthPlace("Joensuu", "FIN"))] =
+            PlayerInfo("Boston","Bruins",58, "L")
+        hashMap[HockeyPlayer("Jakub Zboril",BirthPlace("Brno", "CZE"))] =
+            PlayerInfo("Boston","Bruins",67, "L")
+        hashMap[HockeyPlayer("Jaroslav Halak",BirthPlace("Bratislava", "SVK"))] =
+            PlayerInfo("Boston","Bruins",41, "G")
+        hashMap[HockeyPlayer("Tuukka Rask",BirthPlace("Savonlinna", "FIN"))] =
+            PlayerInfo("Boston","Bruins",40, "G")
+        hashMap[HockeyPlayer("Jeremy Swayman",BirthPlace("Anchorage, AK", "USA"))] =
+            PlayerInfo("Boston","Bruins",1, "G")
+        hashMap[HockeyPlayer("Dan Vladar",BirthPlace("Prague", "CZE"))] =
+            PlayerInfo("Boston","Bruins",80, "G")
 
         // --------------------------------------------------------------------------------
 
-        hashMap.put("Pierre Engvall", NHLTeam("Toronto", "Maple Leafs", 47,"LW",BirthPlace("Ljungby", "SWE")))
-        hashMap.put("Nick Foligno", NHLTeam("Toronto", "Maple Leafs", 71,"LW",BirthPlace("Buffalo, NY", "USA")))
-        hashMap.put("Alex Galchenyuk", NHLTeam("Toronto", "Maple Leafs", 12,"C",BirthPlace("MILWAUKEE, WI","USA")))
-        hashMap.put("Zach Hyman", NHLTeam("Toronto", "Maple Leafs",11,"LW",BirthPlace("Toronto, ON", "CAN")))
-        hashMap.put("Alexander Kerfoot", NHLTeam("Toronto", "Maple Leafs",15,"C",BirthPlace("Vancouver, BC","CAN")))
-        hashMap.put("Kalle Kossila", NHLTeam("Toronto", "Maple Leafs", 48,"C",BirthPlace("Kauniainen","FIN")))
-        hashMap.put("Denis Malgin", NHLTeam("Toronto", "Maple Leafs", 62,"C",BirthPlace("Olten","CHE")))
-        hashMap.put("Mitchell Marner", NHLTeam("Toronto", "Maple Leafs",16,"RW",BirthPlace("Markham, ON","CAN")))
-        hashMap.put("Auston Matthews", NHLTeam("Toronto", "Maple Leafs",  34,"C",BirthPlace("San Ramon, CA","USA")))
-        hashMap.put("Ilya Mikheyev", NHLTeam("Toronto", "Maple Leafs", 65,"RW",BirthPlace("Omsk","RUS")))
-        hashMap.put("Riley Nash", NHLTeam("Toronto", "Maple Leafs", 20,"C",BirthPlace("Consort, AB","CAN")))
-        hashMap.put("Stefan Noesen", NHLTeam("Toronto", "Maple Leafs", 26,"RW",BirthPlace("Plano, TX","USA")))
-        hashMap.put("William Nylander", NHLTeam("Toronto", "Maple Leafs", 88,"RW",BirthPlace("Calgary, AB","CAN")))
-        hashMap.put("Scott Sabourin", NHLTeam("Toronto", "Maple Leafs", 49,"RW",BirthPlace("Orleans, ON", "CAN")))
-        hashMap.put("Wayne Simmonds", NHLTeam("Toronto", "Maple Leafs", 24,"RW",BirthPlace("Scarborough, ON","CAN")))
-        hashMap.put("Jason Spezza", NHLTeam("Toronto", "Maple Leafs", 19,"C",BirthPlace("Toronto, ON","CAN")))
-        hashMap.put("John Tavares", NHLTeam("Toronto", "Maple Leafs", 91,"C",BirthPlace("Mississauga, ON","CAN")))
-        hashMap.put("Joe Thornton", NHLTeam("Toronto", "Maple Leafs", 97,"C",BirthPlace("London, ON","CAN")))
-        hashMap.put("Zach Bogosian", NHLTeam("Toronto", "Maple Leafs", 22,"D",BirthPlace("Massena, NY","USA")))
-        hashMap.put("TJ Brodie", NHLTeam("Toronto", "Maple Leafs", 78,"D",BirthPlace("Chatham, ON","CAN")))
-        hashMap.put("Travis Dermott", NHLTeam("Toronto", "Maple Leafs",  23,"D",BirthPlace("Newmarket, ON","CAN")))
-        hashMap.put("Justin Holl", NHLTeam("Toronto", "Maple Leafs", 3,"D",BirthPlace("Tonka Bay, MN"," USA")))
-        hashMap.put("Mac Hollowell", NHLTeam("Toronto", "Maple Leafs", 81,"D",BirthPlace("Niagara Falls, ON","CAN")))
-        hashMap.put("Ben Hutton", NHLTeam("Toronto", "Maple Leafs", 55,"D",BirthPlace("Brockville, ON","CAN")))
-        hashMap.put("Martin Marincin", NHLTeam("Toronto", "Maple Leafs", 52,"D",BirthPlace("Kosice","SVK")))
-        hashMap.put("Jake Muzzin", NHLTeam("Toronto", "Maple Leafs", 8,"D",BirthPlace("Woodstock, ON","CAN")))
-        hashMap.put("Morgan Rielly", NHLTeam("Toronto", "Maple Leafs", 44,"D",BirthPlace("Vancouver, BC","CAN")))
-        hashMap.put("Calle Rosen", NHLTeam("Toronto", "Maple Leafs", 48,"D",BirthPlace("Vaxjo","SWE")))
-        hashMap.put("Rasmus Sandin", NHLTeam("Toronto", "Maple Leafs", 38,"D",BirthPlace("Uppsala","SWE")))
-        hashMap.put("Frederik Andersen", NHLTeam("Toronto", "Maple Leafs", 31,"G",BirthPlace("Herning", "DNK")))
-        hashMap.put("Jack Campbell", NHLTeam("Toronto", "Maple Leafs",36,"G",BirthPlace("Port Huron, MI","USA")))
-        hashMap.put("Michael Hutchinson", NHLTeam("Toronto", "Maple Leafs",30,"G",BirthPlace("Barrie, ON","CAN")))
-        hashMap.put("David Rittich", NHLTeam("Toronto", "Maple Leafs", 33,"G",BirthPlace("Jihlava","CZE")))
-        hashMap.put("Veini Vehvilainen", NHLTeam("Toronto", "Maple Leafs",35,"G",BirthPlace("Jyväskylä","FIN")))
-        hashMap.put("Joseph Woll", NHLTeam("Toronto", "Maple Leafs", 60,"G",BirthPlace("Dardenne Prairie, MO","USA")))
-
-        //printing the non-Empty hashMap
-        printHashMap(hashMap)
-        //using the overloaded print function of
-        //Kotlin language to get the same results
-        println("hashMap : $hashMap\n")
-
-        //hashMap traversal using a for loop
-        for (key in hashMap.keys) {
-            println("Element at key $key : ${hashMap[key]}")
-        }
-
-        //creating another hashMap object with
-        // the previous version of hashMap object
-        var secondHashMap: HashMap<String, NHLTeam> = HashMap(hashMap)
-
-        println("\n" + "Second HashMap : ")
-        for (key in secondHashMap.keys) {
-            //using hashMap.get() function to fetch the values
-            println("Element at key $key : ${hashMap.get(key)}")
-        }
-
-        //this will clear the whole map and make it empty
-        println("hashMap.clear()")
-        hashMap.clear()
-
-        println("After Clearing : $hashMap")
+        hashMap[HockeyPlayer("Pierre Engvall",BirthPlace("Ljungby", "SWE"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 47,"LW")
+        hashMap[HockeyPlayer("Nick Foligno",BirthPlace("Buffalo, NY", "USA"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 71,"LW")
+        hashMap[HockeyPlayer("Alex Galchenyuk",BirthPlace("MILWAUKEE, WI","USA"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 12,"C")
+        hashMap[HockeyPlayer("Zach Hyman",BirthPlace("Toronto, ON", "CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs",11,"LW")
+        hashMap[HockeyPlayer("Alexander Kerfoot",BirthPlace("Vancouver, BC","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs",15,"C")
+        hashMap[HockeyPlayer("Kalle Kossila",BirthPlace("Kauniainen","FIN"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 48,"C")
+        hashMap[HockeyPlayer("Denis Malgin",BirthPlace("Olten","CZE"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 62,"C")
+        hashMap[HockeyPlayer("Mitchell Marner",BirthPlace("Markham, ON","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs",16,"RW")
+        hashMap[HockeyPlayer("Auston Matthews",BirthPlace("San Ramon, CA","USA"))] =
+            PlayerInfo("Toronto", "Maple Leafs",  34,"C")
+        hashMap[HockeyPlayer("Ilya Mikheyev",BirthPlace("Omsk","RUS"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 65,"RW")
+        hashMap[HockeyPlayer("Riley Nash",BirthPlace("Consort, AB","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 20,"C")
+        hashMap[HockeyPlayer("Stefan Noesen",BirthPlace("Plano, TX","USA"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 26,"RW")
+        hashMap[HockeyPlayer("William Nylander",BirthPlace("Calgary, AB","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 88,"RW")
+        hashMap[HockeyPlayer("Scott Sabourin",BirthPlace("Orleans, ON", "CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 49,"RW")
+        hashMap[HockeyPlayer("Wayne Simmonds",BirthPlace("Scarborough, ON","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 24,"RW")
+        hashMap[HockeyPlayer("Jason Spezza",BirthPlace("Toronto, ON","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 19,"C")
+        hashMap[HockeyPlayer("John Tavares",BirthPlace("Mississauga, ON","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 91,"C")
+        hashMap[HockeyPlayer("Joe Thornton",BirthPlace("London, ON","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 97,"C")
+        hashMap[HockeyPlayer("Zach Bogosian",BirthPlace("Massena, NY","USA"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 22,"D")
+        hashMap[HockeyPlayer("TJ Brodie",BirthPlace("Chatham, ON","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 78,"D")
+        hashMap[HockeyPlayer("Travis Dermott",BirthPlace("Newmarket, ON","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs",  23,"D")
+        hashMap[HockeyPlayer("Justin Holl",BirthPlace("Tonka Bay, MN"," USA"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 3,"D")
+        hashMap[HockeyPlayer("Mac Hollowell",BirthPlace("Niagara Falls, ON","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 81,"D")
+        hashMap[HockeyPlayer("Ben Hutton",BirthPlace("Brockville, ON","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 55,"D")
+        hashMap[HockeyPlayer("Martin Marincin",BirthPlace("Kosice","SVK"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 52,"D")
+        hashMap[HockeyPlayer("Jake Muzzin",BirthPlace("Woodstock, ON","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 8,"D")
+        hashMap[HockeyPlayer("Morgan Rielly",BirthPlace("Vancouver, BC","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 44,"D")
+        hashMap[HockeyPlayer("Calle Rosen",BirthPlace("Vaxjo","SWE"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 48,"D")
+        hashMap[HockeyPlayer("Rasmus Sandin",BirthPlace("Uppsala","SWE"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 38,"D")
+        hashMap[HockeyPlayer("Frederik Andersen",BirthPlace("Herning", "DNK"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 31,"G")
+        hashMap[HockeyPlayer("Jack Campbell",BirthPlace("Port Huron, MI","USA"))] =
+            PlayerInfo("Toronto", "Maple Leafs",36,"G")
+        hashMap[HockeyPlayer("Michael Hutchinson",BirthPlace("Barrie, ON","CAN"))] =
+            PlayerInfo("Toronto", "Maple Leafs",30,"G")
+        hashMap[HockeyPlayer("David Rittich",BirthPlace("Jihlava","CZE"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 33,"G")
+        hashMap[HockeyPlayer("Veini Vehvilainen",BirthPlace("Jyväskylä","FIN"))] =
+            PlayerInfo("Toronto", "Maple Leafs",35,"G")
+        hashMap[HockeyPlayer("Joseph Woll",BirthPlace("Dardenne Prairie, MO","USA"))] =
+            PlayerInfo("Toronto", "Maple Leafs", 60,"G")
+        hashMap[HockeyPlayer("Wally Miller")] =
+            PlayerInfo("Toronto", "Maple Leafs", 99,"G")
 
     }
 
-    //function to print the hashMap
-    fun printHashMap(hashMap: HashMap<String, NHLTeam>) {
-        // isEmpty() function to check whether
-        // the hashMap is empty or not
-        if (hashMap.isEmpty()) {
-            println("hashMap is empty")
-        } else {
-            println("hashMap : $hashMap")
+    @Composable
+    fun DoKotlinHash(navController: NavController) {
+
+        var isInit by remember { mutableStateOf(true) }
+        var showInfo by remember { mutableStateOf(false) }
+        var playerName by remember { mutableStateOf("") }
+        val listHockeyPlayerName = remember { mutableStateListOf<String>() }
+
+        var name by remember { mutableStateOf("") }
+
+        if(isInit){
+            doInit()
+            //hashMap traversal using a for loop
+            for (key in hashMap.keys) {
+                println("Element at key $key : ${hashMap[key]}")
+                listHockeyPlayerName.add(key.name)
+            }
+            isInit = false
+        }
+
+        DoColumnHockeyPlayerName(listHockeyPlayerName, hashMap){
+            if(!showInfo){
+                showInfo = !showInfo
+                playerName = it
+            }
+        }
+
+        if(showInfo){
+            val pInfo:PlayerInfo = getValueFromName(playerName)
+            BoxWithConstraints(modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Gray)
+                .offset(10.dp, 10.dp)) {
+                DoInfoBox(playerName, pInfo) {
+                    showInfo = !showInfo
+                }
+            }
+        }
+
+
+    }
+
+    @Composable
+    fun DoInfoBox(playerName:String, pInfo:PlayerInfo, callback: () -> Unit){
+
+        println(pInfo)
+
+
+            Box(modifier = Modifier
+                .height(350.dp)
+                .width(350.dp)
+                .border(5.dp, color = Color.Black, shape = RectangleShape)
+                .background(Color.White)
+                )
+            {
+
+
+                Column(modifier = Modifier.offset(x=25.dp, y=25.dp)){
+                    Text("player name: $playerName")
+                    Text("**************************************")
+                    Text("team: ${pInfo.team}")
+                    Text("city: ${pInfo.city}")
+                    Text("position: ${pInfo.position}")
+                    Text("number: ${pInfo.num}")
+                }
+
+
+                Button(modifier = Modifier.offset(x=250.dp, y=300.dp), onClick = { callback() }) {
+                    Text("close")
+                }
+            }
+
+
+
+    }
+
+    @Composable
+    fun DoColumnHockeyPlayerName(listHockeyPlayerName:MutableList<String>, hashMap: HashMap<HockeyPlayer, PlayerInfo>, callback:(String) -> Unit){
+
+        val scrollState = rememberScrollState()
+
+        Column(modifier = Modifier.verticalScroll(scrollState)){
+            for (name in listHockeyPlayerName){
+                TextHockeyPlayer(name){
+                    callback(name)
+                }
+            }
         }
     }
 
+    @Composable
+    fun TextHockeyPlayer(name:String, callback: (String) -> Unit){
 
-}
+        Text(name, modifier = Modifier.clickable{
+            callback(name)
+        })
 
-data class NHLTeam(val city:String, val team:String, val num:Int, val position:String, val birthPlace:BirthPlace){
+    }
 
-}
+    private fun getValueFromName(name: String): PlayerInfo {
+        var playerInfo = PlayerInfo()
+            for (key in hashMap.keys) {
+                if(key.name == name){
+                    playerInfo = hashMap[key]!!
+                }
+            }
+        return playerInfo
+    }
 
-data class BirthPlace(val city: String, val country:String){}
+} // end class
+
+data class HockeyPlayer(val name:String, val birthPlace:BirthPlace? = null)
+
+data class PlayerInfo(val city:String? = null, val team:String?= null, val num:Int?= null, val position:String?= null)
+
+data class BirthPlace(val city: String, val country:String)
