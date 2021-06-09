@@ -3,15 +3,20 @@ package com.example.mycompose.hashmap
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import java.util.*
+import kotlin.collections.HashMap
 
 /**
  *  A NOT SO simple example of HashMap class defined
@@ -22,6 +27,8 @@ import androidx.navigation.NavController
 class KotlinHash {
 
     var hashMap: HashMap<HockeyPlayer, PlayerInfo> = HashMap()
+
+    lateinit var navController: NavController
 
     private fun doInit(){
 
@@ -186,12 +193,12 @@ class KotlinHash {
     @Composable
     fun DoKotlinHash(navController: NavController) {
 
+        this.navController = navController
+
         var isInit by remember { mutableStateOf(true) }
         var showInfo by remember { mutableStateOf(false) }
         var playerName by remember { mutableStateOf("") }
         val listHockeyPlayerName = remember { mutableStateListOf<String>() }
-
-        var name by remember { mutableStateOf("") }
 
         if(isInit){
             doInit()
@@ -200,10 +207,10 @@ class KotlinHash {
                 println("Element at key $key : ${hashMap[key]}")
                 listHockeyPlayerName.add(key.name)
             }
-            isInit = false
+            isInit = false // <- why does Kotlin say this is never used??
         }
 
-        DoColumnHockeyPlayerName(listHockeyPlayerName, hashMap){
+        DoColumnHockeyPlayerName(listHockeyPlayerName){
             if(!showInfo){
                 showInfo = !showInfo
                 playerName = it
@@ -211,10 +218,12 @@ class KotlinHash {
         }
 
         if(showInfo){
-            val pInfo:PlayerInfo = getValueFromName(playerName)
-            val bInfo:BirthPlace = getBirthPlaceFromName(playerName)
 
-            if(pInfo.city == null){
+            val playerFullName = getPlayerFullName(playerName) // <- replaces case insensitive search value with proper name
+            val pInfo:PlayerInfo = getValueFromName(playerFullName)
+            val bInfo:BirthPlace = getBirthPlaceFromName(playerFullName)
+
+            if(pInfo.city == null){ // <- in the event that the search returns nothing
                 showInfo = !showInfo
             }
 
@@ -222,7 +231,8 @@ class KotlinHash {
                 .fillMaxSize()
                 .background(Color.Gray)
                 .offset(10.dp, 10.dp)) {
-                DoInfoBox(playerName, pInfo, bInfo) {
+
+                DoInfoBox(playerFullName, pInfo, bInfo) {
                     showInfo = !showInfo
                     if(it != "close"){
                         println("Searching for: $it")
@@ -230,11 +240,9 @@ class KotlinHash {
                         showInfo = !showInfo
                     }
                 }
+
             }
         }
-
-
-
     }
 
     @Composable
@@ -262,6 +270,7 @@ class KotlinHash {
                     Text("         country: ${bInfo.country}")
                     Spacer(modifier = Modifier.height(10.dp))
 
+                    // Search Field
                     TextField(
                         value = text,
                         onValueChange = {
@@ -284,32 +293,47 @@ class KotlinHash {
 
 
     @Composable
-    fun DoColumnHockeyPlayerName(listHockeyPlayerName:MutableList<String>, hashMap: HashMap<HockeyPlayer, PlayerInfo>, callback:(String) -> Unit){
-
+    fun DoColumnHockeyPlayerName(listHockeyPlayerName: MutableList<String>, callback: (String) -> Unit){
         val scrollState = rememberScrollState()
-
-        Column(modifier = Modifier.verticalScroll(scrollState)){
+        Column(modifier = Modifier.verticalScroll(scrollState).fillMaxWidth()){
             for (name in listHockeyPlayerName){
                 TextHockeyPlayer(name){
                     callback(name)
                 }
             }
         }
+
+        Icon(
+            Icons.Filled.Menu, "menu", tint = Color.Gray,
+            modifier = Modifier
+                .height(50.dp)
+                .width(50.dp)
+                .offset(x=250.dp, y=10.dp)
+                .clickable { println(this.navController.navigate("welcome"))})
     }
 
     @Composable
     fun TextHockeyPlayer(name:String, callback: (String) -> Unit){
-
         Text(name, modifier = Modifier.clickable{
             callback(name)
         })
+    }
 
+
+    fun getPlayerFullName(name:String):String{
+        var playerName = ""
+        for (key in hashMap.keys) {
+            if (key.name.equals(name, ignoreCase = true)){
+                playerName = key.name!!
+            }
+        }
+        return playerName
     }
 
     private fun getValueFromName(name: String): PlayerInfo {
         var playerInfo = PlayerInfo()
             for (key in hashMap.keys) {
-                if(key.name == name){
+                if (key.name.equals(name, ignoreCase = true)){
                     playerInfo = hashMap[key]!!
                 }
             }
