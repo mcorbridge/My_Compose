@@ -221,7 +221,7 @@ class KotlinHash {
 
             val playerFullName = getPlayerFullName(playerName) // <- replaces case insensitive search value with proper name
             val pInfo:PlayerInfo = getValueFromName(playerFullName)
-            val bInfo:BirthPlace = getBirthPlaceFromName(playerFullName)
+            val bPlace:BirthPlace = getBirthPlaceFromName(playerFullName)
 
             if(pInfo.city == null){ // <- in the event that the search returns nothing
                 showInfo = !showInfo
@@ -229,10 +229,11 @@ class KotlinHash {
 
             BoxWithConstraints(modifier = Modifier
                 .fillMaxSize()
+
                 .background(Color.Gray)
                 .offset(10.dp, 10.dp)) {
 
-                DoInfoBox(playerFullName, pInfo, bInfo) {
+                DoInfoBox(playerFullName, pInfo, bPlace) {
                     showInfo = !showInfo
                     if(it != "close"){
                         println("Searching for: $it")
@@ -324,7 +325,7 @@ class KotlinHash {
         var playerName = ""
         for (key in hashMap.keys) {
             if (key.name.equals(name, ignoreCase = true)){
-                playerName = key.name!!
+                playerName = key.name
             }
         }
         return playerName

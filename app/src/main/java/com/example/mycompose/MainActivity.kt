@@ -1,7 +1,15 @@
 package com.example.mycompose
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -29,6 +37,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -38,6 +48,7 @@ import com.example.mycompose.canvas.TestCanvas
 import com.example.mycompose.checkbox.TestCheckbox
 import com.example.mycompose.clock.ComposeClock
 import com.example.mycompose.comps.FooComposables
+import com.example.mycompose.coroutine.TestComposeCoroutine
 import com.example.mycompose.dragdrop.TestDragDrop
 import com.example.mycompose.drawer.TestDrawer
 import com.example.mycompose.effects.TestEffects
@@ -71,6 +82,9 @@ class MainActivity : AppCompatActivity() {
 
     private val testViewModel by viewModels<TestViewModel>()
 
+    private lateinit var locationManager: LocationManager
+    private val locationPermissionCode = 2
+
     var fooComposables = FooComposables()
     var fooComposablex = FooComposablex()
     var testAnimate = TestAnimate()
@@ -86,25 +100,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO send screen dimensions to all composable screens
-
         testViewModel.setScreenDims(applicationContext)
 
-        /*setContent {
-
-            MyApp {
-                val fooState = remember { mutableStateOf("Foo State") }
-                //MyScreenContent()
-                //LazyColumnDemo()
-                //FooLazyColumn()
-                //MyComposeList()
-                //HelloContent()("foo")
-                //NamePicker("Pick A Name!",nmList) {}
-                TestColumn()
-                TestText("fooState")
-            }
-
-        }*/
+        checkPermission()
 
         setContent {
 
@@ -174,8 +172,8 @@ class MainActivity : AppCompatActivity() {
                         FourteenthScreen(navController, testViewModel)
                     }
 
-                    composable("fifthteenthScreen") {
-                        FifthteenthScreen(navController, testViewModel)
+                    composable("fifteenthScreen") {
+                        FifteenthScreen(navController, testViewModel)
                     }
 
                     composable("sixteenthScreen") {
@@ -290,10 +288,59 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
 
+                    composable("kotlinCoroutine") {
+                        ScreenTransitions.ExampleAnimation {
+                            TestKotlinCoroutine(navController, testViewModel)
+                        }
+                    }
+
                 }
             }
         }
     }
+
+    private fun getLocation() {
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, LocationListener {
+            onLocationChanged(it)
+        })
+    }
+
+    fun onLocationChanged(location: Location) {
+        var locationText = ("Latitude: ${location.latitude} Longitude: ${location.longitude} Altitude: ${location.altitude} Accuracy: ${location.accuracy}")
+        Toast.makeText(this, locationText, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == locationPermissionCode) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    fun checkPermission(){
+        if (ContextCompat.checkSelfPermission(this@MainActivity,
+                Manifest.permission.ACCESS_FINE_LOCATION) !=
+            PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this@MainActivity,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                ActivityCompat.requestPermissions(this@MainActivity,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+            } else {
+                ActivityCompat.requestPermissions(this@MainActivity,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+            }
+        }
+    }
+
 
 
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -409,9 +456,9 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier.clickable(onClick = {
                         toggle = !toggle
                         if (toggle) {
-                            headerName = "You Suck!"
+                            headerName = "Go Bruins!"
                         } else {
-                            headerNameAlt = "Fuck You!"
+                            headerNameAlt = "Go Habs!"
                         }
                     })
                 )
@@ -872,6 +919,7 @@ class MainActivity : AppCompatActivity() {
 
     var tobble = true
 
+    @SuppressLint("NewApi")
     @ExperimentalAnimationApi
     @Composable
     fun WelcomeScreen(navController: NavController, testViewModel: TestViewModel) {
@@ -969,6 +1017,24 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 Spacer(modifier = Modifier.width(16.dp))
+
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row {
+
+                Button(onClick = { navController.navigate("kotlinCoroutine") }) {
+                    Text(text = "coroutine")
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = {
+                    getLocation()
+                }) {
+                    Text(text = "location")
+                }
 
             }
 
@@ -1191,7 +1257,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Composable
-    fun FifthteenthScreen(navController: NavController, testViewModel: TestViewModel) {
+    fun FifteenthScreen(navController: NavController, testViewModel: TestViewModel) {
         TestState.MakeState()
     }
 
@@ -1351,11 +1417,19 @@ class MainActivity : AppCompatActivity() {
         kotlinHash.DoKotlinHash(navController = navController)
     }
 
+    @Composable
+    fun TestKotlinCoroutine(navController: NavController, testViewModel: TestViewModel) {
+        var testComposeCoroutine = TestComposeCoroutine(navController, testViewModel)
+        testComposeCoroutine.DoTestCoroutine()
+    }
+
 } // end class
 
 enum class MyColors(val color: Color) {
     Red(Color.Red), Green(Color.Green), Blue(Color.Blue)
 }
+
+
 
 
 
