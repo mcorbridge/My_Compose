@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -59,6 +60,7 @@ import com.example.mycompose.icons.TestIcons
 import com.example.mycompose.image.TestImage
 import com.example.mycompose.inlineFun.TestInlineFun
 import com.example.mycompose.layouts.TestRow
+import com.example.mycompose.location.ComposeLocation
 import com.example.mycompose.menu.MenuTwo
 import com.example.mycompose.models.TestViewModel
 import com.example.mycompose.nhl.AnotherNHL
@@ -92,6 +94,7 @@ class MainActivity : AppCompatActivity() {
     var testRow = TestRow()
     var testDrawer = TestDrawer()
     var testScaffold = TestScaffold()
+    lateinit var navController:NavController
 
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -108,9 +111,9 @@ class MainActivity : AppCompatActivity() {
 
             MyComposeTheme {
 
-                val navController = rememberNavController()
+                navController = rememberNavController()
 
-                NavHost(navController, startDestination = "welcome") {
+                NavHost(navController as NavHostController, startDestination = "welcome") {
 
                     composable("welcome") {
                         WelcomeScreen(navController, testViewModel)
@@ -294,6 +297,15 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
 
+                    composable("composeLocation") {
+
+                        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+                        ScreenTransitions.ExampleAnimation {
+                            TestComposeLocation(navController, testViewModel, locationManager)
+                        }
+                    }
+
                 }
             }
         }
@@ -312,6 +324,7 @@ class MainActivity : AppCompatActivity() {
     fun onLocationChanged(location: Location) {
         var locationText = ("Latitude: ${location.latitude} Longitude: ${location.longitude} Altitude: ${location.altitude} Accuracy: ${location.accuracy}")
         Toast.makeText(this, locationText, Toast.LENGTH_SHORT).show()
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -1031,7 +1044,8 @@ class MainActivity : AppCompatActivity() {
                 Spacer(modifier = Modifier.width(16.dp))
 
                 Button(onClick = {
-                    getLocation()
+                    //getLocation()
+                    navController.navigate("composeLocation")
                 }) {
                     Text(text = "location")
                 }
@@ -1421,6 +1435,16 @@ class MainActivity : AppCompatActivity() {
     fun TestKotlinCoroutine(navController: NavController, testViewModel: TestViewModel) {
         var testComposeCoroutine = TestComposeCoroutine(navController, testViewModel)
         testComposeCoroutine.DoTestCoroutine()
+    }
+
+    @Composable
+    fun TestComposeLocation(
+        navController: NavController,
+        testViewModel: TestViewModel,
+        locationManager: LocationManager
+    ) {
+        var composeLocation = ComposeLocation(navController, testViewModel, locationManager)
+        composeLocation.DoLocation()
     }
 
 } // end class
