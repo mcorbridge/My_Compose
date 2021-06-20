@@ -29,6 +29,10 @@ class ComposeLocation(navController: NavController, testViewModel: TestViewModel
         var locationAccuracy by remember { mutableStateOf("Accuracy pending...") }
         var isLocationFound by remember { mutableStateOf(false) }
 
+        /**
+         * this is a good example of 'thinking in compose'
+         * normally in a declarative paradigm we would create ONE Text UI and update
+         */
         Column {
             if(!isLocationFound){
                 LocationMessage(locationLongitude)
@@ -41,7 +45,6 @@ class ComposeLocation(navController: NavController, testViewModel: TestViewModel
                 LocationMessage(locationAltitude, true)
                 LocationMessage(locationAccuracy, true)
             }
-
         }
 
 
@@ -55,6 +58,9 @@ class ComposeLocation(navController: NavController, testViewModel: TestViewModel
     }
 
 
+    /**
+     * we don't use this, but it is a good example of implementing a lambda
+     */
     private fun onLocationChanged(location: Location, callback:(String) -> Unit) {
         val locationText = ("Latitude: ${location.latitude} Longitude: ${location.longitude} Altitude: ${location.altitude} Accuracy: ${location.accuracy}")
         println(locationText)

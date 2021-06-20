@@ -97,6 +97,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var navController:NavController
 
 
+    @SuppressLint("NewApi")
     @RequiresApi(Build.VERSION_CODES.N)
     @ExperimentalFoundationApi
     @ExperimentalAnimationApi
@@ -292,8 +293,9 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     composable("kotlinCoroutine") {
+                        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
                         ScreenTransitions.ExampleAnimation {
-                            TestKotlinCoroutine(navController, testViewModel)
+                            TestKotlinCoroutine(navController, testViewModel, locationManager)
                         }
                     }
 
@@ -1431,9 +1433,10 @@ class MainActivity : AppCompatActivity() {
         kotlinHash.DoKotlinHash(navController = navController)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @Composable
-    fun TestKotlinCoroutine(navController: NavController, testViewModel: TestViewModel) {
-        var testComposeCoroutine = TestComposeCoroutine(navController, testViewModel)
+    fun TestKotlinCoroutine(navController: NavController, testViewModel: TestViewModel, locationManager: LocationManager) {
+        var testComposeCoroutine = TestComposeCoroutine(navController, testViewModel, locationManager)
         testComposeCoroutine.DoTestCoroutine()
     }
 
