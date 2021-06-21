@@ -35,6 +35,11 @@ class TestComposeCoroutine(
         FunWithLocation()
     }
 
+    /**
+     * provider – a provider listed by getAllProviders()
+     * minTimeMs – minimum time interval between location updates in milliseconds
+     * minDistanceM – minimum distance between location updates in meters
+     */
     @SuppressLint("MissingPermission")
     private suspend fun getLocation(callback: (Location) -> Unit) {
         managerLocation.requestLocationUpdates(
@@ -63,14 +68,21 @@ class TestComposeCoroutine(
 
                     locationInfo = "longitude: ${it.longitude} \n" +
                             "latitude: ${it.latitude} \n" +
-                            "altitude: ${it.altitude} \n" +
+                            "altitude: ${it.altitude} \n" + // meters above the WGS 84 reference ellipsoid.
                             "accuracy: ${it.accuracy} \n" +
+                            // Bearing is the horizontal direction of travel of this device, and is not related to the device orientation.
+                            // It is guaranteed to be in the range (0.0, 360.0] if the device has a bearing.
                             "bearing: ${it.bearing} \n" +
                             "bearingAccuracyDegrees: ${it.bearingAccuracyDegrees} \n" +
                             "elapsedRealtimeNanos: ${it.elapsedRealtimeNanos} \n" +
                             "isFromMockProvider: ${it.isFromMockProvider} \n" +
                             "provider: ${it.provider} \n" +
-                            "speed: ${it.speed} "
+                            "speed: ${it.speed} " // meters/second over ground.
+
+                    println(locationInfo)
+
+                    // lat 41.61717844, lon -70.44669206  (41.61717844, -70.44669206) (41°37'02.0"N 70°26'48.0"W)
+                    // Orthometric height (height above EGM96 geoid which approximates mean sea level): 27.8m 91.2 ft
                 }
             }
         }

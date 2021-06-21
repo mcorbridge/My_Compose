@@ -28,10 +28,14 @@ class ComposeLocation(navController: NavController, testViewModel: TestViewModel
         var locationAltitude by remember { mutableStateOf("Altitude pending...") }
         var locationAccuracy by remember { mutableStateOf("Accuracy pending...") }
         var isLocationFound by remember { mutableStateOf(false) }
+        var numLocations by remember { mutableStateOf(0)}
 
         /**
-         * this is a good example of 'thinking in compose'
-         * normally in a declarative paradigm we would create ONE Text UI and update
+         * This is a good example of 'thinking in compose'
+         * Normally in a imperative programming paradigm we would create ONE Text UI and update it
+         * by using findViewById()
+         * Compose is a declarative programming paradigm where any UI that displays a mutable value
+         * is *recomposed* with the updated value
          */
         Column {
             if(!isLocationFound){
@@ -44,6 +48,7 @@ class ComposeLocation(navController: NavController, testViewModel: TestViewModel
                 LocationMessage(locationLatitude, true)
                 LocationMessage(locationAltitude, true)
                 LocationMessage(locationAccuracy, true)
+                Text("Request Location Updates: $numLocations")
             }
         }
 
@@ -54,6 +59,7 @@ class ComposeLocation(navController: NavController, testViewModel: TestViewModel
             locationAltitude = "Altitude: ${location.altitude}"
             locationAccuracy = "Accuracy: ${location.accuracy}"
             isLocationFound = true
+            numLocations++
         })
     }
 
@@ -72,9 +78,13 @@ class ComposeLocation(navController: NavController, testViewModel: TestViewModel
     fun LocationMessage(locationText:String, locationFound:Boolean = false){
 
         if(!locationFound){
-            Text(locationText, color = Color.White, modifier = Modifier.background(Color.Gray).fillMaxWidth())
+            Text(locationText, color = Color.White, modifier = Modifier
+                .background(Color.Gray)
+                .fillMaxWidth())
         }else{
-            Text(locationText, color = Color.Yellow, fontSize = 20.sp, modifier = Modifier.background(Color.Blue).fillMaxWidth())
+            Text(locationText, color = Color.Yellow, fontSize = 20.sp, modifier = Modifier
+                .background(Color.Blue)
+                .fillMaxWidth())
         }
 
     }

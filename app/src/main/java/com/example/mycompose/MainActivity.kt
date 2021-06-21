@@ -75,7 +75,11 @@ import com.example.mycompose.ui.theme.MyComposeTheme
 import com.example.mycompose.utils.FooComposablex
 import com.example.mycompose.ztate.TestState
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
 
+/**
+ * The GOD class
+ */
 class MainActivity : AppCompatActivity() {
 
     var isTrue = true
@@ -106,6 +110,7 @@ class MainActivity : AppCompatActivity() {
 
         testViewModel.setScreenDims(applicationContext)
 
+        // initiates the Location functionality
         checkPermission()
 
         setContent {
@@ -323,7 +328,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun onLocationChanged(location: Location) {
+    private fun onLocationChanged(location: Location) {
         var locationText = ("Latitude: ${location.latitude} Longitude: ${location.longitude} Altitude: ${location.altitude} Accuracy: ${location.accuracy}")
         Toast.makeText(this, locationText, Toast.LENGTH_SHORT).show()
 
@@ -341,7 +346,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun checkPermission(){
+    private fun checkPermission(){
         if (ContextCompat.checkSelfPermission(this@MainActivity,
                 Manifest.permission.ACCESS_FINE_LOCATION) !=
             PackageManager.PERMISSION_GRANTED) {
@@ -404,7 +409,7 @@ class MainActivity : AppCompatActivity() {
                 onValueChange = {
                     onNameChange(it)
                     doFoo()
-                    doBar(it.toUpperCase())
+                    doBar(it.uppercase(Locale.getDefault()))
                 },
                 label = { Text("Enter First Name") }
             )
