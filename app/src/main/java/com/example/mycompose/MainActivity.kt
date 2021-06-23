@@ -61,6 +61,7 @@ import com.example.mycompose.image.TestImage
 import com.example.mycompose.inlineFun.TestInlineFun
 import com.example.mycompose.layouts.TestRow
 import com.example.mycompose.location.ComposeLocation
+import com.example.mycompose.location.Nmea
 import com.example.mycompose.menu.MenuTwo
 import com.example.mycompose.models.TestViewModel
 import com.example.mycompose.nhl.AnotherNHL
@@ -310,6 +311,15 @@ class MainActivity : AppCompatActivity() {
 
                         ScreenTransitions.ExampleAnimation {
                             TestComposeLocation(navController, testViewModel, locationManager)
+                        }
+                    }
+
+                    composable("nmea") {
+
+                        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+                        ScreenTransitions.ExampleAnimation {
+                            NationalMarineElectronicsAssociation(navController, testViewModel, locationManager)
                         }
                     }
 
@@ -1057,6 +1067,15 @@ class MainActivity : AppCompatActivity() {
                     Text(text = "location")
                 }
 
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = {
+                    //getLocation()
+                    navController.navigate("nmea")
+                }) {
+                    Text(text = "NMEA")
+                }
+
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -1454,6 +1473,19 @@ class MainActivity : AppCompatActivity() {
         var composeLocation = ComposeLocation(navController, testViewModel, locationManager)
         composeLocation.DoLocation()
     }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    @Composable
+    fun NationalMarineElectronicsAssociation(
+        navController: NavController,
+        testViewModel: TestViewModel,
+        locationManager: LocationManager
+    ) {
+        var nmea = Nmea(navController, testViewModel, locationManager)
+        nmea.doNmea()
+    }
+
+
 
 } // end class
 

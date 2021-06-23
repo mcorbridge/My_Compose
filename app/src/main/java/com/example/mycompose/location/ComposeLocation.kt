@@ -7,6 +7,7 @@ import android.location.LocationManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -49,19 +50,27 @@ class ComposeLocation(navController: NavController, testViewModel: TestViewModel
                 LocationMessage(locationAltitude, true)
                 LocationMessage(locationAccuracy, true)
                 Text("Request Location Updates: $numLocations")
+                Button(onClick = {
+                    managerLocation.removeUpdates {
+                        println("not sure how this works")
+                    }
+                }) {
+                    Text("clear location")
+                }
             }
         }
 
-
         managerLocation.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, LocationListener { location ->
-            locationLongitude = "Longitude: ${location.longitude}"
-            locationLatitude = "Latitude: ${location.latitude}"
-            locationAltitude = "Altitude: ${location.altitude}"
-            locationAccuracy = "Accuracy: ${location.accuracy}"
-            isLocationFound = true
-            numLocations++
+                locationLongitude = "Longitude: ${location.longitude}"
+                locationLatitude = "Latitude: ${location.latitude}"
+                locationAltitude = "Altitude: ${location.altitude}"
+                locationAccuracy = "Accuracy: ${location.accuracy}"
+                isLocationFound = true
+                numLocations++
         })
     }
+
+
 
 
     /**
