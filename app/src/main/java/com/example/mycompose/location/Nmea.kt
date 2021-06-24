@@ -20,10 +20,17 @@ import androidx.navigation.NavController
 import com.example.mycompose.models.TestViewModel
 import kotlinx.coroutines.launch
 
+/**
+ * this is a bit messy
+ * and I will probably clean it up at some point, but it currently gets the job done
+ * my task was to find a way to get actual elevation fro NMEA data...
+ * I'm only 1/2 way there
+ */
+
 class Nmea(
     navController: NavController,
     testViewModel: TestViewModel,
-    locationManager: LocationManager
+    var locationManager: LocationManager
 ) {
 
     companion object {
@@ -31,9 +38,6 @@ class Nmea(
         var counter = 0
     }
 
-    var locationManager: LocationManager = locationManager
-
-    //lateinit var locationManager: LocationManager
     private var mOnNmeaMessageListener: OnNmeaMessageListener? = null
 
 
@@ -96,8 +100,6 @@ class Nmea(
             locationInfo = "pending..."
             coroutineScope.launch {
                 val location = getLocation() {
-
-
                 }
             }
         }
@@ -127,10 +129,23 @@ class Nmea(
         }
     }
 
+    /**
+     * h = height above ellipsoid
+     * H = elevation, orthometric height <- this is what we want
+     * N = geoidal separation (some books call this the geoidal height)
+     * H = h – N
+     */
     private fun nmeaProgress(rawNmea: String, callback: (String) -> Unit) {
+        println(rawNmea)
         if (rawNmea.contains("GNGGA")) {
             var tmp: Sequence<String> = rawNmea.trim().splitToSequence(',')
-            callback("Altitude Mean sea level altitude: ${ tmp.elementAt(9) }m, Geoidal Separation: ${ tmp.elementAt(11) }m")
+
+            var H = tmp.elementAt(9).toFloat() - tmp.elementAt(11).toFloat()
+
+            callback("Num Satellites ${tmp.elementAt(7)}, " +
+                    "Altitude Mean sea level altitude: ${ tmp.elementAt(9) }m, " +
+                    "Geoidal Separation: ${ tmp.elementAt(11) }m " +
+                    "elevation: ${H.toString()} ft")
         }
     }
 
