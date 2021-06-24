@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.hardware.SensorManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -68,6 +69,7 @@ import com.example.mycompose.nhl.AnotherNHL
 import com.example.mycompose.room.TestingRoom
 import com.example.mycompose.scaffold.TestScaffold
 import com.example.mycompose.sealed.TestSealedClass
+import com.example.mycompose.sensors.TestAndroidSensors
 import com.example.mycompose.sinWave.*
 import com.example.mycompose.state.ManagingState
 import com.example.mycompose.text.TestingText
@@ -90,6 +92,8 @@ class MainActivity : AppCompatActivity() {
     private val testViewModel by viewModels<TestViewModel>()
 
     private lateinit var locationManager: LocationManager
+    private lateinit var sensorManager: SensorManager
+
     private val locationPermissionCode = 2
 
     var fooComposables = FooComposables()
@@ -320,6 +324,13 @@ class MainActivity : AppCompatActivity() {
 
                         ScreenTransitions.ExampleAnimation {
                             NationalMarineElectronicsAssociation(navController, testViewModel, locationManager)
+                        }
+                    }
+
+                    composable("kotlinSensor") {
+                        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+                        ScreenTransitions.ExampleAnimation {
+                            AndroidSensors(navController, testViewModel, sensorManager)
                         }
                     }
 
@@ -1080,6 +1091,12 @@ class MainActivity : AppCompatActivity() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            Row{
+                Button(onClick = { navController.navigate("kotlinSensor") }) {
+                    Text(text = "sensors")
+                }
+            }
+
             AnimatedVisibility(
                 visible = toggle, enter = slideInVertically(
                     // Enters by sliding down from offset -fullHeight to 0.
@@ -1485,7 +1502,11 @@ class MainActivity : AppCompatActivity() {
         nmea.doNmea()
     }
 
-
+    @Composable
+    fun AndroidSensors(navController: NavController, testViewModel: TestViewModel, sensorManager: SensorManager) {
+       var testAndroidSensors = TestAndroidSensors(navController, sensorManager)
+        testAndroidSensors.DoTest()
+    }
 
 } // end class
 
