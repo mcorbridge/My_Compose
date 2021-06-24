@@ -9,12 +9,15 @@ import android.hardware.SensorManager
 import android.os.IBinder
 import android.os.IInterface
 import android.os.Parcel
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -22,6 +25,7 @@ import java.io.FileDescriptor
 
 class TestAndroidSensors(var navController: NavController, var sensorManager: SensorManager) {
 
+    private lateinit var pressureListener:SensorEventListener
 
     @Composable
     fun DoTest(){
@@ -31,34 +35,64 @@ class TestAndroidSensors(var navController: NavController, var sensorManager: Se
     @Composable
     fun SensorNavigation(){
 
-        Row{
+        var listPressure = remember{ mutableStateListOf<String>() }
+        val scrollState = rememberScrollState()
+        var ndx = -1
 
-            Button(onClick = {
-                setUp()
-            }) {
-                Text("setup")
+        Column{
+            Row{
+                Button(onClick = {
+                    setUp {
+                        ndx++
+                        if(ndx == 0){
+                            listPressure.add(it)
+                        }else if(ndx >= 10){
+                            ndx = -1
+                        }
+                    }
+                }) {
+                    Text("setup")
+                }
+
+                Spacer(modifier=Modifier.width(16.dp))
+
+                Button(onClick = {
+                    removeListener()
+                }) {
+                    Text("Stop")
+                }
+
+                Spacer(modifier=Modifier.width(16.dp))
+
+                Button(onClick = {
+                    navController.navigate("welcome")
+                }) {
+                    Text("Main Menu")
+                }
             }
 
-            Spacer(modifier=Modifier.width(16.dp))
-
-            Button(onClick = {
-                navController.navigate("welcome")
-            }) {
-                Text("Main Menu")
+            Column(modifier = Modifier.verticalScroll(scrollState)){
+                listPressure.forEach { message ->
+                    Text(message)
+                }
             }
         }
-
     }
 
+    private fun removeListener(){
+        println("Remove sensor listener")
+        sensorManager.unregisterListener(pressureListener)
+    }
 
-    private fun setUp(){
+    private fun setUp(callback: (String) -> Unit){
 
-//        sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)?.also { accelerometer ->
-//            sensorManager.registerListener(MyAccelerometerListener(), accelerometer, SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI)
-//        }
+        pressureListener = MyPressureListener {
+            callback(it)
+        }
 
         sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE)?.also { pressure ->
-            sensorManager.registerListener(MyPressureListener(), pressure, SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI)
+            sensorManager.registerListener(pressureListener, pressure, SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI)
+            callback(pressure.toString())
         }
 
     }
@@ -78,20 +112,16 @@ class MyAccelerometerListener : Service(), SensorEventListener{
     override fun onBind(intent: Intent?): IBinder? {
         println("--------------------------------Pressure onAccuracyChanged------------------------------------")
         println(intent.toString())
-        val thisBinder = MyBinder()
-        return thisBinder
+        return MyBinder()
     }
 
 }
 
-class MyPressureListener : Service(), SensorEventListener{
+class MyPressureListener(val callback: (String) -> Unit) : Service(), SensorEventListener{
+
     override fun onSensorChanged(event: SensorEvent?) {
         if(event?.sensor?.type == Sensor.TYPE_PRESSURE) {
-            println("--------------------------------Pressure onSensorChanged------------------------------------")
-            event.values.forEach {
-                println("$it hPa (millibar)")
-            }
-            println("--------------------------------------------------------------------------------------------")
+            callback("----------------------> ${event.values[0]} hPa (millibar)")
         }
     }
 
@@ -103,8 +133,7 @@ class MyPressureListener : Service(), SensorEventListener{
     override fun onBind(intent: Intent?): IBinder? {
         println("--------------------------------Pressure onBind------------------------------------")
         println(intent.toString())
-        val thisBinder = MyBinder()
-        return thisBinder
+        return MyBinder()
     }
 
 }
