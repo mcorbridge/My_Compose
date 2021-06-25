@@ -59,6 +59,7 @@ import com.example.mycompose.dragdrop.TestDragDrop
 import com.example.mycompose.drawer.TestDrawer
 import com.example.mycompose.effects.TestEffects
 import com.example.mycompose.firebase.TestFirestore
+import com.example.mycompose.geomagnetic.AndroidGeomagnetic
 import com.example.mycompose.hashmap.KotlinHash
 import com.example.mycompose.hoisting.TestStateHoisting
 import com.example.mycompose.icons.TestIcons
@@ -70,13 +71,13 @@ import com.example.mycompose.location.Nmea
 import com.example.mycompose.menu.MenuTwo
 import com.example.mycompose.models.TestViewModel
 import com.example.mycompose.nhl.AnotherNHL
+import com.example.mycompose.proximity.TestProximity
 import com.example.mycompose.room.TestingRoom
 import com.example.mycompose.scaffold.TestScaffold
 import com.example.mycompose.sealed.TestSealedClass
 import com.example.mycompose.sensors.TestAndroidSensors
 import com.example.mycompose.sinWave.*
 import com.example.mycompose.state.ManagingState
-import com.example.mycompose.temperature.AndroidTemp
 import com.example.mycompose.text.TestingText
 import com.example.mycompose.transition.*
 import com.example.mycompose.ui.theme.MyComposeTheme
@@ -367,6 +368,20 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
 
+                    composable("kotlinGeomagnetic") {
+                        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+                        ScreenTransitions.ExampleAnimation {
+                            KotlinGeomagnetic(navController, testViewModel, sensorManager)
+                        }
+                    }
+
+                    composable("kotlinProximity") {
+                        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+                        ScreenTransitions.ExampleAnimation {
+                            KotlinProximity(navController, testViewModel, sensorManager)
+                        }
+                    }
+
                 }
             }
         }
@@ -383,7 +398,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onLocationChanged(location: Location) {
-        var locationText = ("Latitude: ${location.latitude} Longitude: ${location.longitude} Altitude: ${location.altitude} Accuracy: ${location.accuracy}")
+        val locationText = ("Latitude: ${location.latitude} Longitude: ${location.longitude} Altitude: ${location.altitude} Accuracy: ${location.accuracy}")
         Toast.makeText(this, locationText, Toast.LENGTH_SHORT).show()
 
     }
@@ -1162,6 +1177,22 @@ class MainActivity : AppCompatActivity() {
                 }) {
                     Text(text = "gravity")
                 }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = {
+                    navController.navigate("kotlinGeomagnetic")
+                }) {
+                    Text(text = "geomagnetic")
+                }
+            }
+
+            Row{
+                Button(onClick = {
+                    navController.navigate("kotlinProximity")
+                }) {
+                    Text(text = "proximity")
+                }
             }
 
             AnimatedVisibility(
@@ -1599,6 +1630,20 @@ class MainActivity : AppCompatActivity() {
     fun KotlinGravity(navController: NavController, testViewModel: TestViewModel, sensorManager: SensorManager){
         var androidTemp = AndroidGravity(navController, sensorManager)
         androidTemp.TestKotlinGravity()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    @Composable
+    fun KotlinGeomagnetic(navController: NavController, testViewModel: TestViewModel, sensorManager: SensorManager){
+        var androidGeomagnetic = AndroidGeomagnetic(navController, sensorManager)
+        androidGeomagnetic.TestKotlinGeomagnetic()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    @Composable
+    fun KotlinProximity(navController: NavController, testViewModel: TestViewModel, sensorManager: SensorManager){
+        var testProximity = TestProximity(navController, testViewModel, sensorManager)
+        testProximity.TestKotlinProximity()
     }
 
 } // end class

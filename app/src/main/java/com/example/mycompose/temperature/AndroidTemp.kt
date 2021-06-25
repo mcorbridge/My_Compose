@@ -26,8 +26,8 @@ import androidx.navigation.NavController
 import com.example.mycompose.accelerometer.MyBinder
 
 /**
- * Measures the force of gravity in m/s2 that is applied to a device on all three physical axes
- * (x, y, z).	Motion detection (shake, tilt, etc.).
+ * Temperature doesn't seem to work.
+ * There is no temperature sensor?
  */
 
 class AndroidTemp(val navController: NavController, private val sensorManager: SensorManager) {
