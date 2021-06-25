@@ -45,8 +45,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.mycompose.accelerometer.AndroidGravity
+import com.example.mycompose.accelerometer.KotlinAccel
+import com.example.mycompose.accelerometer.LinearAccel
 import com.example.mycompose.animate.*
 import com.example.mycompose.canvas.TestCanvas
+import com.example.mycompose.card.TestCard
 import com.example.mycompose.checkbox.TestCheckbox
 import com.example.mycompose.clock.ComposeClock
 import com.example.mycompose.comps.FooComposables
@@ -72,6 +76,7 @@ import com.example.mycompose.sealed.TestSealedClass
 import com.example.mycompose.sensors.TestAndroidSensors
 import com.example.mycompose.sinWave.*
 import com.example.mycompose.state.ManagingState
+import com.example.mycompose.temperature.AndroidTemp
 import com.example.mycompose.text.TestingText
 import com.example.mycompose.transition.*
 import com.example.mycompose.ui.theme.MyComposeTheme
@@ -106,6 +111,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var navController:NavController
 
 
+    @ExperimentalMaterialApi
     @SuppressLint("NewApi")
     @RequiresApi(Build.VERSION_CODES.N)
     @ExperimentalFoundationApi
@@ -331,6 +337,33 @@ class MainActivity : AppCompatActivity() {
                         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
                         ScreenTransitions.ExampleAnimation {
                             AndroidSensors(navController, testViewModel, sensorManager)
+                        }
+                    }
+
+                    composable("composeCard") {
+                        ScreenTransitions.ExampleAnimation {
+                            ComposeCard(navController, testViewModel)
+                        }
+                    }
+
+                    composable("kotlinAccel") {
+                        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+                        ScreenTransitions.ExampleAnimation {
+                            KotlinAccelerometer(navController, testViewModel, sensorManager)
+                        }
+                    }
+
+                    composable("kotlinLinAccel") {
+                        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+                        ScreenTransitions.ExampleAnimation {
+                            KotlinLinAccelerometer(navController, testViewModel, sensorManager)
+                        }
+                    }
+
+                    composable("kotlinGravity") {
+                        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+                        ScreenTransitions.ExampleAnimation {
+                            KotlinGravity(navController, testViewModel, sensorManager)
                         }
                     }
 
@@ -1081,7 +1114,6 @@ class MainActivity : AppCompatActivity() {
                 Spacer(modifier = Modifier.width(16.dp))
 
                 Button(onClick = {
-                    //getLocation()
                     navController.navigate("nmea")
                 }) {
                     Text(text = "NMEA")
@@ -1094,6 +1126,41 @@ class MainActivity : AppCompatActivity() {
             Row{
                 Button(onClick = { navController.navigate("kotlinSensor") }) {
                     Text(text = "sensors")
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = {
+                    navController.navigate("composeCard")
+                }) {
+                    Text(text = "Card")
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = {
+                    navController.navigate("kotlinAccel")
+                }) {
+                    Text(text = "Accel")
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row{
+
+                Button(onClick = {
+                    navController.navigate("kotlinLinAccel")
+                }) {
+                    Text(text = "Linear Accel")
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = {
+                    navController.navigate("kotlinGravity")
+                }) {
+                    Text(text = "gravity")
                 }
             }
 
@@ -1506,6 +1573,32 @@ class MainActivity : AppCompatActivity() {
     fun AndroidSensors(navController: NavController, testViewModel: TestViewModel, sensorManager: SensorManager) {
        var testAndroidSensors = TestAndroidSensors(navController, sensorManager)
         testAndroidSensors.DoTest()
+    }
+
+    @ExperimentalMaterialApi
+    @Composable
+    fun ComposeCard(navController: NavController, testViewModel: TestViewModel) {
+        var testCard = TestCard(navController)
+        testCard.DoCard()
+    }
+
+    @Composable
+    fun KotlinAccelerometer(navController: NavController, testViewModel: TestViewModel, sensorManager: SensorManager){
+        var kotlinAccel = KotlinAccel(navController, sensorManager)
+        kotlinAccel.TestKotlinAccel()
+    }
+
+    @Composable
+    fun KotlinLinAccelerometer(navController: NavController, testViewModel: TestViewModel, sensorManager: SensorManager){
+        var kotlinLinAccel = LinearAccel(navController, sensorManager)
+        kotlinLinAccel.TestKotlinLinAccel()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    @Composable
+    fun KotlinGravity(navController: NavController, testViewModel: TestViewModel, sensorManager: SensorManager){
+        var androidTemp = AndroidGravity(navController, sensorManager)
+        androidTemp.TestKotlinGravity()
     }
 
 } // end class

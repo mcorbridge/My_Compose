@@ -37,18 +37,19 @@ class TestAndroidSensors(var navController: NavController, var sensorManager: Se
 
         var listPressure = remember{ mutableStateListOf<String>() }
         val scrollState = rememberScrollState()
-        var ndx = -1
+        var ndx = 0
 
         Column{
             Row{
                 Button(onClick = {
                     setUp {
                         ndx++
-                        if(ndx == 0){
+                        if(ndx == 1){
                             listPressure.add(it)
                         }else if(ndx >= 10){
-                            ndx = -1
+                            ndx = 0
                         }
+
                     }
                 }) {
                     Text("setup")
