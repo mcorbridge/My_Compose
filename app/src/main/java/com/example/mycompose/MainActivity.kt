@@ -72,6 +72,7 @@ import com.example.mycompose.menu.MenuTwo
 import com.example.mycompose.models.TestViewModel
 import com.example.mycompose.nhl.AnotherNHL
 import com.example.mycompose.proximity.TestProximity
+import com.example.mycompose.retrofit.TestRetrofit
 import com.example.mycompose.room.TestingRoom
 import com.example.mycompose.scaffold.TestScaffold
 import com.example.mycompose.sealed.TestSealedClass
@@ -379,6 +380,12 @@ class MainActivity : AppCompatActivity() {
                         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
                         ScreenTransitions.ExampleAnimation {
                             KotlinProximity(navController, testViewModel, sensorManager)
+                        }
+                    }
+
+                    composable("kotlinRetrofit") {
+                        ScreenTransitions.ExampleAnimation {
+                            KotlinRetrofit(navController, testViewModel)
                         }
                     }
 
@@ -1193,6 +1200,14 @@ class MainActivity : AppCompatActivity() {
                 }) {
                     Text(text = "proximity")
                 }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = {
+                    navController.navigate("kotlinRetrofit")
+                }) {
+                    Text(text = "Retrofit")
+                }
             }
 
             AnimatedVisibility(
@@ -1644,6 +1659,12 @@ class MainActivity : AppCompatActivity() {
     fun KotlinProximity(navController: NavController, testViewModel: TestViewModel, sensorManager: SensorManager){
         var testProximity = TestProximity(navController, testViewModel, sensorManager)
         testProximity.TestKotlinProximity()
+    }
+
+    @Composable
+    fun KotlinRetrofit(navController: NavController, testViewModel: TestViewModel){
+        var testRetrofit = TestRetrofit(navController, testViewModel)
+        testRetrofit.DoRetrofit()
     }
 
 } // end class
