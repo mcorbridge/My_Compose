@@ -83,6 +83,7 @@ import com.example.mycompose.text.TestingText
 import com.example.mycompose.transition.*
 import com.example.mycompose.ui.theme.MyComposeTheme
 import com.example.mycompose.utils.FooComposablex
+import com.example.mycompose.weather.OpenWeather
 import com.example.mycompose.ztate.TestState
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
@@ -386,6 +387,12 @@ class MainActivity : AppCompatActivity() {
                     composable("kotlinRetrofit") {
                         ScreenTransitions.ExampleAnimation {
                             KotlinRetrofit(navController, testViewModel)
+                        }
+                    }
+
+                    composable("kotlinWeather") {
+                        ScreenTransitions.ExampleAnimation {
+                            KotlinWeather(navController, testViewModel)
                         }
                     }
 
@@ -1190,9 +1197,11 @@ class MainActivity : AppCompatActivity() {
                 Button(onClick = {
                     navController.navigate("kotlinGeomagnetic")
                 }) {
-                    Text(text = "geomagnetic")
+                    Text(text = "mag")
                 }
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             Row{
                 Button(onClick = {
@@ -1207,6 +1216,14 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate("kotlinRetrofit")
                 }) {
                     Text(text = "Retrofit")
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(onClick = {
+                    navController.navigate("kotlinWeather")
+                }) {
+                    Text(text = "weather")
                 }
             }
 
@@ -1661,10 +1678,17 @@ class MainActivity : AppCompatActivity() {
         testProximity.TestKotlinProximity()
     }
 
+    @OptIn(ExperimentalMaterialApi::class)
     @Composable
     fun KotlinRetrofit(navController: NavController, testViewModel: TestViewModel){
         var testRetrofit = TestRetrofit(navController, testViewModel)
         testRetrofit.DoRetrofit()
+    }
+
+    @Composable
+    fun KotlinWeather(navController: NavController, testViewModel: TestViewModel){
+        var openWeather = OpenWeather(navController, testViewModel)
+        openWeather.DoOpenWeather()
     }
 
 } // end class

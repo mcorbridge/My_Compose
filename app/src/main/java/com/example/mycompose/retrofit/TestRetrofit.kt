@@ -50,6 +50,8 @@ import androidx.annotation.NonNull
  * JSON parsing), along with support for arbitrary formats with pluggable serialization/deserialization.
  *
  * https://www.elitechsystems.com/how-to-implement-retrofit-in-an-android-project-via-kotlin/
+ * and
+ * https://www.c-sharpcorner.com/article/how-to-create-weather-app-using-retrofit-2-in-android/ <- java
  */
 
 class TestRetrofit(val navController: NavController, testViewModel: TestViewModel) {
@@ -89,7 +91,7 @@ class TestRetrofit(val navController: NavController, testViewModel: TestViewMode
                 Text("Users")
             }
             Button(onClick = {
-                getCurrentData()
+                //getCurrentData()
             }) {
                 Text("Weather")
             }
@@ -190,73 +192,70 @@ interface ApiInterface {
     }
 }
 
-interface WeatherService {
-    @GET("data/2.5/weather?")
-    fun getCurrentWeatherData(
-        @Query("lat") lat: String?,
-        @Query("lon") lon: String?,
-        @Query("APPID") app_id: String?
-    ): Call<WeatherResponse?>?
-}
+//interface WeatherServicez {
+//    @GET("data/2.5/weather?")
+//    fun getCurrentWeatherData(
+//        @Query("lat") lat: String?,
+//        @Query("lon") lon: String?,
+//        @Query("APPID") app_id: String?
+//    ): Call<WeatherResponse?>?
+//}
 
 
 
-fun getCurrentData() {
-
-    //https://api.openweathermap.org/data/2.5/weather?lat=41.61626448849655&lon=-70.44671000806197&appid=330aa600b4d24eb3a29f1fccdc436e93
-
-    //I/System.out: Response{protocol=http/1.1, code=404, message=Not Found,
-    // url=https://api.openweathermap.org/data/2.5/weather/data/2.5/weather?&lat=41.61626448849655&lon=-70.44671000806197&APPID=330aa600b4d24eb3a29f1fccdc436e93}
-
-    println("****************************** getCurrentData *******************************")
-
-    val baseUrl = "https://api.openweathermap.org/"
-    val lat = "41.61626448849655"
-    val lon = "-70.44671000806197"
-    val appId = "330aa600b4d24eb3a29f1fccdc436e93"
-
-    val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(baseUrl)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-    val service = retrofit.create(WeatherService::class.java)
-    val call = service.getCurrentWeatherData(lat, lon, appId)
-
-    println("service.toString()")
-    println(service.toString())
-
-    println("call.toString()")
-    println(call.toString())
-
-    call!!.enqueue(object : Callback<WeatherResponse?> {
-
-        override fun onResponse(
-            call: Call<WeatherResponse?>,
-            response: Response<WeatherResponse?>
-        ) {
-
-            println("response.toString()")
-            println(response.toString())
-
-            if (response.code() == 200) {
-                val weatherResponse = response.body()!!
-                val stringBuilder = """
-                    Country: ${weatherResponse.sys!!.country}
-                    Temperature: ${weatherResponse.main!!.temp}
-                    Temperature(Min): ${weatherResponse.main!!.temp_min}
-                    Temperature(Max): ${weatherResponse.main!!.temp_max}
-                    Humidity: ${weatherResponse.main!!.humidity}
-                    Pressure: ${weatherResponse.main!!.pressure}
-                    """.trimIndent()
-                println(stringBuilder)
-            }
-        }
-
-        override fun onFailure(call: Call<WeatherResponse?>, t: Throwable) {
-            println(t.message)
-        }
-    })
-}
+//fun getCurrentData() {
+//
+//    //https://api.openweathermap.org/data/2.5/weather?lat=41.61626448849655&lon=-70.44671000806197&appid=330aa600b4d24eb3a29f1fccdc436e93
+//
+//    println("****************************** getCurrentData *******************************")
+//
+//    val baseUrl = "https://api.openweathermap.org/"
+//    val lat = "41.61626448849655"
+//    val lon = "-70.44671000806197"
+//    val appId = "330aa600b4d24eb3a29f1fccdc436e93"
+//
+//    val retrofit: Retrofit = Retrofit.Builder()
+//        .baseUrl(baseUrl)
+//        .addConverterFactory(GsonConverterFactory.create())
+//        .build()
+//    val service = retrofit.create(WeatherServicez::class.java)
+//    val call = service.getCurrentWeatherData(lat, lon, appId)
+//
+//    println("service.toString()")
+//    println(service.toString())
+//
+//    println("call.toString()")
+//    println(call.toString())
+//
+//    call!!.enqueue(object : Callback<WeatherResponse?> {
+//
+//        override fun onResponse(
+//            call: Call<WeatherResponse?>,
+//            response: Response<WeatherResponse?>
+//        ) {
+//
+//            println("response.toString()")
+//            println(response.toString())
+//
+//            if (response.code() == 200) {
+//                val weatherResponse = response.body()!!
+//                val stringBuilder = """
+//                    Country: ${weatherResponse.sys!!.country}
+//                    Temperature: ${weatherResponse.main!!.temp}
+//                    Temperature(Min): ${weatherResponse.main!!.temp_min}
+//                    Temperature(Max): ${weatherResponse.main!!.temp_max}
+//                    Humidity: ${weatherResponse.main!!.humidity}
+//                    Pressure: ${weatherResponse.main!!.pressure}
+//                    """.trimIndent()
+//                println(stringBuilder)
+//            }
+//        }
+//
+//        override fun onFailure(call: Call<WeatherResponse?>, t: Throwable) {
+//            println(t.message)
+//        }
+//    })
+//}
 
 
 data class User(
@@ -291,59 +290,8 @@ data class Post (
     val body: String? = null
 )
 
-//data class Weather(val weather:Any? = null)
 
- data class WeatherResponse (
-     var coord: Coord? = null,
-     var sys: Sys? = null,
-     var weather: ArrayList<Weather> = ArrayList<Weather>(),
-     var main: Main? = null,
-     var wind: Wind? = null,
-     var rain: Rain? = null,
-     var clouds: Clouds? = null,
-     var dt: Float = 0f,
-     var id: Int = 0,
-     var name: String? = null,
-     var cod: Float = 0f,
-)
 
-data class Weather (
-    var id: Int = 0,
-    var main: String? = null,
-    var description: String? = null,
-    var icon: String? = null
-)
 
-data class Clouds (
-    var all: Float = 0f
-)
-
-data  class Rain (
-    var h3: Float = 0f
-)
-
-data class Wind (
-    var speed: Float = 0f,
-    var deg: Float = 0f
-)
-
-data class Main (
-    var temp: Float = 0f,
-    var humidity: Float = 0f,
-    var pressure: Float = 0f,
-    var temp_min: Float = 0f,
-    var temp_max: Float = 0f
-)
-
-data class Sys (
-    var country: String? = null,
-    var sunrise: Long = 0,
-    var sunset: Long = 0,
-)
-
-data class Coord (
-    var lon: Float = 0f,
-    var lat: Float = 0f
-)
 
 
