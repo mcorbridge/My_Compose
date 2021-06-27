@@ -8,7 +8,6 @@ import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -26,9 +25,19 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
+import com.google.gson.annotations.SerializedName
+import androidx.annotation.NonNull
+
+
+
+
+
+
 
 
 /**
@@ -77,9 +86,13 @@ class TestRetrofit(val navController: NavController, testViewModel: TestViewMode
                     }
                 }
             }) {
-                Text("Start")
+                Text("Users")
             }
-
+            Button(onClick = {
+                getCurrentData()
+            }) {
+                Text("Weather")
+            }
             Column(modifier = Modifier.verticalScroll(scrollState)){
                 listUsers.forEach { user ->
                     DataCard(user, ndx++, cardClicked, cardColor = Color.LightGray, textColor = Color.Black){
@@ -101,7 +114,6 @@ class TestRetrofit(val navController: NavController, testViewModel: TestViewMode
 
     private fun doRetrofit(callback:(List<User>) -> Unit){
         val apiInterface = ApiInterface.create().getUsers()
-
         apiInterface.enqueue( object : Callback<List<User>> {
 
             override fun onFailure(call: Call<List<User>>?, t: Throwable?) {
@@ -109,12 +121,11 @@ class TestRetrofit(val navController: NavController, testViewModel: TestViewMode
             }
 
             override fun onResponse(call: Call<List<User>>, response: retrofit2.Response<List<User>>) {
-
                 response.body()?.let { callback(it) }
-
             }
         })
     }
+
 
     @ExperimentalMaterialApi
     @Composable
@@ -125,7 +136,9 @@ class TestRetrofit(val navController: NavController, testViewModel: TestViewMode
                 shape = RoundedCornerShape(4.dp),
                 backgroundColor = Color.White,
                 onClick = { callback(cardNum) },
-                modifier = Modifier.fillMaxWidth(0.5f).border(5.dp, color=Color.Black, shape = RoundedCornerShape(4.dp))
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .border(5.dp, color = Color.Black, shape = RoundedCornerShape(4.dp))
             ) {
                 Text(
                     user.name!!, style = TextStyle(
@@ -177,6 +190,75 @@ interface ApiInterface {
     }
 }
 
+interface WeatherService {
+    @GET("data/2.5/weather?")
+    fun getCurrentWeatherData(
+        @Query("lat") lat: String?,
+        @Query("lon") lon: String?,
+        @Query("APPID") app_id: String?
+    ): Call<WeatherResponse?>?
+}
+
+
+
+fun getCurrentData() {
+
+    //https://api.openweathermap.org/data/2.5/weather?lat=41.61626448849655&lon=-70.44671000806197&appid=330aa600b4d24eb3a29f1fccdc436e93
+
+    //I/System.out: Response{protocol=http/1.1, code=404, message=Not Found,
+    // url=https://api.openweathermap.org/data/2.5/weather/data/2.5/weather?&lat=41.61626448849655&lon=-70.44671000806197&APPID=330aa600b4d24eb3a29f1fccdc436e93}
+
+    println("****************************** getCurrentData *******************************")
+
+    val baseUrl = "https://api.openweathermap.org/"
+    val lat = "41.61626448849655"
+    val lon = "-70.44671000806197"
+    val appId = "330aa600b4d24eb3a29f1fccdc436e93"
+
+    val retrofit: Retrofit = Retrofit.Builder()
+        .baseUrl(baseUrl)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+    val service = retrofit.create(WeatherService::class.java)
+    val call = service.getCurrentWeatherData(lat, lon, appId)
+
+    println("service.toString()")
+    println(service.toString())
+
+    println("call.toString()")
+    println(call.toString())
+
+    call!!.enqueue(object : Callback<WeatherResponse?> {
+
+        override fun onResponse(
+            call: Call<WeatherResponse?>,
+            response: Response<WeatherResponse?>
+        ) {
+
+            println("response.toString()")
+            println(response.toString())
+
+            if (response.code() == 200) {
+                val weatherResponse = response.body()!!
+                val stringBuilder = """
+                    Country: ${weatherResponse.sys!!.country}
+                    Temperature: ${weatherResponse.main!!.temp}
+                    Temperature(Min): ${weatherResponse.main!!.temp_min}
+                    Temperature(Max): ${weatherResponse.main!!.temp_max}
+                    Humidity: ${weatherResponse.main!!.humidity}
+                    Pressure: ${weatherResponse.main!!.pressure}
+                    """.trimIndent()
+                println(stringBuilder)
+            }
+        }
+
+        override fun onFailure(call: Call<WeatherResponse?>, t: Throwable) {
+            println(t.message)
+        }
+    })
+}
+
+
 data class User(
     val id: Int? = null,
     val name: String? = null,
@@ -207,6 +289,61 @@ data class Post (
     val id: Int? = null,
     val title: String? = null,
     val body: String? = null
+)
+
+//data class Weather(val weather:Any? = null)
+
+ data class WeatherResponse (
+     var coord: Coord? = null,
+     var sys: Sys? = null,
+     var weather: ArrayList<Weather> = ArrayList<Weather>(),
+     var main: Main? = null,
+     var wind: Wind? = null,
+     var rain: Rain? = null,
+     var clouds: Clouds? = null,
+     var dt: Float = 0f,
+     var id: Int = 0,
+     var name: String? = null,
+     var cod: Float = 0f,
+)
+
+data class Weather (
+    var id: Int = 0,
+    var main: String? = null,
+    var description: String? = null,
+    var icon: String? = null
+)
+
+data class Clouds (
+    var all: Float = 0f
+)
+
+data  class Rain (
+    var h3: Float = 0f
+)
+
+data class Wind (
+    var speed: Float = 0f,
+    var deg: Float = 0f
+)
+
+data class Main (
+    var temp: Float = 0f,
+    var humidity: Float = 0f,
+    var pressure: Float = 0f,
+    var temp_min: Float = 0f,
+    var temp_max: Float = 0f
+)
+
+data class Sys (
+    var country: String? = null,
+    var sunrise: Long = 0,
+    var sunset: Long = 0,
+)
+
+data class Coord (
+    var lon: Float = 0f,
+    var lat: Float = 0f
 )
 
 
