@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import com.example.mycompose.R
 import com.example.mycompose.compassRose.Bearing
 import com.example.mycompose.models.TestViewModel
+import com.example.mycompose.secrets.SECRET_VALUES
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -83,16 +84,10 @@ class OpenWeather(navController: NavController, testViewModel: TestViewModel) {
 
     private fun getCurrentData(callback:(MutableList<Pair<String,String>>) -> Unit) {
 
-//        DataHeading.values().forEach {
-//            println(it)
-//        }
-
-        //https://api.openweathermap.org/data/2.5/weather?lat=41.61626448849655&lon=-70.44671000806197&appid=330aa600b4d24eb3a29f1fccdc436e93
-
         val baseUrl = "https://api.openweathermap.org/"
         val lat = "41.61626448849655"
         val lon = "-70.44671000806197"
-        val appId = "330aa600b4d24eb3a29f1fccdc436e93"
+        val appId = SECRET_VALUES.OPEN_WEATHER_TOKEN
         val units = "imperial"
 
         val retrofit: Retrofit = Retrofit.Builder()
