@@ -1,14 +1,11 @@
 package com.example.mycompose.image
 
-import android.view.Gravity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +16,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.mycompose.R
+import com.google.accompanist.glide.rememberGlidePainter
+
 
 /*
 
@@ -104,6 +103,13 @@ class TestImage {
                     )
                 }
 
+                    Image(
+                        painter = rememberGlidePainter("https://github.com/bumptech/glide/blob/master/static/glide_logo.png?raw=true"),
+                        contentDescription = "My content description",
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier.height(100.dp).width(300.dp)
+                    )
+
                 Row(modifier = Modifier.padding(10.dp)){
                     FunBox()
                     Spacer(modifier = Modifier.width(16.dp))
@@ -143,5 +149,7 @@ class TestImage {
             }
         }
     }
+
+
 
 }

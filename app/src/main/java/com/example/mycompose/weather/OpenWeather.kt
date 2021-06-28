@@ -1,14 +1,11 @@
 package com.example.mycompose.weather
 
-import java.text.DecimalFormat
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -20,6 +17,8 @@ import com.example.mycompose.R
 import com.example.mycompose.compassRose.Bearing
 import com.example.mycompose.models.TestViewModel
 import com.example.mycompose.secrets.SECRET_VALUES
+import com.google.accompanist.glide.rememberGlidePainter
+import com.google.accompanist.imageloading.ImageLoadState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,6 +26,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.text.DecimalFormat
 
 /**
  * my own personal weather station
@@ -42,34 +42,65 @@ class OpenWeather(navController: NavController, testViewModel: TestViewModel) {
         var listWeather = remember{ mutableStateListOf<String>() }
         var ndx = 0
         val scrollState = rememberScrollState()
+        var weatherIcon by remember { mutableStateOf("")}
 
         var altColor = Color(0xFFF47A38)
         var bgColor = Color(0xff48484a)
 
-        Column{
-            Box(
-                modifier = Modifier
-                    .height(200.dp)
-                    .width(200.dp)
-                    .background(bgColor, RectangleShape)
-                    .border(2.dp, color = Color.Black)
-                    .clickable {
-                        getCurrentData() {
-                            it.forEach { data ->
-                                println("${data.first} ${data.second}")
-                                listWeather.add("${data.first} ${data.second}")
-                            }
+        val cotuit:Pair<String,String> = Pair ("41.61626448849655", "-70.44671000806197")
+        val denver:Pair<String,String> = Pair ("39.61786349866042", "-104.9018568687661")
+        val toronto:Pair<String,String> = Pair ("43.69188879277894", "-79.39273640987554")
 
+        Column{
+
+                Box(
+                    modifier = Modifier
+                        .height(200.dp)
+                        .width(200.dp)
+                        .background(bgColor, RectangleShape)
+                        .border(2.dp, color = Color.Black)
+                        .clickable {
+                            getCurrentData(cotuit.first, cotuit.second) {
+                                it.forEach { data ->
+                                    println("${data.first} ${data.second}")
+                                    listWeather.add("${data.first}: ${data.second}")
+                                    if(data.first == "icon"){
+                                        weatherIcon = data.second
+                                    }
+                                }
+
+                            }
                         }
-                    }
-            ) {
+                ) {
+                    Image(
+                        painterResource(R.drawable.openweather),
+                        contentDescription = "retrofit",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier.fillMaxSize()
+                    )
+
+                }
+
+            if(weatherIcon != ""){
+                val painter = rememberGlidePainter("https://openweathermap.org/img/w/$weatherIcon.png", fadeIn = true)
+
                 Image(
-                    painterResource(R.drawable.openweather),
-                    contentDescription = "retrofit",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier.fillMaxSize()
-                )
+                    painter = painter,
+                    contentDescription = "openweathermap",
+                    modifier = Modifier.width(100.dp).height(100.dp))
+
+                when (painter.loadState) {
+                    is ImageLoadState.Loading -> {
+                        // Display a circular progress indicator whilst loading
+                        CircularProgressIndicator(Modifier.align(Alignment.CenterHorizontally))
+                    }
+                    is ImageLoadState.Error -> {
+                        // If you wish to display some content if the request fails
+                    }
+                }
             }
+
+
 
             Column(modifier = Modifier.verticalScroll(scrollState)){
                 listWeather.forEach { data ->
@@ -81,12 +112,13 @@ class OpenWeather(navController: NavController, testViewModel: TestViewModel) {
         }
 
 
-
-    private fun getCurrentData(callback:(MutableList<Pair<String,String>>) -> Unit) {
+    private fun getCurrentData(lat:String, lon:String, callback:(MutableList<Pair<String,String>>) -> Unit) {
 
         val baseUrl = "https://api.openweathermap.org/"
-        val lat = "41.61626448849655"
-        val lon = "-70.44671000806197"
+        //val lat = "41.61626448849655"
+        var lat = lat
+        //val lon = "-70.44671000806197"
+        var lon = lon
         val appId = SECRET_VALUES.OPEN_WEATHER_TOKEN
         val units = "imperial"
 
@@ -110,27 +142,27 @@ class OpenWeather(navController: NavController, testViewModel: TestViewModel) {
                     weatherData.add(Pair("country",weatherResponse.sys?.country!!))
                     weatherData.add(Pair("sunrise",weatherResponse.sys?.sunrise!!.toString()))
                     weatherData.add(Pair("sunset",weatherResponse.sys?.sunset!!.toString()))
-                    weatherData.add(Pair("temp","${weatherResponse.main?.temp!!} ℉"))
+                    weatherData.add(Pair("current temp","${weatherResponse.main?.temp!!} ℉"))
                     weatherData.add(Pair("humidity",weatherResponse.main?.humidity!!.toString()))
-                    weatherData.add(Pair("temp_max","${weatherResponse.main?.temp_max!!} ℉"))
-                    weatherData.add(Pair("temp_min","${weatherResponse.main?.temp_min!!} ℉"))
-                    weatherData.add(Pair("feels_like","${weatherResponse.main?.feels_like!!} ℉"))
+                    weatherData.add(Pair("max temp","${weatherResponse.main?.temp_max!!} ℉"))
+                    weatherData.add(Pair("min temp","${weatherResponse.main?.temp_min!!} ℉"))
+                    weatherData.add(Pair("feels like","${weatherResponse.main?.feels_like!!} ℉"))
                     weatherData.add(Pair("pressure",weatherResponse.main?.pressure!!.toString()))
                     weatherData.add(Pair("lat",weatherResponse.coord?.lat!!.toString()))
                     weatherData.add(Pair("lon",weatherResponse.coord?.lon!!.toString()))
                     weatherData.add(Pair("weather id",weatherResponse.weather.get(0).id.toString()))
-                    weatherData.add(Pair("main",weatherResponse.weather.get(0).main.toString()))
+                    //weatherData.add(Pair("main",weatherResponse.weather.get(0).main.toString()))
                     weatherData.add(Pair("description",weatherResponse.weather.get(0).description.toString()))
                     weatherData.add(Pair("icon",weatherResponse.weather.get(0).icon.toString()))
                     weatherData.add(Pair("wind speed",weatherResponse.wind?.speed.toString()))
-                    weatherData.add(Pair("wind deg",Bearing.findBearing(weatherResponse.wind?.deg)))
+                    weatherData.add(Pair("winds from",Bearing.findBearing(weatherResponse.wind?.deg)))
                     weatherData.add(Pair("wind gust",weatherResponse.wind?.gust.toString()))
                     weatherData.add(Pair("clouds all",weatherResponse.clouds?.all.toString()))
                     weatherData.add(Pair("clouds dt",weatherResponse.clouds?.dt.toString()))
                     weatherData.add(Pair("timezone",weatherResponse.timezone!!.toString()))
                     weatherData.add(Pair("id",weatherResponse.id!!.toString()))
-                    weatherData.add(Pair("name",weatherResponse.name!!.toString()))
-                    weatherData.add(Pair("cod",weatherResponse.cod!!.toString()))
+                    weatherData.add(Pair("location",weatherResponse.name!!.toString()))
+                    weatherData.add(Pair("response code",weatherResponse.cod!!.toString()))
                     weatherData.add(Pair("visibility",weatherResponse.visibility!!.toString()))
                     callback(weatherData)
                 }
