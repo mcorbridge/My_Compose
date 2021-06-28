@@ -1,5 +1,14 @@
 package com.example.mycompose.weather
 
+import android.annotation.SuppressLint
+import android.app.Service
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
@@ -35,21 +44,51 @@ import java.text.DecimalFormat
  * (xK − 273.15) × 9/5 + 32
  */
 
-class OpenWeather(navController: NavController, testViewModel: TestViewModel) {
+class OpenWeather(
+    navController: NavController,
+    testViewModel: TestViewModel,
+    val locationManager: LocationManager
+) {
 
+    lateinit var myLocationListener:LocationListener
+
+    @SuppressLint("MissingPermission")
     @Composable
     fun DoOpenWeather(){
+
+
+        var currentLocation:Pair<String,String>
         var listWeather = remember{ mutableStateListOf<String>() }
         var ndx = 0
         val scrollState = rememberScrollState()
         var weatherIcon by remember { mutableStateOf("")}
-
+        var isLocation by remember { mutableStateOf(false)}
         var altColor = Color(0xFFF47A38)
         var bgColor = Color(0xff48484a)
 
         val cotuit:Pair<String,String> = Pair ("41.61626448849655", "-70.44671000806197")
         val denver:Pair<String,String> = Pair ("39.61786349866042", "-104.9018568687661")
         val toronto:Pair<String,String> = Pair ("43.69188879277894", "-79.39273640987554")
+
+        myLocationListener = MyLocationListener(){
+            currentLocation = Pair("${it.latitude}", "${it.longitude}")
+            isLocation = true
+            getCurrentData(currentLocation.first, currentLocation.second) {
+                it.forEach { data ->
+                    println("${data.first} ${data.second}")
+                    listWeather.add("${data.first}: ${data.second}")
+                    if (data.first == "icon") {
+                        weatherIcon = data.second
+                    }
+                }
+            }
+
+            removeLocationListener()
+        }
+
+        if(!isLocation){
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, myLocationListener)
+        }
 
         Column{
 
@@ -64,7 +103,7 @@ class OpenWeather(navController: NavController, testViewModel: TestViewModel) {
                                 it.forEach { data ->
                                     println("${data.first} ${data.second}")
                                     listWeather.add("${data.first}: ${data.second}")
-                                    if(data.first == "icon"){
+                                    if (data.first == "icon") {
                                         weatherIcon = data.second
                                     }
                                 }
@@ -87,7 +126,9 @@ class OpenWeather(navController: NavController, testViewModel: TestViewModel) {
                 Image(
                     painter = painter,
                     contentDescription = "openweathermap",
-                    modifier = Modifier.width(100.dp).height(100.dp))
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(100.dp))
 
                 when (painter.loadState) {
                     is ImageLoadState.Loading -> {
@@ -100,8 +141,6 @@ class OpenWeather(navController: NavController, testViewModel: TestViewModel) {
                 }
             }
 
-
-
             Column(modifier = Modifier.verticalScroll(scrollState)){
                 listWeather.forEach { data ->
                     Text(data)
@@ -111,14 +150,19 @@ class OpenWeather(navController: NavController, testViewModel: TestViewModel) {
 
         }
 
+    private fun removeLocationListener(){
+        println("-------------------> locationManager.removeUpdates(myLocationListener)")
+        locationManager.removeUpdates(myLocationListener)
+    }
+
 
     private fun getCurrentData(lat:String, lon:String, callback:(MutableList<Pair<String,String>>) -> Unit) {
 
         val baseUrl = "https://api.openweathermap.org/"
         //val lat = "41.61626448849655"
-        var lat = lat
+        val lat = lat
         //val lon = "-70.44671000806197"
-        var lon = lon
+        val lon = lon
         val appId = SECRET_VALUES.OPEN_WEATHER_TOKEN
         val units = "imperial"
 
@@ -132,6 +176,7 @@ class OpenWeather(navController: NavController, testViewModel: TestViewModel) {
 
         call!!.enqueue(object : Callback<WeatherResponse?> {
 
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(
                 call: Call<WeatherResponse?>,
                 response: Response<WeatherResponse?>
@@ -140,14 +185,14 @@ class OpenWeather(navController: NavController, testViewModel: TestViewModel) {
                     val weatherResponse = response.body()!!
 
                     weatherData.add(Pair("country",weatherResponse.sys?.country!!))
-                    weatherData.add(Pair("sunrise",weatherResponse.sys?.sunrise!!.toString()))
-                    weatherData.add(Pair("sunset",weatherResponse.sys?.sunset!!.toString()))
+                    weatherData.add(Pair("sunrise", unixTimestampConversion(weatherResponse.sys?.sunrise!! + weatherResponse.timezone!!)))
+                    weatherData.add(Pair("sunset", unixTimestampConversion(weatherResponse.sys?.sunset!! + weatherResponse.timezone!!)))
                     weatherData.add(Pair("current temp","${weatherResponse.main?.temp!!} ℉"))
-                    weatherData.add(Pair("humidity",weatherResponse.main?.humidity!!.toString()))
+                    weatherData.add(Pair("humidity","${weatherResponse.main?.humidity!!} %"))
                     weatherData.add(Pair("max temp","${weatherResponse.main?.temp_max!!} ℉"))
                     weatherData.add(Pair("min temp","${weatherResponse.main?.temp_min!!} ℉"))
                     weatherData.add(Pair("feels like","${weatherResponse.main?.feels_like!!} ℉"))
-                    weatherData.add(Pair("pressure",weatherResponse.main?.pressure!!.toString()))
+                    weatherData.add(Pair("pressure","${weatherResponse.main?.pressure!!}  hPa"))
                     weatherData.add(Pair("lat",weatherResponse.coord?.lat!!.toString()))
                     weatherData.add(Pair("lon",weatherResponse.coord?.lon!!.toString()))
                     weatherData.add(Pair("weather id",weatherResponse.weather.get(0).id.toString()))
@@ -157,13 +202,13 @@ class OpenWeather(navController: NavController, testViewModel: TestViewModel) {
                     weatherData.add(Pair("wind speed",weatherResponse.wind?.speed.toString()))
                     weatherData.add(Pair("winds from",Bearing.findBearing(weatherResponse.wind?.deg)))
                     weatherData.add(Pair("wind gust",weatherResponse.wind?.gust.toString()))
-                    weatherData.add(Pair("clouds all",weatherResponse.clouds?.all.toString()))
+                    weatherData.add(Pair("clouds all","${weatherResponse.clouds?.all.toString()} %"))
                     weatherData.add(Pair("clouds dt",weatherResponse.clouds?.dt.toString()))
                     weatherData.add(Pair("timezone",weatherResponse.timezone!!.toString()))
                     weatherData.add(Pair("id",weatherResponse.id!!.toString()))
                     weatherData.add(Pair("location",weatherResponse.name!!.toString()))
                     weatherData.add(Pair("response code",weatherResponse.cod!!.toString()))
-                    weatherData.add(Pair("visibility",weatherResponse.visibility!!.toString()))
+                    weatherData.add(Pair("visibility","${weatherResponse.visibility!!.toString()} m"))
                     callback(weatherData)
                 }
             }
@@ -172,6 +217,13 @@ class OpenWeather(navController: NavController, testViewModel: TestViewModel) {
                 println(t.message)
             }
         })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun unixTimestampConversion(epochSecond: Float):String{
+        return java.time.format.DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.ofEpochSecond(
+            epochSecond.toLong()
+        ))
     }
 
     fun convertKelvinFahrenheit(kelvin:Float):String{
@@ -294,6 +346,14 @@ enum class DataHeading (item: String){
     NAME("name"),
     COD("cod"),
     VISIBILITY("visiility")
+}
+
+class MyLocationListener(val callback: (Location) -> Unit) : LocationListener {
+
+    override fun onLocationChanged(location: Location) {
+        callback(location)
+    }
+
 }
 
 

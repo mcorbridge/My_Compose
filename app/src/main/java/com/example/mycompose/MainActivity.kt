@@ -391,8 +391,9 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     composable("kotlinWeather") {
+                        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
                         ScreenTransitions.ExampleAnimation {
-                            KotlinWeather(navController, testViewModel)
+                            KotlinWeather(navController, testViewModel, locationManager)
                         }
                     }
 
@@ -1686,8 +1687,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Composable
-    fun KotlinWeather(navController: NavController, testViewModel: TestViewModel){
-        var openWeather = OpenWeather(navController, testViewModel)
+    fun KotlinWeather(navController: NavController, testViewModel: TestViewModel, locationManager: LocationManager){
+        var openWeather = OpenWeather(navController, testViewModel, locationManager)
         openWeather.DoOpenWeather()
     }
 
