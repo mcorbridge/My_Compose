@@ -47,21 +47,20 @@ import java.text.DecimalFormat
 class OpenWeather(
     navController: NavController,
     testViewModel: TestViewModel,
-    val locationManager: LocationManager
+    private val locationManager: LocationManager
 ) {
 
-    lateinit var myLocationListener:LocationListener
+    private lateinit var myLocationListener:LocationListener
 
     @SuppressLint("MissingPermission")
     @Composable
     fun DoOpenWeather(){
 
-
-        var currentLocation:Pair<String,String>
         var listWeather = remember{ mutableStateListOf<String>() }
         var ndx = 0
         val scrollState = rememberScrollState()
         var weatherIcon by remember { mutableStateOf("")}
+        var weatherIconLoadFailed by remember { mutableStateOf(false)}
         var isLocation by remember { mutableStateOf(false)}
         var altColor = Color(0xFFF47A38)
         var bgColor = Color(0xff48484a)
@@ -69,6 +68,7 @@ class OpenWeather(
         val cotuit:Pair<String,String> = Pair ("41.61626448849655", "-70.44671000806197")
         val denver:Pair<String,String> = Pair ("39.61786349866042", "-104.9018568687661")
         val toronto:Pair<String,String> = Pair ("43.69188879277894", "-79.39273640987554")
+        var currentLocation:Pair<String,String>
 
         myLocationListener = MyLocationListener(){
             currentLocation = Pair("${it.latitude}", "${it.longitude}")
@@ -83,6 +83,7 @@ class OpenWeather(
                 }
             }
 
+            // we only need the location once
             removeLocationListener()
         }
 
@@ -137,8 +138,14 @@ class OpenWeather(
                     }
                     is ImageLoadState.Error -> {
                         // If you wish to display some content if the request fails
+                        weatherIconLoadFailed = true
                     }
+                    else -> println("something fucked up")
                 }
+            }
+
+            if(weatherIconLoadFailed){
+                Text("The OpenWeatherMap weather Icon did not load!!")
             }
 
             Column(modifier = Modifier.verticalScroll(scrollState)){
@@ -151,18 +158,18 @@ class OpenWeather(
         }
 
     private fun removeLocationListener(){
-        println("-------------------> locationManager.removeUpdates(myLocationListener)")
         locationManager.removeUpdates(myLocationListener)
     }
-
 
     private fun getCurrentData(lat:String, lon:String, callback:(MutableList<Pair<String,String>>) -> Unit) {
 
         val baseUrl = "https://api.openweathermap.org/"
         //val lat = "41.61626448849655"
-        val lat = lat
+        val lat = lat // <- try to avoid shadowing for two reasons:
+        // 1. your code becomes hard to read as two different things have the same name, which leads to confusion.
+        // 2. once shadowed, you can no longer access the original variable within a scope.
         //val lon = "-70.44671000806197"
-        val lon = lon
+        val lon = lon // <- shadowed
         val appId = SECRET_VALUES.OPEN_WEATHER_TOKEN
         val units = "imperial"
 
@@ -173,6 +180,10 @@ class OpenWeather(
         val service = retrofit.create(WeatherService::class.java)
         val call = service.getCurrentWeatherData(lat, lon, appId, units)
         val weatherData:MutableList<Pair<String,String>> = mutableListOf()
+
+
+        // You're making an asynchronous call, so data.value will not be set until that asynchronous
+        // call resolves.
 
         call!!.enqueue(object : Callback<WeatherResponse?> {
 
