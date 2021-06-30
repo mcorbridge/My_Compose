@@ -397,6 +397,12 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
 
+                    composable("kotlinCompass") {
+                        ScreenTransitions.ExampleAnimation {
+                            KotlinCompass(navController, testViewModel)
+                        }
+                    }
+
                 }
             }
         }
@@ -1228,6 +1234,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row{
+                Button(onClick = {
+                    navController.navigate("kotlinCompass")
+                }) {
+                    Text(text = "compass")
+                }
+            }
+
             AnimatedVisibility(
                 visible = toggle, enter = slideInVertically(
                     // Enters by sliding down from offset -fullHeight to 0.
@@ -1690,6 +1706,12 @@ class MainActivity : AppCompatActivity() {
     fun KotlinWeather(navController: NavController, testViewModel: TestViewModel, locationManager: LocationManager){
         var openWeather = OpenWeather(navController, testViewModel, locationManager)
         openWeather.DoOpenWeather()
+    }
+
+    @Composable
+    fun KotlinCompass(navController: NavController, testViewModel: TestViewModel){
+        var compass = Compass(navController, testViewModel)
+        compass.DoCompass()
     }
 
 } // end class
