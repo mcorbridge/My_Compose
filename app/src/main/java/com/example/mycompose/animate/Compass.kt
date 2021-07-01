@@ -2,6 +2,7 @@ package com.example.mycompose.animate
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
@@ -230,6 +231,8 @@ class Compass(navController: NavController, testViewModel: TestViewModel) {
 
             var tempColor = TempColor()
             tempColor.Test()
+
+
 
         }
 
