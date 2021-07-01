@@ -23,7 +23,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mycompose.R
+import com.example.mycompose.animate.Compass
 import com.example.mycompose.compassRose.Bearing
+import com.example.mycompose.compassRose.TempColor
 import com.example.mycompose.models.TestViewModel
 import com.example.mycompose.secrets.SECRET_VALUES
 import com.google.accompanist.glide.rememberGlidePainter
@@ -95,8 +97,8 @@ class OpenWeather(
 
                 Box(
                     modifier = Modifier
-                        .height(200.dp)
-                        .width(200.dp)
+                        .height(100.dp)
+                        .width(100.dp)
                         .background(bgColor, RectangleShape)
                         .border(2.dp, color = Color.Black)
                         .clickable {
@@ -116,7 +118,9 @@ class OpenWeather(
                         painterResource(R.drawable.openweather),
                         contentDescription = "retrofit",
                         contentScale = ContentScale.Fit,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier
+                            .height(100.dp)
+                            .width(100.dp)
                     )
 
                 }
@@ -147,6 +151,8 @@ class OpenWeather(
             if(weatherIconLoadFailed){
                 Text("The OpenWeatherMap weather Icon did not load!!")
             }
+
+            Compass.DoWindBearing(rotation = 90.0f)
 
             Column(modifier = Modifier.verticalScroll(scrollState)){
                 listWeather.forEach { data ->

@@ -17,9 +17,49 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mycompose.R
 import com.example.mycompose.compassRose.Bearing
+import com.example.mycompose.compassRose.TempColor
 import com.example.mycompose.models.TestViewModel
 
 class Compass(navController: NavController, testViewModel: TestViewModel) {
+
+
+
+    companion object{
+
+        @Composable
+        fun DoWindBearing(rotation:Float){
+            val compassRose: Painter = painterResource(id = R.drawable.compass_rose)
+            val compassArrow: Painter = painterResource(id = R.drawable.arrow)
+            var xPos by remember { mutableStateOf(55)}
+            var yPos by remember { mutableStateOf(-5)}
+            var rot by remember { mutableStateOf(rotation)}
+
+            Column{
+                Box(modifier = Modifier.offset(100.dp, 10.dp)){
+                    Image(
+                        modifier = Modifier
+                            .background(color = Color.Transparent ),
+                        alpha = 0.5f,
+                        painter = compassRose,
+                        contentDescription = "A compass rose",
+                    )
+                    Image(
+                        modifier = Modifier
+                            .offset(xPos.dp, yPos.dp)
+                            .rotate(rot),
+                        painter = compassArrow,
+                        contentDescription = "A compass arrow",
+                    )
+                }
+
+                Text("Wind Bearing: ${Bearing.findBearing(rot)}")
+
+            }
+
+        }
+
+
+    }
 
 
     @Composable
@@ -149,7 +189,7 @@ class Compass(navController: NavController, testViewModel: TestViewModel) {
                     rot--
                     println("xPos: $xPos  yPos: $yPos rotation: $rot")
                 }) {
-                    Text("rot--")
+                    Text("rotate--")
                 }
 
                 Spacer(modifier = Modifier.width(16.dp))
@@ -158,7 +198,7 @@ class Compass(navController: NavController, testViewModel: TestViewModel) {
                     rot++
 
                 }) {
-                    Text("rot++")
+                    Text("rotate++")
                 }
 
                 Spacer(modifier = Modifier.width(16.dp))
@@ -169,6 +209,7 @@ class Compass(navController: NavController, testViewModel: TestViewModel) {
 
 
             Row{
+
                 OutlinedTextField(
                     value = rotationText,
                     onValueChange = { rotationText = it },
@@ -186,6 +227,9 @@ class Compass(navController: NavController, testViewModel: TestViewModel) {
                 }
 
             }
+
+            var tempColor = TempColor()
+            tempColor.Test()
 
         }
 
